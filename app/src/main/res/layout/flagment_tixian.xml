@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/tixianTitleRl"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <LinearLayout android:id="@+id/howToTixianLl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/selector_back">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="13sp"
+                android:text="如何提现"
+                android:textColor="@color/module_11"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/reflashTixianLl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_back">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/reflash" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tixianTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="@color/detailPercent"/>
+    </RelativeLayout>
+
+    <com.tencent.smtt.sdk.WebView android:id="@+id/tixianWebview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:focusable="false"
+        android:layout_weight="1.0"
+        />
+
+</LinearLayout>

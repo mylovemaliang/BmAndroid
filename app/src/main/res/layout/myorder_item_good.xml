@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginTop="2dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/line2">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/myorder_item_good_image"
+            android:layout_gravity="center_horizontal"
+            fresco:failureImage="@mipmap/default_img"
+            fresco:placeholderImage="@mipmap/default_img"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:id="@+id/myorder_item_good_titletext"
+            android:layout_below="@+id/myorder_item_good_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/myorder_item_good_originprice"
+            android:text="$##.#"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/myorder_item_good_titletext" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/myorder_item_good_sellcount"
+            android:text="已售####件"
+            android:textColor="#999999"
+            android:textSize="10sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/myorder_item_good_titletext"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myorder_item_good_sellcount"
+            android:layout_marginTop="5dp"
+            android:id="@+id/myorder_item_fanli_info">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myorder_item_good_discount"
+                android:text="返##%"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/redborder"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myorder_item_good_pricesaved"
+                android:text="约##元"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/transparent"
+            android:layout_below="@+id/myorder_item_fanli_info"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

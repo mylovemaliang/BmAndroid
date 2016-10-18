@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/search_flagment_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            app:layout_widthPercent="20%"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/search_flagment_cancel_area">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/juxing_6"
+                android:id="@+id/search_flagment_cancel"/>
+         </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="75%"
+            app:layout_widthPercent="75%"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/search_flagment_cancel_area"
+            android:layout_centerVertical="true"
+            app:layout_marginRightPercent="5%"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/textborder"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:id="@+id/search_flagment_searchtype_btn"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/search_promt_spinner"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/serach_flagment_searchText"/>
+        </LinearLayout>
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/gray"
+        android:layout_below="@+id/search_flagment_toolbar"
+        android:id="@+id/line1"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/line1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:id="@+id/search_condition_layout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="综合排序"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:textColor="@color/module_6"
+            android:id="@+id/search_flagment_left_btn"
+            android:background="@color/white"
+        />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="筛选"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/module_6"
+            android:layout_weight="1"
+            android:id="@+id/search_flagment_right_btn"
+            android:background="@color/white"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5sp"
+        android:background="@color/darkBackground"
+        android:layout_below="@+id/search_condition_layout"
+        android:id="@+id/line2"
+        android:orientation="horizontal"></LinearLayout>
+
+    <cn.fuyoushuo.fqbb.view.Layout.RefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line2"
+        android:id="@+id/search_result_refreshLayout">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_result_rview"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </android.support.v7.widget.RecyclerView>
+
+  </cn.fuyoushuo.fqbb.view.Layout.RefreshLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/to_top_border"
+        android:id="@+id/search_totop_area"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/search_totop_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/to_top_iconfront"/>
+    </FrameLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:text="价格区间"
+         app:layout_marginLeftPercent="6%"
+         android:textSize="16sp"
+         android:gravity="center"/>
+
+     <EditText
+         android:layout_width="0dp"
+         app:layout_widthPercent="25%"
+         android:layout_height="match_parent"
+         app:layout_marginLeftPercent="2%"
+         android:digits="1234567890."
+         android:gravity="center"
+         android:textCursorDrawable="@null"
+         android:background="@drawable/textborder"
+         android:id="@+id/taobao_search_right_startprice" />
+
+     <ImageView
+         android:layout_width="0dp"
+         app:layout_widthPercent="3%"
+         app:layout_heightPercent="2%"
+         android:layout_height="0dp"
+         android:background="@color/grayBackground"
+         android:layout_gravity="center"
+         app:layout_marginLeftPercent="2%"/>
+
+        <EditText
+            android:layout_width="0dp"
+            app:layout_widthPercent="25%"
+            android:layout_height="match_parent"
+            app:layout_marginLeftPercent="2%"
+            android:digits="1234567890."
+            android:gravity="center"
+            android:textCursorDrawable="@null"
+            android:background="@drawable/textborder"
+            android:id="@+id/taobao_search_right_endprice" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
+    
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="包邮"
+            android:textColor="#666666"
+            app:layout_marginLeftPercent="6%"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:id="@+id/taobao_search_service_mfree_check" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_marginLeftPercent="2%"
+            android:text="天猫"
+            android:textSize="15sp"
+            android:textColor="#666666"
+            android:id="@+id/taobao_search_service_tmall_check"/>
+    </com.zhy.android.percent.support.PercentLinearLayout>
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/taobao_search_condition_submit_btn"
+            android:layout_width="0dp"
+            app:layout_widthPercent="70%"
+            app:layout_heightPercent="80%"
+            android:layout_height="0dp"
+            android:textColor="@color/white"
+            android:text="确定"
+            android:layout_centerHorizontal="true"
+            android:background="@color/module_11" />
+
+     </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#50323232"
+        android:orientation="vertical"
+        android:id="@+id/taobao_search_right_below_backGroup"/>
+
+</LinearLayout>

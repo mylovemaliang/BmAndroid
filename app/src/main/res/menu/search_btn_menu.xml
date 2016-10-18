@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/searchmenu_action_chaojifan"
+        android:orderInCategory="1"
+        android:title="超级返"
+        android:checked="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/searchmenu_action_fanli"
+        android:orderInCategory="2"
+        android:title="返利搜索"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/searchmenu_action_taobao"
+        android:orderInCategory="3"
+        android:title="淘宝"
+        app:showAsAction="never"/>
+</menu>

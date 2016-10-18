@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	>
+
+	<RelativeLayout
+		android:id="@+id/activity_score_imageview2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/selector_back" >
+		<ImageView
+			android:id="@+id/webviewBackImg"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="12dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:src="@mipmap/juxing_6" />
+
+		<TextView
+			android:id="@+id/webviewTitleText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:textSize="15sp"
+			android:textColor="@color/detailPercent"/>
+	</RelativeLayout>
+    
+	<WebView android:id="@+id/tb_h5page_webview" 
+		android:layout_width="fill_parent" 
+		android:layout_height="0dip" 
+		 android:focusable="false"
+		android:layout_weight="1.0"
+		/>
+
+	<RelativeLayout android:id="@+id/webviewFragBottom"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout android:id="@+id/leftButtonLl"
+			android:orientation="horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			>
+			<Button
+				android:id="@+id/loginAlimama"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="我要返钱"
+				android:visibility="gone"
+				/>
+
+			<Button
+				android:id="@+id/ktfxQx"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="开通返现权限"
+				android:visibility="gone"/>
+
+			<Button
+				android:id="@+id/wsxx"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="修复权限"
+				android:visibility="gone"/>
+
+			<Button
+				android:id="@+id/qdfx"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="启动返现模式"
+				android:visibility="gone"
+				/>
+
+			<Button
+				android:id="@+id/qdfjfb"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="启动返集分宝"
+				android:visibility="gone"
+				/>
+
+			<Button
+				android:id="@+id/reflashFl"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text="刷新进入返利"
+				android:visibility="gone"/>
+
+			<TextView android:id="@+id/leftDetailInfo"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
+				android:background="@drawable/detail_yuanjiao"
+				android:gravity="center"
+				android:textColor="@color/white"
+				android:textSize="15sp"
+				android:text=""
+				android:visibility="gone"
+				/>
+		</LinearLayout>
+
+		<TextView android:id="@+id/itemfxinfo1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/leftButtonLl"
+			android:layout_marginLeft="10dp"
+			android:layout_marginTop="11dp"
+			android:textSize="12sp"
+			android:textColor="@color/detailJe"
+			android:visibility="gone"
+			android:text=""
+			/>
+
+		<TextView android:id="@+id/itemfxinfo2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/itemfxinfo1"
+			android:layout_alignBaseline="@+id/itemfxinfo1"
+			android:textSize="16sp"
+			android:textColor="@color/detailPercent"
+			android:visibility="gone"
+			android:text=""
+			/>
+
+		<TextView android:id="@+id/itemfxinfo3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/itemfxinfo2"
+			android:layout_alignBaseline="@+id/itemfxinfo2"
+			android:textSize="12sp"
+			android:textColor="@color/detailJe"
+			android:visibility="gone"
+			android:text=""
+			/>
+
+		<!--<LinearLayout android:id="@+id/detailBottomRmBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_alignParentRight="true">
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="20dp"
+				android:layout_marginTop="15dp"
+				android:layout_marginBottom="10dp"
+				android:layout_alignParentRight="true"
+				android:layout_centerInParent="true"
+				android:src="@mipmap/detailpoint" />
+		</LinearLayout>-->
+	</RelativeLayout>
+</LinearLayout>

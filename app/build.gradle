@@ -1,0 +1,139 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "cn.fuyoushuo.fqbb"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 27
+        versionName "1.1.7"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    //签名
+    signingConfigs {
+        relealse {
+            //这样写就得把demo.jk文件放在项目目录
+            storeFile file("fanqianbb.jks")
+            storePassword "Fanqianbb20160726"
+            keyAlias "fqbb-android"
+            keyPassword "FanQianbb20160726"
+        }
+    }
+
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.relealse
+        }
+
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.relealse
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            def fileName
+            def buildName
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                variant.productFlavors.each { product ->
+                    buildName = product.name
+                    //这里修改apk文件名
+                    if (variant.buildType.name.equals('release')) {
+                        fileName = "fanqianbb-${buildName}-${defaultConfig.versionCode}-release.apk"
+                    } else if (variant.buildType.name.equals('debug')) {
+                        fileName = "fanqianbb-${buildName}-${defaultConfig.versionCode}-debug.apk"
+                    }
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            }
+        }
+
+        variant.assemble.doLast {
+            variant.outputs.each { output ->
+                println "aligned " + output.outputFile
+                println "unaligned " + output.packageApplication.outputFile
+
+                File unaligned = output.packageApplication.outputFile;
+                File aligned = output.outputFile
+                if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
+                    println "deleting " + unaligned.getName()
+                    unaligned.delete()
+                }
+            }
+        }
+    }
+
+    productFlavors {
+
+        official {}
+        fysTest {}
+        wandoujia {}
+        _360_shoujizhushou {}
+        anzhishichang {}
+        jifengshichang {}
+        huawei {}
+        vivo {}
+        oppo {}
+        pp_zhushou {}
+        qq_yingyongbao {}
+        xiaomi {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':commonlib')
+    compile project(':domain')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
+
+    compile 'com.trello:rxlifecycle:0.3.1'
+    compile 'com.trello:rxlifecycle-components:0.3.1'
+
+    compile 'com.zhy:percent-support-extends:1.0.1'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+}

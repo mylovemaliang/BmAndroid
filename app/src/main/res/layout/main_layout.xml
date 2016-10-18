@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:showDividers="middle"
+    android:divider="@drawable/line"
+    android:id="@+id/main_layout">
+
+    <LinearLayout
+        android:id="@+id/bottomRadioGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/bottomRg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbHome"
+                style="@style/rg_btn_style"
+                android:drawableTop="@drawable/bt_menu_cjf_select"
+                android:textColor="@drawable/bt_menu_select_color"
+                android:checked="true"
+                android:text="超级返"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="3dp" />
+
+            <RadioButton
+                android:id="@+id/rbOrder"
+                style="@style/rg_btn_style"
+                android:drawableTop="@drawable/bt_menu_order_select"
+                android:textColor="@drawable/bt_menu_select_color"
+                android:text="查询订单"
+                android:layout_toRightOf="@+id/rbHome"
+                android:layout_marginBottom="3dp"/>
+
+            <!--<RadioButton
+                android:id="@+id/rbJifen"
+                style="@style/rg_btn_style"
+                android:drawableTop="@drawable/bt_menu_jfb_select"
+                android:textColor="@drawable/bt_menu_select_color"
+                android:text="集分宝"
+                android:layout_toRightOf="@+id/rbOrder"
+                android:layout_marginBottom="3dp"/>-->
+
+            <RadioButton
+                android:id="@+id/rb_tixian"
+                style="@style/rg_btn_style"
+                android:drawableTop="@drawable/bt_menu_tixian_select"
+                android:textColor="@drawable/bt_menu_select_color"
+                android:text="提现"
+                android:layout_toRightOf="@+id/rbJifen"
+                android:layout_marginBottom="3dp"/>
+
+        </RadioGroup>
+
+        <LinearLayout android:id="@+id/rb_rightArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <ImageButton
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/tab_cebian"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<View
+        android:id="@+id/bottomFenge"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_bellow="@+id/bottomRadioGroupLayout"
+        android:background="@color/line" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_viewpager_layout"
+        android:layout_above="@+id/bottomRadioGroupLayout">
+
+        <cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout
+            android:id="@+id/drawerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <!-- VIewPager 主要是加载内容的 -->
+            <RelativeLayout
+                android:id="@+id/main_area"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <!-- 侧滑菜单 -->
+            <RelativeLayout
+                android:id="@+id/rightMenu"
+                android:layout_width="260dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@color/white"
+                android:clickable="true">
+
+                <include layout="@layout/menu_right"/>
+
+            </RelativeLayout>
+        </cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

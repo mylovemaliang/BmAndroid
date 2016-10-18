@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.fuyoushuo.fqbb">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- 获取手机网络状态权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--<uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>-->
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+
+        <activity android:name=".view.activity.LauncherActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:theme="@style/AppTheme"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.activity.UserguideActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
+        </activity>
+
+        <activity
+            android:name=".view.activity.AppstartActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/SearchActivityTheme"
+            android:windowSoftInputMode="adjustUnspecified|adjustResize" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
+        <activity
+            android:name=".view.activity.WebviewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
+        <activity
+            android:name=".view.activity.HelpActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
+        <activity
+            android:name=".view.activity.ConfigActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
+
+        <meta-data android:value="57aabc7de0f55a1987001856" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+        <meta-data android:value="23441360" android:name="feedback_appkey"/>
+    </application>
+
+</manifest>

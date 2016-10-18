@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/module_11">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent ="100%"
+            android:layout_alignParentLeft="true">
+            <ImageView
+                android:id="@+id/cjf_s"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/cj_s"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="60%"
+            app:layout_widthPercent="60%"
+            android:layout_centerInParent="true"
+            android:background="@color/module_12"
+            android:id="@+id/main_toolbar_searchLayout"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/shouye_search"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shouye_textbox_word"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:textColor="#999999"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent ="100%"
+            android:layout_alignParentRight="true"
+            android:id="@+id/main_feedback">
+
+            <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:src="@mipmap/xx_s"/>
+        </RelativeLayout>
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <cn.fuyoushuo.fqbb.view.Layout.RefreshLayout
+        android:id="@+id/main_flagment_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/my_toolbar">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/main_bottomRcycleView">
+        </android.support.v7.widget.RecyclerView>
+    </cn.fuyoushuo.fqbb.view.Layout.RefreshLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/to_top_border"
+        android:id="@+id/main_totop_area"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/main_totop_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/to_top_iconfront"/>
+    </FrameLayout>
+
+</RelativeLayout>

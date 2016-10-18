@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">返钱宝宝</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shouye_textbox_word">输入相关商品</string>
+    <string name="shouye_text_searchorder">订单查询</string>
+    <string name="shouye_text_searchjifenbao">集分宝查询</string>
+    <string name="shouye_text_tixian">提现</string>
+    <string name="shouye_chaojifan">超级返</string>
+    <string name="shouye_more">更多</string>
+
+    <!-- 右边侧滑菜单界面 -->
+    <string name="right_menu_logo1">返钱宝宝</string>
+    <string name="right_menu_logo2">就是让你省钱</string>
+    <string name="right_menu_mytaobao">我的淘宝</string>
+    <string name="right_menu_firstpage">首页</string>
+    <string name="right_menu_myorder">查询订单</string>
+    <string name="right_menu_tixian">提现</string>
+    <string name="right_menu_myjfb">集分宝</string>
+    <string name="right_menu_help">使用帮助</string>
+    <string name="right_menu_config">设置</string>
+
+    <!-- 设置界面 -->
+    <string name="config_title">设置</string>
+    <string name="config_fanli">自动启动返利</string>
+    <string name="config_fanli_desc">为了能让你轻松的购物，并快速给您返钱，返钱宝宝将为您推荐相同/相似的商品、帮助您跳过“爱淘宝”的繁琐页面。</string>
+    <string name="config_update">检查更新</string>
+    <string name="config_about">关于返钱宝宝</string>
+
+    <!-- 关于返钱宝宝界面 -->
+    <string name="about_title">关于返钱宝宝</string>
+    <string name="about_appdesc">返钱宝宝是一款网购返利工具。当用户在淘宝、天猫购物时，返钱宝宝能够为您提供自动查询商品返利，一键启动返利，返利自动到账，同类商品比价等功能。返钱宝宝无须注册即可使用，非常方便快捷，是消费者非常贴心的网购小助手。同时，返钱宝宝官方网站已经打造成一个每日上新的超级返利平台。</string>
+    <string name="about_company">上海喆越金融信息服务有限公司</string>
+    <string name="about_weburl">http://www.fanqianbb.com</string>
+
+    <!-- 帮助界面 -->
+    <string name="help_title">使用帮助</string>
+
+    <!--iconfront图标-->
+    <string name="to_top_iconfront">&#xe69e;</string>
+    <string name="user_guide_iconfont">立即体验&#xe78b;</string>
+    <string name="search_condition_clear">&#xe624;</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1a9bd0</color>
+    <color name="colorPrimaryDark">#b1adad</color>
+    <color name="colorAccent">#ff009688</color>
+    <color name="main_bg">#EFEFF4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="line2">#FFFAFA</color>
+    <color name="black">#000000</color>
+    <color name="line">#ddd</color>
+    <color name="gray">#B0B0B0</color>
+    <color name="darkBackground">#999999</color>
+    <color name="grayBackground">#f0f0f0</color>
+    <color name="rightMenuText">#333333</color>
+
+    <color name="module_1">#05c7a5</color>
+    <color name="module_2">#0ca3d0</color>
+    <color name="module_3">#01b8d7</color>
+    <color name="module_4">#d76d93</color>
+    <color name="module_5">#7e4b84</color>
+    <color name="module_6">#ea8010</color>
+    <color name="module_7">#27ae60</color>
+    <color name="module_8">#61c883</color>
+    <color name="module_9">#01b8d7</color>
+    <color name="module_10">#05c7a5</color>
+    <color name="module_11">#de323a</color>
+    <color name="module_12">#f0f0f0</color>
+    <color name="module_13">#DBDBDB</color>
+    <color name="module_14">#ef2020</color>
+
+    <color name="detailJe">#666666</color>
+    <color name="detailPercent">#333333</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="c1">#00A1E5</color>
+    <color name="c2">#2A639A</color>
+    <color name="popupwindow_background">#303030</color>
+</resources>
