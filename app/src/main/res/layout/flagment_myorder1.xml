@@ -37,7 +37,7 @@
             android:textColor="@color/detailPercent"/>
     </RelativeLayout>
 
-    <com.tencent.smtt.sdk.WebView android:id="@+id/myorderWebview"
+    <WebView android:id="@+id/myorderWebview"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:focusable="false"

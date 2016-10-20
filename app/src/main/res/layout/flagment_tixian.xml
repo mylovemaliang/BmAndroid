@@ -55,7 +55,7 @@
             android:textColor="@color/detailPercent"/>
     </RelativeLayout>
 
-    <com.tencent.smtt.sdk.WebView android:id="@+id/tixianWebview"
+    <WebView android:id="@+id/tixianWebview"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:focusable="false"
