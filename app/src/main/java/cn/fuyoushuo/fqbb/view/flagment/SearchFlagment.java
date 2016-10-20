@@ -81,10 +81,10 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     @Bind(R.id.search_flagment_searchtype_btn)
     TextView SearchTypeButton;
 
-    @Bind(R.id.search_flagment_left_btn)
+    //@Bind(R.id.search_flagment_left_btn)
     TextView searchleftBtn;
 
-    @Bind(R.id.search_flagment_right_btn)
+    //@Bind(R.id.search_flagment_right_btn)
     TextView searchrightBtn;
 
     @Bind(R.id.search_flagment_cancel_area)
@@ -93,9 +93,8 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     @Bind(R.id.line1)
     View line1;
 
-    @Bind(R.id.line2)
+    //@Bind(R.id.line2)
     View line2;
-
 
     //用于呈现搜索浮层
     PopupWindow popupWindow;
@@ -124,10 +123,10 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     RecyclerView searchLeftRview;
 
     //搜索结果呈现部分
-    @Bind(R.id.search_result_rview)
+    //@Bind(R.id.search_result_rview)
     RecyclerView searchResultRview;
 
-    @Bind(R.id.search_result_refreshLayout)
+    //@Bind(R.id.search_result_refreshLayout)
     RefreshLayout refreshLayout;
 
     @Bind(R.id.search_totop_area)
