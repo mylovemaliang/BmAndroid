@@ -5,8 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,13 +18,15 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
-import cn.fuyoushuo.fqbb.presenter.impl.SearchPresenter;
+import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
 import cn.fuyoushuo.fqbb.view.Layout.SearchTypeMenu;
 import rx.functions.Action1;
 
@@ -32,8 +36,6 @@ import rx.functions.Action1;
 public class SearchFlagment extends BaseFragment{
 
     public static String TAG_NAME = "search_flagment";
-
-    private SearchPresenter searchPresenter;
 
     @Bind(R.id.search_flagment_toolbar)
     RelativeLayout toolbar;
@@ -84,7 +86,6 @@ public class SearchFlagment extends BaseFragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        searchPresenter.onDestroy();
         destoryPopupWindow();
     }
 
@@ -127,7 +128,16 @@ public class SearchFlagment extends BaseFragment{
 
     @Override
     public void initView(){
-
+//        FragmentManager childFragmentManager = getChildFragmentManager();
+//        MyPageAdapter myPageAdapter = new MyPageAdapter(childFragmentManager);
+//        myPageAdapter.addFragment(TbSearchResFlagment.newInstance(SearchCondition.search_cate_superfan,q),"超返");
+//        myPageAdapter.addFragment(TbSearchResFlagment.newInstance(SearchCondition.search_cate_taobao,q),"淘宝");
+//        myPageAdapter.addFragment(new JdSearchResFlagment(),"京东");
+//        viewPager.setAdapter(myPageAdapter);
+//        tabLayout.setupWithViewPager(viewPager);
+          tabLayout.addTab(tabLayout.newTab().setText("1111"));
+          tabLayout.addTab(tabLayout.newTab().setText("2222"));
+          tabLayout.addTab(tabLayout.newTab().setText("3333"));
     }
 
     /**
@@ -179,6 +189,33 @@ public class SearchFlagment extends BaseFragment{
         }
     }
 
+
+   //--------------------------------------------------------------------------------------------------
+
+    static class MyPageAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+        public MyPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
+    }
+
     //------------------------------与SearcjActivity 通信-----------------------------------------------
 
     public class toSearchPromptFragmentEvent extends RxBus.BusEvent{
@@ -199,23 +236,6 @@ public class SearchFlagment extends BaseFragment{
     }
 
     public class toMainFlagmentEvent extends RxBus.BusEvent{}
-
-    public class toGoodInfoEvent extends RxBus.BusEvent{
-
-        private String goodUrl;
-
-        public toGoodInfoEvent(String goodUrl) {
-            this.goodUrl = goodUrl;
-        }
-
-        public String getGoodUrl() {
-            return goodUrl;
-        }
-
-        public void setGoodUrl(String goodUrl) {
-            this.goodUrl = goodUrl;
-        }
-    }
 
     //-----------------------------------统计------------------------------------------------
 

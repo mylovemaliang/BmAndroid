@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
@@ -13,6 +12,7 @@ import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
 import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
 import cn.fuyoushuo.fqbb.view.flagment.SearchFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
+import cn.fuyoushuo.fqbb.view.flagment.TbSearchResFlagment;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -47,11 +47,10 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("testmy","c0_start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_layout);
         mSubscriptions = new CompositeSubscription();
-        searchFlagment = SearchFlagment.newInstance(SearchCondition.search_cate_superfan);
+        searchFlagment = SearchFlagment.newInstance("hello");
         searchPromptFragment = SearchPromptFragment.newInstance();
         fragmentManager = getSupportFragmentManager();
         initFragments();
@@ -103,7 +102,7 @@ public class SearchActivity extends BaseActivity {
             return false;
         }
         if(isFlagmentExist){
-            searchFlagment.refreshSearchView(po);
+            //searchFlagment.refreshSearchView(po);
         }else{
             searchFlagment.refreshSearchData(po);
         }
@@ -162,7 +161,7 @@ public class SearchActivity extends BaseActivity {
                 if (busEvent instanceof SearchPromptFragment.ToSearchFlagmentEvent) {
                     SearchPromptFragment.ToSearchFlagmentEvent event = (SearchPromptFragment.ToSearchFlagmentEvent) busEvent;
                     switchContent(mContent, searchFlagment);
-                    searchFlagment.refreshSearchView(event.getSeartchPo());
+                    //searchFlagment.refreshSearchView(event.getSeartchPo());
                 }
                 if (busEvent instanceof SearchPromptFragment.BacktoMainFlagEvent) {
                     Intent intent = new Intent(SearchActivity.this, MainActivity.class);
@@ -176,8 +175,8 @@ public class SearchActivity extends BaseActivity {
                 if (busEvent instanceof SearchFlagment.toMainFlagmentEvent) {
                     goBack();
                 }
-                if(busEvent instanceof SearchFlagment.toGoodInfoEvent){
-                    SearchFlagment.toGoodInfoEvent event = (SearchFlagment.toGoodInfoEvent) busEvent;
+                if(busEvent instanceof TbSearchResFlagment.toGoodInfoEvent){
+                    TbSearchResFlagment.toGoodInfoEvent event = (TbSearchResFlagment.toGoodInfoEvent) busEvent;
                     /*Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                     intent.putExtra("goodUrl",event.getGoodUrl());*/
                     Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
