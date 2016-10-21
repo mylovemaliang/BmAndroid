@@ -2,65 +2,28 @@ package cn.fuyoushuo.fqbb.view.flagment;
 
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
 
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
-import cn.fuyoushuo.fqbb.commonlib.utils.CommonUtils;
-import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
-import cn.fuyoushuo.fqbb.domain.entity.TaoBaoItemVo;
-import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
 import cn.fuyoushuo.fqbb.presenter.impl.SearchPresenter;
-import cn.fuyoushuo.fqbb.view.Layout.DividerItemDecoration;
-import cn.fuyoushuo.fqbb.view.Layout.ItemDecoration;
-import cn.fuyoushuo.fqbb.view.Layout.MyGridLayoutManager;
-import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
 import cn.fuyoushuo.fqbb.view.Layout.SearchTypeMenu;
-import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
-import cn.fuyoushuo.fqbb.view.adapter.SearchLeftRviewAdapter;
-import cn.fuyoushuo.fqbb.view.adapter.SearchMenuAdapter;
-import cn.fuyoushuo.fqbb.view.adapter.TbGoodDataAdapter;
-import cn.fuyoushuo.fqbb.view.view.SearchView;
 import rx.functions.Action1;
 
 /**
@@ -87,14 +50,16 @@ public class SearchFlagment extends BaseFragment{
     @Bind(R.id.line1)
     View line1;
 
+    @Bind(R.id.search_type_tabTitle)
+    TabLayout tabLayout;
+
+    @Bind(R.id.search_result_page)
+    ViewPager viewPager;
+
     //搜索菜单处理
     SearchTypeMenu searchTypeMenu;
 
     private static final String ARG_PARAM1 = "q";
-
-    private String searchCateString;
-
-    private LayoutInflater layoutInflater;
 
     //搜索词
     private String q = "";
@@ -183,7 +148,6 @@ public class SearchFlagment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        layoutInflater = LayoutInflater.from(getActivity());
     }
 
     /**
