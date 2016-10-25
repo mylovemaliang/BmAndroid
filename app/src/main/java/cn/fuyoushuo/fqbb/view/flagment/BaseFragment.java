@@ -24,6 +24,8 @@ public abstract class BaseFragment extends RxFragment {
 
     private boolean mAutoBindView;
 
+    protected boolean isInit = false;
+
     public BaseFragment() {
         // Required empty public constructor
     }
@@ -58,6 +60,7 @@ public abstract class BaseFragment extends RxFragment {
             ButterKnife.bind(this,inflateView);
         }
         initView();
+        isInit = true;
         return inflateView;
     }
 

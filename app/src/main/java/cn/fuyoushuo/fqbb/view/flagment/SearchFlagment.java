@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,7 +20,9 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -43,9 +46,6 @@ public class SearchFlagment extends BaseFragment{
     @Bind(R.id.serach_flagment_searchText)
     TextView searchText;
 
-    @Bind(R.id.search_flagment_searchtype_btn)
-    TextView SearchTypeButton;
-
     @Bind(R.id.search_flagment_cancel_area)
     View cancelView;
 
@@ -65,6 +65,16 @@ public class SearchFlagment extends BaseFragment{
 
     //搜索词
     private String q = "";
+
+    private Map<String,Fragment> fragmentMap = new LinkedHashMap<String, Fragment>();
+
+    public Map<String, Fragment> getFragmentMap() {
+        return fragmentMap;
+    }
+
+    public void setFragmentMap(Map<String, Fragment> fragmentMap) {
+        this.fragmentMap = fragmentMap;
+    }
 
     @Override
     protected int getRootLayoutId() {
@@ -87,6 +97,7 @@ public class SearchFlagment extends BaseFragment{
     public void onDestroy() {
         super.onDestroy();
         destoryPopupWindow();
+        fragmentMap.clear();
     }
 
 
@@ -100,17 +111,6 @@ public class SearchFlagment extends BaseFragment{
             @Override
             public void call(Void aVoid) {
                     RxBus.getInstance().send(new toMainFlagmentEvent());
-            }
-        });
-
-        RxView.clicks(SearchTypeButton).throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                if(searchTypeMenu != null){
-                   searchTypeMenu.showWindow();
-                }
             }
         });
 
@@ -128,16 +128,19 @@ public class SearchFlagment extends BaseFragment{
 
     @Override
     public void initView(){
-//        FragmentManager childFragmentManager = getChildFragmentManager();
-//        MyPageAdapter myPageAdapter = new MyPageAdapter(childFragmentManager);
-//        myPageAdapter.addFragment(TbSearchResFlagment.newInstance(SearchCondition.search_cate_superfan,q),"超返");
-//        myPageAdapter.addFragment(TbSearchResFlagment.newInstance(SearchCondition.search_cate_taobao,q),"淘宝");
-//        myPageAdapter.addFragment(new JdSearchResFlagment(),"京东");
-//        viewPager.setAdapter(myPageAdapter);
-//        tabLayout.setupWithViewPager(viewPager);
-          tabLayout.addTab(tabLayout.newTab().setText("1111"));
-          tabLayout.addTab(tabLayout.newTab().setText("2222"));
-          tabLayout.addTab(tabLayout.newTab().setText("3333"));
+        FragmentManager childFragmentManager = getChildFragmentManager();
+        MyPageAdapter myPageAdapter = new MyPageAdapter(childFragmentManager);
+        for(Map.Entry<String,Fragment> entry : this.getFragmentMap().entrySet()){
+            myPageAdapter.addFragment(entry.getValue(),entry.getKey());
+        }
+        viewPager.setAdapter(myPageAdapter);
+        viewPager.setOffscreenPageLimit(2);
+        tabLayout.setupWithViewPager(viewPager);
+        if(!isInit){
+          if(!TextUtils.isEmpty(q)){
+             searchText.setText(q);
+          }
+        }
     }
 
     /**
@@ -147,11 +150,11 @@ public class SearchFlagment extends BaseFragment{
      * @return A new instance of fragment MainFlagment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFlagment newInstance(String q) {
+    public static SearchFlagment newInstance() {
         SearchFlagment fragment = new SearchFlagment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1,q);
-        fragment.setArguments(args);
+        fragment.getFragmentMap().put("超级返利",TbSearchResFlagment.newInstance(SearchCondition.search_cate_superfan));
+        fragment.getFragmentMap().put("淘宝返利",TbSearchResFlagment.newInstance(SearchCondition.search_cate_taobao));
+        fragment.getFragmentMap().put("京东",new JdSearchResFlagment());
         return fragment;
     }
 
@@ -172,12 +175,28 @@ public class SearchFlagment extends BaseFragment{
     }
 
     //--------------------------------组装搜索条件------------------------------------------------------
+    //刷新flagment view
+    public void refreshSearchView(SeartchPo po){
+        String q = po.getQ();
+        this.q = q;
+        if(isInit){
+            searchText.setText(q);
+        }
+        dispatchWhenQChanged(this.q);
+    }
 
-    //刷新flagment 数据
-   public void refreshSearchData(SeartchPo po){
-       String q = po.getQ();
-       this.q = q;
-   }
+    /**
+     * 当搜索改变的时候，触发各fragment 执行
+     * @param q
+     */
+    private void dispatchWhenQChanged(String q){
+        Map<String, Fragment> fragmentMap = getFragmentMap();
+        if(fragmentMap != null && fragmentMap.size() > 0){
+            for(Map.Entry<String,Fragment> entry : fragmentMap.entrySet()){
+                ((doUpdateWithQ)entry.getValue()).updateQ(q);
+            }
+        }
+    }
 
     /**
      * 释放相关 popupwindow 的资源
@@ -195,6 +214,7 @@ public class SearchFlagment extends BaseFragment{
     static class MyPageAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
+
         public MyPageAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -206,13 +226,23 @@ public class SearchFlagment extends BaseFragment{
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+
         @Override
         public int getCount() {
             return mFragments.size();
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
+        }
+
+        public List<String> getmFragmentTitles() {
+            return mFragmentTitles;
+        }
+
+        public List<Fragment> getmFragments() {
+            return mFragments;
         }
     }
 
@@ -237,6 +267,17 @@ public class SearchFlagment extends BaseFragment{
 
     public class toMainFlagmentEvent extends RxBus.BusEvent{}
 
-    //-----------------------------------统计------------------------------------------------
+    //-----------------------------------外部需要实现的接口----------------------------------------------
 
+    /**
+     *  当搜索词发生改变所触发动作
+     */
+    public interface doUpdateWithQ{
+        /**
+         * 触发动作
+         * @param q
+         */
+        void updateQ(String q);
+
+    }
 }

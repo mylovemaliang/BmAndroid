@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="shouye_textbox_word">输入相关商品</string>
+    <string name="shouye_textbox_word">输入商品名或链接,最高返利超过90%</string>
     <string name="shouye_text_searchorder">订单查询</string>
     <string name="shouye_text_searchjifenbao">集分宝查询</string>
     <string name="shouye_text_tixian">提现</string>

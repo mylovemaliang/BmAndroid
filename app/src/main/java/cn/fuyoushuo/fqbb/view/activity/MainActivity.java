@@ -47,17 +47,14 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.rbHome)
     RadioButton mainButton;
 
-    @Bind(R.id.rbOrder)
+    @Bind(R.id.rb_myorder)
     RadioButton myOrderButton;
 
-    /*@Bind(R.id.rbJifen)
-    RadioButton jifenButton;*/
+    @Bind(R.id.rbjxsc)
+    RadioButton jxscButton;
 
-    @Bind(R.id.rb_tixian)
-    RadioButton tixianButton;
-
-    @Bind(R.id.rb_rightArea)
-    LinearLayout rightAreaButton;
+    @Bind(R.id.rb_user_center)
+    RadioButton ucButton;
 
     @Bind(R.id.drawerLayout)
     SafeDrawerLayout drawerLayout;
@@ -244,41 +241,39 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rbHome:
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        preShowBizPage = currentShowBizPage;
-                        currentShowBizPage = 0;
-                        changeView(MAIN_FRAGMENT_INDEX);
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        preShowBizPage = currentShowBizPage;
+//                        currentShowBizPage = 0;
+                          changeView(MAIN_FRAGMENT_INDEX);
                         break;
 
-                    case R.id.rbOrder:
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        preShowBizPage = currentShowBizPage;
-                        currentShowBizPage = 1;
-
-                        changeView(MYORDER_FRAGMENT_INDEX);
-                        myOrderFlagment.loadWebviewPage();
-
+                    case R.id.rb_myorder:
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        preShowBizPage = currentShowBizPage;
+//                        currentShowBizPage = 1;
+//
+//                        changeView(MYORDER_FRAGMENT_INDEX);
+//                        myOrderFlagment.loadWebviewPage();
+//
                         break;
 
-                /*case R.id.rbJifen:
-                    drawerLayout.closeDrawer(drawerMenuContent);
-                    preShowBizPage = currentShowBizPage;
-                    currentShowBizPage = 2;
-                    //showMyJfbPage();
+                 case R.id.rb_user_center:
+//                    drawerLayout.closeDrawer(drawerMenuContent);
+//                    preShowBizPage = currentShowBizPage;
+//                    currentShowBizPage = 2;
+//                    //showMyJfbPage();
+//                    changeView(MYJIFEN_FRAGMENT_INDEX);
+//                    myJifenFlagment.loadWebviewPage();
+                    break;
 
-                    changeView(MYJIFEN_FRAGMENT_INDEX);
-                    myJifenFlagment.loadWebviewPage();
-
-                    break;*/
-
-                    case R.id.rb_tixian:
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        preShowBizPage = currentShowBizPage;
-                        currentShowBizPage = 3;
-                        //showTixian();
-
-                        changeView(TIXIAN_FRAGMENT_INDEX);
-                        tixianFlagment.loadWebviewPage();
+                    case R.id.rbjxsc:
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        preShowBizPage = currentShowBizPage;
+//                        currentShowBizPage = 3;
+//                        //showTixian();
+//
+//                        changeView(TIXIAN_FRAGMENT_INDEX);
+//                        tixianFlagment.loadWebviewPage();
                         break;
 
                     default:
@@ -287,14 +282,14 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        RxView.clicks(rightAreaButton).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                drawerLayout.openDrawer(drawerMenuContent);
-            }
-        });
+//        RxView.clicks(rightAreaButton).throttleFirst(500, TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//            @Override
+//            public void call(Void aVoid) {
+//                drawerLayout.openDrawer(drawerMenuContent);
+//            }
+//        });
         RxView.clicks(rightMenuMyFirstpage).throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .compose(this.<Void>bindToLifecycle())
                 .subscribe(new Action1<Void>() {
@@ -392,7 +387,7 @@ public class MainActivity extends BaseActivity {
     }*/
 
     public void clickTixian(){
-        tixianButton.setChecked(true);
+        //tixianButton.setChecked(true);
     }
 
     public void showMyTaobaoPage(){

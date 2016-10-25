@@ -27,60 +27,41 @@
             <RadioButton
                 android:id="@+id/rbHome"
                 style="@style/rg_btn_style"
-                android:drawableTop="@drawable/bt_menu_cjf_select"
+                android:drawableTop="@drawable/bt_menu_shouye_select"
                 android:textColor="@drawable/bt_menu_select_color"
                 android:checked="true"
-                android:text="超级返"
+                android:text="首页"
                 android:layout_alignParentLeft="true"
                 android:layout_marginBottom="3dp" />
 
             <RadioButton
-                android:id="@+id/rbOrder"
+                android:id="@+id/rbjxsc"
                 style="@style/rg_btn_style"
-                android:drawableTop="@drawable/bt_menu_order_select"
+                android:drawableTop="@drawable/bt_menu_jxsc_select"
                 android:textColor="@drawable/bt_menu_select_color"
-                android:text="查询订单"
+                android:text="精选商城"
                 android:layout_toRightOf="@+id/rbHome"
                 android:layout_marginBottom="3dp"/>
 
-            <!--<RadioButton
-                android:id="@+id/rbJifen"
+            <RadioButton
+                android:id="@+id/rb_myorder"
                 style="@style/rg_btn_style"
-                android:drawableTop="@drawable/bt_menu_jfb_select"
+                android:drawableTop="@drawable/bt_menu_order_select"
                 android:textColor="@drawable/bt_menu_select_color"
-                android:text="集分宝"
-                android:layout_toRightOf="@+id/rbOrder"
-                android:layout_marginBottom="3dp"/>-->
+                android:text="我的订单"
+                android:layout_toRightOf="@+id/rbJifen"
+                android:layout_marginBottom="3dp"/>
 
             <RadioButton
-                android:id="@+id/rb_tixian"
+                android:id="@+id/rb_user_center"
                 style="@style/rg_btn_style"
-                android:drawableTop="@drawable/bt_menu_tixian_select"
+                android:drawableTop="@drawable/bt_menu_uc_select"
                 android:textColor="@drawable/bt_menu_select_color"
-                android:text="提现"
+                android:text="个人中心"
                 android:layout_toRightOf="@+id/rbJifen"
                 android:layout_marginBottom="3dp"/>
 
         </RadioGroup>
-
-        <LinearLayout android:id="@+id/rb_rightArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            >
-            <ImageButton
-                android:clickable="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@mipmap/tab_cebian"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                />
-        </LinearLayout>
-
     </LinearLayout>
 
     <!--<View

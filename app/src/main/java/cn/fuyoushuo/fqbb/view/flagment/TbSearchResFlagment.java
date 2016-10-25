@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +60,7 @@ import rx.functions.Action1;
  * Created by MALIANG on 2016/10/20.
  * 用于展现淘宝的搜索结果页
  */
-public class TbSearchResFlagment extends BaseFragment implements SearchView {
+public class TbSearchResFlagment extends BaseFragment implements SearchView,SearchFlagment.doUpdateWithQ {
 
     public static final String TAG_NAME = "tbSearchResFlagment";
 
@@ -142,11 +141,10 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
      * @return A new instance of fragment MainFlagment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFlagment newInstance(String searchCateString,String q) {
-        SearchFlagment fragment = new SearchFlagment();
+    public static TbSearchResFlagment newInstance(String searchCateString) {
+        TbSearchResFlagment fragment = new TbSearchResFlagment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1,searchCateString);
-        args.putString(ARG_PARAM2,q);
         fragment.setArguments(args);
         return fragment;
     }
@@ -164,10 +162,9 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
         initPopupWindow();
 
         changeSearchType(searchCondition.getCurrentSearchCate());
-        if(!TextUtils.isEmpty(q)) {
-            searchPresenter.getSearchResult(searchCondition, false);
-        }
-
+//        if(!TextUtils.isEmpty(q)) {
+//            searchPresenter.getSearchResult(searchCondition, false);
+//        }
         //-----------------------------------------初始化搜索结果列表---------------------------------------------------------------
         searchResultRview.setHasFixedSize(true);
         final MyGridLayoutManager gridLayoutManager = new MyGridLayoutManager(mactivity,2);
@@ -255,12 +252,16 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
                 return;
             }
         });
+        if(!isInit){
+            changeSearchType(searchCateString);
+            searchPresenter.getSearchResult(searchCondition,false);
+        }
     }
 
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+         super.onViewCreated(view, savedInstanceState);
 
         RxView.clicks(searchleftBtn).throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
@@ -274,7 +275,6 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
                         if(popupWindow.isShowing()){
                             popupWindow.dismiss();
                         }
-                        popupWindow.setFocusable(true);
                         updatePopupWindow(leftSearchView);
                         ColorDrawable backgroundColor = new ColorDrawable(getResources().getColor(R.color.transparent));
                         popupWindow.setBackgroundDrawable(backgroundColor);
@@ -282,6 +282,7 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
                         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         //backgroundAlpha(0.5f);
                         if(line2 != null) {
+                            popupWindow.setFocusable(true);
                             popupWindow.showAsDropDown(line2);
                         }
                     }
@@ -298,7 +299,6 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
                         if(popupWindow.isShowing()){
                             popupWindow.dismiss();
                         }
-                        popupWindow.setFocusable(true);
                         updatePopupWindow(rightSearchView);
                         ColorDrawable backgroundColor = new ColorDrawable(getResources().getColor(R.color.transparent));
                         popupWindow.setBackgroundDrawable(backgroundColor);
@@ -306,6 +306,7 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
                         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         //backgroundAlpha(0.5f);
                         if(line2 != null){
+                            popupWindow.setFocusable(true);
                             popupWindow.showAsDropDown(line2);
                         }
                     }
@@ -325,9 +326,7 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
     protected void initData() {
         if (getArguments() != null) {
             searchCateString = getArguments().getString(ARG_PARAM1);
-            q = getArguments().getString(ARG_PARAM2);
             searchCondition = SearchCondition.newInstance(searchCateString);
-            searchCondition.updateSearchKeyValue("q",q);
         }
         searchPresenter = new SearchPresenter(this);
     }
@@ -393,6 +392,7 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
     private void dismissPopupWindow(){
         if(popupWindow != null && mactivity != null){
             popupWindow.dismiss();
+            popupWindow.setFocusable(false);
         }
     }
 
@@ -908,7 +908,7 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
         return mactivity;
     }
 
-   //-----------------------------与 SearchActivity 通信-----------------------------------------------
+    //-----------------------------与 SearchActivity 通信-----------------------------------------------
    public class toGoodInfoEvent extends RxBus.BusEvent{
 
        private String goodUrl;
@@ -925,4 +925,17 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView {
            this.goodUrl = goodUrl;
        }
    }
+
+   //------------------------------实现上下级通信------------------------------------------------------
+    @Override
+    public void updateQ(String q) {
+        if(!isInit){
+            this.q = q;
+        }else{
+            this.q = q;
+            changeSearchType(searchCateString);
+            searchPresenter.getSearchResult(searchCondition,false);
+        }
+    }
+
 }

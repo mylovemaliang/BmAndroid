@@ -50,7 +50,7 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_layout);
         mSubscriptions = new CompositeSubscription();
-        searchFlagment = SearchFlagment.newInstance("hello");
+        searchFlagment = SearchFlagment.newInstance();
         searchPromptFragment = SearchPromptFragment.newInstance();
         fragmentManager = getSupportFragmentManager();
         initFragments();
@@ -101,11 +101,7 @@ public class SearchActivity extends BaseActivity {
         if(!intentFromMainMore){
             return false;
         }
-        if(isFlagmentExist){
-            //searchFlagment.refreshSearchView(po);
-        }else{
-            searchFlagment.refreshSearchData(po);
-        }
+        searchFlagment.refreshSearchView(po);
         return true;
     }
 
@@ -122,7 +118,7 @@ public class SearchActivity extends BaseActivity {
             SeartchPo po = new SeartchPo();
             po.setSearchType(SearchCondition.search_cate_superfan);
             po.setQ(lastestHistory);
-            searchFlagment.refreshSearchData(po);
+            searchFlagment.refreshSearchView(po);
             return FLAG_SEARCH;
         }
         return FLAG_SEARCHPROMT;
@@ -161,7 +157,7 @@ public class SearchActivity extends BaseActivity {
                 if (busEvent instanceof SearchPromptFragment.ToSearchFlagmentEvent) {
                     SearchPromptFragment.ToSearchFlagmentEvent event = (SearchPromptFragment.ToSearchFlagmentEvent) busEvent;
                     switchContent(mContent, searchFlagment);
-                    //searchFlagment.refreshSearchView(event.getSeartchPo());
+                    searchFlagment.refreshSearchView(event.getSeartchPo());
                 }
                 if (busEvent instanceof SearchPromptFragment.BacktoMainFlagEvent) {
                     Intent intent = new Intent(SearchActivity.this, MainActivity.class);

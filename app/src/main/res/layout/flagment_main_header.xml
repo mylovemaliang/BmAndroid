@@ -2,177 +2,241 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <!--<RelativeLayout
+
+    //四个图标区域，京东，淘宝，天猫，我的淘宝
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/module_11"
-        android:weightSum="3.0"
-        android:id="@+id/main_linearLayout2">
-
-        <LinearLayout
-            android:id="@+id/topMyOrder"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="47dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1.0">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@mipmap/dd_s"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:layout_marginTop="5dp"
-                android:text="@string/shouye_text_searchorder"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/topMyJfb"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1.0">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@mipmap/jf_s"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:layout_marginTop="2dp"
-                android:text="@string/shouye_text_searchjifenbao"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/topTixian"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="45dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1.0">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@mipmap/tx_s"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/white"
-                android:text="@string/shouye_text_tixian"/>
-        </LinearLayout>
-    </RelativeLayout>-->
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grayBackground" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_below="@+id/main_linearLayout2"
-        android:id="@+id/main_changedView">
-
-        <cn.fuyoushuo.fqbb.view.Layout.ImageCycleView
-            android:id="@+id/icv_topView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </cn.fuyoushuo.fqbb.view.Layout.ImageCycleView>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/grayBackground" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@+id/main_changedView"
-        android:weightSum="1"
-        android:id="@+id/main_linearLayout3">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/shouye_chaojifan"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/main_chaojifan"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+        android:layout_height="120dp"
+        android:weightSum="4"
+        android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/main_more_area">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#999999"
-            android:text="@string/shouye_more"
-            android:layout_marginRight="10dp"
-            android:id="@+id/main_more"
-            android:layout_weight="0.25"
-            android:textSize="13sp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/main_jd_icon">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_toRightOf="@id/main_more"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/shouye_next" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:id="@+id/main_jd_icon_image"
+            android:src="@mipmap/jd_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="京东"
+            android:textColor="#666666"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/main_jd_icon_image"
+            android:layout_centerHorizontal="true" />
+
+
         </RelativeLayout>
-    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/main_tb_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/main_tb_icon_image"
+                android:src="@mipmap/tb_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="淘宝"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/main_tb_icon_image"
+                android:layout_centerHorizontal="true" />
+
+         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/main_tm_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/main_tm_icon_image"
+                android:src="@mipmap/tm_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天猫"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/main_tm_icon_image"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/main_mytb_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/main_mytb_icon_image"
+                android:src="@mipmap/my_taobao"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的淘宝"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/main_mytb_icon_image"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grayBackground" />
 
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:id="@+id/main_topRcycleView"
-            android:layout_below="@+id/main_linearLayout3">
-    </android.support.v7.widget.RecyclerView>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="90dp"-->
+        <!--android:layout_below="@+id/main_linearLayout2"-->
+        <!--android:id="@+id/main_changedView">-->
+
+        <!--<cn.fuyoushuo.fqbb.view.Layout.ImageCycleView-->
+            <!--android:id="@+id/icv_topView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+        <!--</cn.fuyoushuo.fqbb.view.Layout.ImageCycleView>-->
+
+    <!--</RelativeLayout>-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/grayBackground" />
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            app:layout_widthPercent="40%w"
+            android:layout_height="match_parent"
+            android:id="@+id/card_chaojifan"
+            app:contentPadding="3dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="2dp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:src="@mipmap/cjf_img"
+             android:scaleType="fitXY"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="60%w"
+            app:layout_heightPercent="50%"
+            android:layout_toRightOf="@+id/card_chaojifan"
+            android:id="@+id/card_jkj"
+            app:contentPadding="3dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="2dp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/jkj_baoyou_img"
+                android:scaleType="fitXY"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="60%w"
+            app:layout_heightPercent="50%"
+            android:layout_toRightOf="@+id/card_chaojifan"
+            android:id="@+id/card_jdgaofan"
+            android:layout_below="@+id/card_jkj"
+            app:contentPadding="3dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="2dp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/jd_gaofan_img"
+                android:scaleType="fitXY"/>
+
+        </android.support.v7.widget.CardView>
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/grayBackground" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="#666666"
+            android:text="精选高返商品"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:id="@+id/main_topRcycleView"-->
+            <!--android:layout_below="@+id/main_linearLayout3">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
 
 </LinearLayout>
