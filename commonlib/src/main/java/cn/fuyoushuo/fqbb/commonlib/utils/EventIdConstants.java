@@ -97,4 +97,26 @@ public class EventIdConstants {
      *  app crash 重启次数
      */
     public static final String APP_CRASH_RESTART = "app_crash_restart";
+
+
+    /**
+     * app 启用
+     */
+    public static final String APP_START = "app_start";
+
+    /**
+     * 首页类目点击
+     */
+    public static final String HOME_CATE_CLICK = "home_cate_click";
+
+    /**
+     * 首页商品加载
+     */
+    public static final String HOME_GOOD_LOAD = "home_good_load";
+
+
+    /**
+     * 首页商品点击
+     */
+    public static final String HOME_GOOD_CLICK = "home_good_click";
 }

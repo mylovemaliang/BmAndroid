@@ -234,7 +234,7 @@ public class MainFlagment extends BaseFragment implements MainView {
         fcatesDataAdapter.setOnCateClick(new CatesDataAdapter.OnCateClick() {
             @Override
             public void onClick(View view, FCateItem cateItem, int lastPosition) {
-
+                MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.HOME_CATE_CLICK);
                 cateItem.setIsRed(true);
                 FCateItem item = fcatesDataAdapter.getItem(lastPosition);
                 item.setIsRed(false);
@@ -282,6 +282,7 @@ public class MainFlagment extends BaseFragment implements MainView {
 
             @Override
             public void onGoodItemClick(View clickView, FGoodItem goodItem) {
+                MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.HOME_GOOD_CLICK);
                 String url = goodItem.getItemUrl();
                 MainActivity ma = (MainActivity) getActivity();
                 //ma.showWebviewFragment(url, false,false);

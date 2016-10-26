@@ -8,7 +8,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
+import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 
 public class AppstartActivity extends BaseActivity {
 
@@ -34,6 +38,7 @@ public class AppstartActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                MobclickAgent.onEvent(MyApplication.getContext(), EventIdConstants.APP_START);
                 startActivity(new Intent(AppstartActivity.this, MainActivity.class));
                 AppstartActivity.this.finish();
             }
