@@ -15,7 +15,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +99,7 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     @Bind(R.id.line2)
     View line2;
 
-
+    View leftBelowBackGroup;
     //用于呈现搜索浮层
     PopupWindow popupWindow;
 
@@ -254,7 +257,11 @@ public class SearchFlagment extends BaseFragment implements SearchView{
                 popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 //backgroundAlpha(0.5f);
                 if(line2 != null) {
-                    popupWindow.showAsDropDown(line2);
+                    int[] location = new int[2];
+                    line2.getLocationInWindow(location);
+                    int height = location[1];
+                    popupWindow.showAtLocation(line2,Gravity.TOP,0,height+line2.getHeight());
+                    backgroundAlpha(0.5f);
                 }
             }
         });
@@ -278,7 +285,11 @@ public class SearchFlagment extends BaseFragment implements SearchView{
                 popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 //backgroundAlpha(0.5f);
                 if(line2 != null){
-                    popupWindow.showAsDropDown(line2);
+                    int[] location = new int[2];
+                    line2.getLocationInWindow(location);
+                    int height = location[1];
+                    popupWindow.showAtLocation(line2,Gravity.TOP,0,height+line2.getHeight());
+                    backgroundAlpha(0.5f);
                 }
             }
         });
@@ -502,7 +513,8 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     //初始化搜索浮框
     private void initPopupWindow(){
         leftSearchView = layoutInflater.inflate(R.layout.flagment_search_left_area, null);
-        View leftBelowBackGroup = leftSearchView.findViewById(R.id.search_left_below_backGroup);
+        leftBelowBackGroup = leftSearchView.findViewById(R.id.search_left_below_backGroup);
+
         RxView.clicks(leftBelowBackGroup).throttleFirst(1000,TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
@@ -540,14 +552,14 @@ public class SearchFlagment extends BaseFragment implements SearchView{
         // 参数1：contentView 指定PopupWindow的内容
         // 参数2：width 指定PopupWindow的width
         // 参数3：height 指定PopupWindow的height
-        popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setOutsideTouchable(true);
-//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//            @Override
-//            public void onDismiss() {
-//                backgroundAlpha(1f);
-//            }
-//        });
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
 
         // 获取屏幕和PopupWindow的width和height
         mScreenWidth = getResources().getDisplayMetrics().widthPixels;
@@ -930,6 +942,7 @@ public class SearchFlagment extends BaseFragment implements SearchView{
     private void dismissPopupWindow(){
         if(popupWindow != null && mactivity != null){
             popupWindow.dismiss();
+            popupWindow.setFocusable(false);
         }
     }
 

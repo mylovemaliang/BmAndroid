@@ -30,7 +30,7 @@ public class TixianFlagment extends Fragment {
 
     public WebView mytixianWebview;
 
-    private String tixianPageUrl = "http://media.alimama.com/account/account.htm";
+    private String tixianPageUrl = "http://media.alimama.com/account/overview.htm";
 
     TextView tixianTitleText;
 
@@ -112,10 +112,7 @@ public class TixianFlagment extends Fragment {
                 super.onPageFinished(view, url);
 
                 Log.i("TixianWebview", url);
-                if(url.startsWith("http://www.alimama.com/index.htm") || url.startsWith("http://www.alimama.com/index.htm")
-                        || url.startsWith("http://media.alimama.com/account/overview.htm")
-                        || url.startsWith("https://www.alimama.com/index.htm") || url.startsWith("https://www.alimama.com/index.htm")
-                        || url.startsWith("https://media.alimama.com/account/overview.htm")){//已登录
+                if(url.startsWith("http://www.alimama.com/index.htm")){//已登录
                     TaobaoInterPresenter.saveLoginCookie(url);
                     tixianTitleText.setText("淘宝联盟");
                     mytixianWebview.loadUrl(tixianPageUrl);
