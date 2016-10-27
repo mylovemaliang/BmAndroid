@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="5%h"
+        android:background="@drawable/textborder"
+        android:id="@+id/find_pass_2_newpass_area">
+
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:hint="请输入新密码"
+        android:textColorHint="@color/gray"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/account_value"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/new_pass"/>
+
+
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        app:layout_marginTopPercent="5%h"
+        android:layout_below="@+id/find_pass_2_newpass_area"
+        android:background="@color/module_11"
+        android:text="提交"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/commit_button"/>
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

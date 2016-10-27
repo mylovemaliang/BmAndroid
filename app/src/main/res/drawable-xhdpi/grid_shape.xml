@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <stroke
+        android:width="2dp"
+        android:color="@color/module_6" />
+
+
+    <!-- android:angle，渐变方向，单位是角度，0表示从左到右渐变，180表示从右到左渐变，90表示从上到下渐变，270表示从下到上渐变  -->
+    <gradient
+        android:angle="90"
+        android:endColor="#DD2ECCFA"
+        android:startColor="#DD000000" />
+
+</shape>

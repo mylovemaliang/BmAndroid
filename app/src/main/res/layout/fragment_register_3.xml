@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:layout_width="0dp"
+        app:layout_widthPercent="90%w"
+        android:layout_height="50dp"
+        android:text="手机号 : 18711346638"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="5%h"
+        app:layout_marginLeftPercent="15%w"
+        android:id="@+id/register_3_header_area" />
+
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="3%h"
+        android:background="@drawable/textborder"
+        android:layout_below="@+id/register_3_header_area"
+        android:id="@+id/register_3_last_area">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="请输入登录密码"
+            android:textColorHint="@color/gray"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/password_value"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ver_pass"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        app:layout_marginTopPercent="5%h"
+        android:layout_below="@+id/register_3_last_area"
+        android:background="@color/module_11"
+        android:text="开启你的返利之旅"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/commit_button"/>
+
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

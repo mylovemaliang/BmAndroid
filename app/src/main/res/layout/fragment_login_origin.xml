@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="5%h"
+        android:background="@drawable/textborder"
+        android:id="@+id/login_account_area">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/account_icon"
+        android:id="@+id/login_account_icon"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:digits="1234567890"
+        android:hint="输入手机号码"
+        android:textColorHint="@color/gray"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/login_account_icon"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/account_value"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="3%h"
+        android:background="@drawable/textborder"
+        android:id="@+id/login_password_area"
+        android:layout_below="@+id/login_account_area">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/password_icon"
+            android:id="@+id/login_password_icon"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:digits="1234567890"
+            android:hint="输入登录密码"
+            android:textColorHint="@color/gray"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/login_password_icon"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/password_value"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="3%h"
+        android:id="@+id/login_extra_area"
+        android:layout_below="@+id/login_password_area">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="忘记密码"
+            android:textSize="15sp"
+            android:textColor="@color/gray"
+            android:id="@+id/forget_pass_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="20秒快速注册"
+            android:textSize="15sp"
+            android:textColor="@color/gray"
+            android:id="@+id/quick_register_text"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        app:layout_marginTopPercent="5%h"
+        android:layout_below="@+id/login_extra_area"
+        android:background="@color/module_11"
+        android:text="立即登录"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/login_button"/>
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

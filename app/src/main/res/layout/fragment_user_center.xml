@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/module_13">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/user_center_header"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18711346638"
+            android:textSize="20sp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_center_header"
+        android:id="@+id/user_center_userInfo"
+        android:layout_marginTop="10dp"
+        android:rowCount="2"
+        android:columnCount="3"
+        android:background="@color/white">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+             <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="当前积分"
+              android:textSize="15sp"
+              android:id="@+id/userinfo_currentpoints_tip"
+              android:layout_marginTop="10dp"
+              android:layout_centerHorizontal="true"/>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="--"
+              android:textSize="20sp"
+              android:layout_below="@+id/userinfo_currentpoints_tip"
+              android:id="@+id/userinfo_currentpoints_value"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="10dp"/>
+         </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="冻结积分"
+                android:textSize="15sp"
+                android:id="@+id/userinfo_freezepoints_tip"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textSize="20sp"
+                android:layout_below="@+id/userinfo_freezepoints_tip"
+                android:id="@+id/userinfo_freezepoints_value"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可用积分"
+                android:textSize="15sp"
+                android:id="@+id/userinfo_useablepoints_tip"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8888"
+                android:textSize="20sp"
+                android:layout_below="@+id/userinfo_useablepoints_tip"
+                android:id="@+id/userinfo_useablepoints_value"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"/>
+          </RelativeLayout>
+          </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本月20日预估"
+                    android:textSize="15sp"
+                    android:id="@+id/userinfo_month_20day_tip"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8888"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/userinfo_month_20day_tip"
+                    android:id="@+id/userinfo_month_20day_value"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"/>
+            </RelativeLayout>
+         </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下月20日预估"
+                    android:textSize="15sp"
+                    android:id="@+id/userinfo_nextmonth_20day_tip"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8888"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/userinfo_nextmonth_20day_tip"
+                    android:id="@+id/userinfo_nextmonth_20day_value"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="3dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可提现金"
+                    android:textSize="15sp"
+                    android:id="@+id/userinfo_useable_money_tip"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8888"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/userinfo_useable_money_tip"
+                    android:id="@+id/userinfo_useable_money_value"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </GridLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/userinfo_channel_area"
+        android:layout_below="@+id/user_center_userInfo"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        >
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:weightSum="4"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/user_center_help_icon">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/user_center_help_imgage"
+                android:src="@mipmap/help_center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帮助中心"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/user_center_help_imgage"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/user_center_points_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/user_center_points_image"
+                android:src="@mipmap/points_center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分商城"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/user_center_points_image"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/user_center_activity_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/user_center_activity_image"
+                android:src="@mipmap/activity_center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动中心"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/user_center_activity_image"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/user_center_balance_icon"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:id="@+id/user_center_balance_image"
+                android:src="@mipmap/balance"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额提现"
+                android:textColor="#666666"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/user_center_balance_image"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userinfo_channel_area"
+        android:id="@+id/fun_area"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="绑定邮箱"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="修改登录密码"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
+</RelativeLayout>

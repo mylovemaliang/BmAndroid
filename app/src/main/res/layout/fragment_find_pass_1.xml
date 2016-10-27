@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="5%h"
+        android:background="@drawable/textborder"
+        android:id="@+id/find_pass_1_account_area">
+
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:hint="输入手机号码或邮箱"
+        android:gravity="center"
+        android:textColorHint="@color/gray"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/account_value"/>
+
+    </RelativeLayout>
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        android:layout_centerHorizontal="true"
+        app:layout_marginTopPercent="3%h"
+        android:id="@+id/verificate_area"
+        android:layout_below="@+id/find_pass_1_account_area">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_widthPercent="55%w"
+            android:layout_centerVertical="true"
+            android:background="@drawable/textborder"
+            android:digits="1234567890"
+            android:hint="输入验证码"
+            android:gravity="center"
+            android:textColorHint="@color/gray"
+            android:textSize="18sp"
+            android:id="@+id/verificate_value"/>
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="80%h"
+            app:layout_widthPercent="40%w"
+            app:layout_marginLeftPercent="5%w"
+            android:layout_toRightOf="@+id/verificate_value"
+            android:background="@color/module_6"
+            android:layout_centerVertical="true"
+            android:text="发送验证码"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:id="@+id/acquire_verification_button" />
+
+
+
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_widthPercent="90%w"
+        app:layout_marginTopPercent="5%h"
+        android:layout_below="@+id/verificate_area"
+        android:background="@color/module_11"
+        android:text="提交"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/commit_button"/>
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

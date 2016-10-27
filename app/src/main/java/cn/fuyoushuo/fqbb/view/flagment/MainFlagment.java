@@ -91,6 +91,8 @@ public class MainFlagment extends BaseFragment implements MainView {
     @Bind(R.id.main_toolbar_searchLayout)
     View mainSearchInputLayout;
 
+    View chaojifanArea;
+
     //private SharedPreferences lunboImgInfosCache;
 
     //private final String lunboImgInfosFile = "fplunbo";
@@ -160,6 +162,15 @@ public class MainFlagment extends BaseFragment implements MainView {
                         FeedbackAPI.openFeedbackActivity(MyApplication.getContext());
                     }
         });
+
+        RxView.clicks(chaojifanArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
+                    }
+                });
     }
 
     @Override
@@ -174,6 +185,8 @@ public class MainFlagment extends BaseFragment implements MainView {
         //mainTopRView = (RecyclerView) mainFlagmentHeader.findViewById(R.id.main_topRcycleView);
 
         //moreArea = mainFlagmentHeader.findViewById(R.id.main_more_area);
+
+        chaojifanArea = mainFlagmentHeader.findViewById(R.id.card_chaojifan);
 
         refreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
