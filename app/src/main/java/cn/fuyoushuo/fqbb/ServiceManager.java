@@ -11,6 +11,7 @@ import java.util.HashMap;
 import cn.fuyoushuo.fqbb.commonlib.utils.Constants;
 import cn.fuyoushuo.fqbb.domain.httpservice.AlimamaHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbHttpService;
+import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.JifenBaoHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.TaoBaoSearchHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.TaoBaoSuggestHttpService;
@@ -112,6 +113,10 @@ public class ServiceManager {
         else if(t.getName().equals(TaoBaoSuggestHttpService.class.getName()))
         {
             endPoint = Constants.ENDPOINT_TAOBAO_SUGGESTS;
+        }
+        else if(t.getName().equals(FqbbLocalHttpService.class.getName()))
+        {
+            endPoint = Constants.ENDPOINT_FQBB_LOCAL;
         }
         if ("".equals(endPoint)) {
             throw new IllegalArgumentException("Error: Can't get end point url. Please configure at the method " + ServiceManager.class.getSimpleName() + ".getEndPoint(T t)");

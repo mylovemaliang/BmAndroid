@@ -1,10 +1,137 @@
 package cn.fuyoushuo.fqbb.view.activity;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
+
+import butterknife.Bind;
+import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
+import cn.fuyoushuo.fqbb.view.flagment.BaseFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.FindPassOneFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.FindPassTwoFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.LoginOriginFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.RegisterOneFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.RegisterThreeFragment;
+import cn.fuyoushuo.fqbb.view.flagment.login.RegisterTwoFragment;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
+
 /**
  *  用于用户登录注册.
  */
 public class UserLoginActivity extends BaseActivity{
 
 
+    LoginOriginFragment loginOriginFragment;
+
+    FindPassOneFragment findPassOneFragment;
+
+    FindPassTwoFragment findPassTwoFragment;
+
+    RegisterOneFragment registerOneFragment;
+
+    RegisterTwoFragment registerTwoFragment;
+
+    RegisterThreeFragment registerThreeFragment;
+
+    private CompositeSubscription mSubscriptions;
+
+
+    private Fragment mContent;
+
+
+    @Bind(R.id.login_title)
+    TextView headTitle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login_area);
+        mSubscriptions = new CompositeSubscription();
+        initFragments();
+        initBusEventListen();
+    }
+
+
+
+
+    //初始化所有的FRAGMENT
+    private void initFragments(){
+        loginOriginFragment = LoginOriginFragment.newInstance();
+
+        findPassOneFragment = FindPassOneFragment.newInstance();
+
+        findPassTwoFragment = FindPassTwoFragment.newInstance();
+
+        registerOneFragment = RegisterOneFragment.newInstance();
+
+        registerTwoFragment = RegisterTwoFragment.newInstance();
+
+        registerThreeFragment = RegisterThreeFragment.newInstance();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.login_fragment_area,loginOriginFragment,LoginOriginFragment.TAG_NAME);
+        fragmentTransaction.add(R.id.login_fragment_area,findPassOneFragment,FindPassOneFragment.TAG_NAME);
+        fragmentTransaction.add(R.id.login_fragment_area,findPassTwoFragment,FindPassTwoFragment.TAG_NAME);
+        fragmentTransaction.add(R.id.login_fragment_area,registerOneFragment,RegisterOneFragment.TAG_NAME);
+        fragmentTransaction.add(R.id.login_fragment_area,registerTwoFragment,RegisterTwoFragment.TAG_NAME);
+        fragmentTransaction.add(R.id.login_fragment_area,registerThreeFragment,RegisterThreeFragment.TAG_NAME);
+
+        //初始化 fragment 状态
+        fragmentTransaction.show(loginOriginFragment);
+        fragmentTransaction.hide(findPassOneFragment);
+        fragmentTransaction.hide(findPassTwoFragment);
+        fragmentTransaction.hide(registerOneFragment);
+        fragmentTransaction.hide(registerTwoFragment);
+        fragmentTransaction.hide(registerThreeFragment);
+
+        mContent = loginOriginFragment;
+
+        //提交fragment 事务
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    //转换flagment
+    public void switchContent(Fragment from, Fragment to){
+        if (mContent != to) {
+            mContent = to;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.main_area, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
+
+    //初始化事件总线
+    private void initBusEventListen(){
+        mSubscriptions.add(RxBus.getInstance().toObserverable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<RxBus.BusEvent>() {
+            @Override
+            public void call(RxBus.BusEvent busEvent) {
+                if(busEvent instanceof LoginOriginFragment.ToRegisterOneEvent){
+                    // TODO: 2016/10/28
+                    headTitle.setText("注册");
+                    switchContent(mContent,registerOneFragment);
+                }
+                else if(busEvent instanceof RegisterOneFragment.ToRegisterTwoEvent){
+                    RegisterOneFragment.ToRegisterTwoEvent event = (RegisterOneFragment.ToRegisterTwoEvent) busEvent;
+                    String phoneNum = event.getPhoneNum();
+                    registerTwoFragment.refreshPhoneNum(phoneNum);
+                    switchContent(mContent,registerTwoFragment);
+                }
+                else if(busEvent instanceof RegisterTwoFragment.ToRegisterThreeEvent){
+                    RegisterTwoFragment.ToRegisterThreeEvent event = (RegisterTwoFragment.ToRegisterThreeEvent) busEvent;
+                    String phoneNum = event.getPhoneNum();
+                    String verifiCode = event.getVerifiCode();
+                    registerThreeFragment.refreshView(phoneNum,verifiCode);
+                    switchContent(mContent,registerThreeFragment);
+                }
+            }
+        }));
+    }
 
 }

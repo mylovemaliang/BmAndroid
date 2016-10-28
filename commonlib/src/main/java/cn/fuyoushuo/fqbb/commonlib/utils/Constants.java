@@ -30,6 +30,8 @@ public class Constants {
 
     public static final String ENDPOINT_TAOBAO_SUGGESTS="https://suggest.taobao.com";
 
+    public static final String ENDPOINT_FQBB_LOCAL = "http://192.168.31.113";
+
 
 
     public static final boolean DEBUG = false;

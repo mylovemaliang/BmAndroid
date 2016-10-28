@@ -35,6 +35,7 @@ import cn.fuyoushuo.fqbb.view.Layout.MyGridLayoutManager;
 import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
+import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
 import cn.fuyoushuo.fqbb.view.activity.WebviewActivity;
 import cn.fuyoushuo.fqbb.view.adapter.GoodDataAdapter;
 import cn.fuyoushuo.fqbb.view.view.MainView;
@@ -168,7 +169,10 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
+                        //SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
+                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                        startActivity(intent);
                     }
                 });
     }

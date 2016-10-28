@@ -59,6 +59,13 @@
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/SearchActivityTheme"
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
+
+        <activity
+            android:name=".view.activity.UserLoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/LoginActivityTheme"
+            android:windowSoftInputMode="adjustUnspecified|adjustResize" />
+
         <activity
             android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
