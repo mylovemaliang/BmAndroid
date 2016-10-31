@@ -89,7 +89,7 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
     }
 
 
-   //--------------------------------------------实现　view　层接口　
+   //--------------------------------------------实现　view　层接口---------------------------------　
     @Override
     public void onRegistSuccess(String phoneNum) {
 
@@ -99,4 +99,7 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
     public void onRegistFail(String phoneNum, String msg) {
 
     }
+
+
+   //----------------------------------------总线EVENT定义------------------------------------------
 }
