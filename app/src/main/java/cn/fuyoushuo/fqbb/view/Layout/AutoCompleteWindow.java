@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class AutoCompleteWindow extends PopupWindow{
         this.setOutsideTouchable(true);
         this.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         //再设置模式，和Activity的一样，覆盖。
-        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         //防止虚拟软键盘被弹出菜单遮住
         return this;
     }
@@ -110,7 +111,11 @@ public class AutoCompleteWindow extends PopupWindow{
         if (this.isShowing()){
             this.dismiss();
         }
-        this.showAsDropDown(belowView);
+//        int[] location = new int[2];
+//        belowView.getLocationInWindow(location);
+//        int height = location[1];
+//        showAtLocation(belowView, Gravity.TOP,0,height+belowView.getHeight());
+        showAsDropDown(belowView);
     }
 
     //关掉window

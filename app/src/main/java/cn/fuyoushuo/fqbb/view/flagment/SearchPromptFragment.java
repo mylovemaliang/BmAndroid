@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,6 +43,8 @@ import cn.fuyoushuo.fqbb.presenter.impl.SearchPromptPresenter;
 import cn.fuyoushuo.fqbb.view.Layout.AutoCompleteWindow;
 import cn.fuyoushuo.fqbb.view.Layout.SearchTypeMenu;
 import cn.fuyoushuo.fqbb.view.adapter.SearchMenuAdapter;
+import cn.fuyoushuo.fqbb.view.flagment.searchpromt.SearchAutoCompleteFragment;
+import cn.fuyoushuo.fqbb.view.flagment.searchpromt.SearchPromtOriginFragment;
 import cn.fuyoushuo.fqbb.view.view.SearchPromptView;
 import rx.Observable;
 import rx.Subscriber;
@@ -81,23 +86,13 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
     @Bind(R.id.search_prompt_flagment_cancel_area)
     View cancelView;
 
-    @Bind(R.id.searchHisRview)
-    TagFlowLayout searchHisRview;
-
-    List<String> hisWords;
-
-    @Bind(R.id.searchHotRview)
-    TagFlowLayout searchHotRview;
-
-    List<String> hotWords;
-
     //当前搜索的存储信息
     SeartchPo seartchPo = new SeartchPo();
 
     SearchTypeMenu searchTypeMenu;
 
     //自动提示功能
-    AutoCompleteWindow autoCompleteWindow;
+    //AutoCompleteWindow autoCompleteWindow;
 
     private SharedPreferences mSharePreference;
 
@@ -109,6 +104,12 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
 
     //是否需要刷新
     private boolean isReflash = false;
+
+    SearchPromtOriginFragment searchPromtOriginFragment;
+
+    SearchAutoCompleteFragment searchAutoCompleteFragment;
+
+    private Fragment mContent;
 
 
     public SearchPromptFragment() {
@@ -179,9 +180,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
                     public Observable<String> call(CharSequence charSequence) {
                         String q = charSequence.toString();
                         if(!TextUtils.isEmpty(q)){
-                            if(!autoCompleteWindow.isShowing()){
-                                autoCompleteWindow.showWindow();
-                            }
+                            switchContent(mContent,searchAutoCompleteFragment);
                         }
                         return Observable.just(q);
                     }
@@ -204,42 +203,13 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
                         if (!TextUtils.isEmpty(q)) {
                             searchPromptPresenter.searchWordsByKey(q);
                         }else if(TextUtils.isEmpty(q)) {
-                            if(autoCompleteWindow.isShowing()){
-                                autoCompleteWindow.dismissWindow();
-                            }
+                             switchContent(mContent,searchPromtOriginFragment);
                         }
                         seartchPo.setQ(q);
                     }
                 });
 
-        //
-        autoCompleteWindow.setOnItemClick(new AutoCompleteWindow.OnItemClick() {
-            @Override
-            public void onHisItemClick(View view, String item) {
-                seartchPo.setQ(item);
-                saveSearch(item);
-                if (inputMethodManager.isActive()) {
-                    inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
-                }
-                if(autoCompleteWindow.isShowing()) {
-                    autoCompleteWindow.dismissWindow();
-                }
-                RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
-            }
 
-            @Override
-            public void onHotItemClick(View view, String item) {
-                seartchPo.setQ(item);
-                saveSearch(item);
-                if (inputMethodManager.isActive()) {
-                    inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
-                }
-                if(autoCompleteWindow.isShowing()) {
-                    autoCompleteWindow.dismissWindow();
-                }
-                RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
-            }
-        });
 
         //
         searchTypeMenu.setOnItemClick(new SearchTypeMenu.OnItemClick() {
@@ -266,9 +236,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
                     /*隐藏软键盘*/
                     if (inputMethodManager.isActive()) {
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                    }
-                    if(autoCompleteWindow.isShowing()) {
-                        autoCompleteWindow.dismissWindow();
                     }
                     RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
                 }
@@ -310,39 +277,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
                 }
             }
         });
-
-        //
-        searchHisRview.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                seartchPo.setQ(hisWords.get(position));
-                if (inputMethodManager.isActive()) {
-                    inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
-                }
-                if(autoCompleteWindow.isShowing()){
-                    autoCompleteWindow.dismissWindow();
-                }
-                RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
-                return true;
-            }
-        });
-
-        //
-        searchHotRview.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                seartchPo.setQ(hotWords.get(position));
-                saveSearch(hotWords.get(position));
-                if (inputMethodManager.isActive()) {
-                    inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
-                }
-                if(autoCompleteWindow.isShowing()){
-                    autoCompleteWindow.dismissWindow();
-                }
-                RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
-                return true;
-            }
-        });
     }
 
     @Override
@@ -350,33 +284,9 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
 
         searchText.requestFocus();
 
-        autoCompleteWindow = new AutoCompleteWindow(getActivity(), toolbar).init();
-
         searchTypeMenu = new SearchTypeMenu(getActivity(), toolbar).init();
 
-        hisWords = new ArrayList<String>();
-        searchHisRview.setAdapter(new TagAdapter<String>(hisWords) {
-            @Override
-            public View getView(FlowLayout parent, int position, String o) {
-                RelativeLayout view = (RelativeLayout) layoutInflater.inflate(R.layout.search_prompt_item, searchHisRview, false);
-                TextView textView = (TextView) view.findViewById(R.id.search_prompt_item_text);
-                textView.setText(o);
-                return view;
-            }
-        });
-
-
-
-        hotWords = new ArrayList<String>();
-        searchHotRview.setAdapter(new TagAdapter<String>(hotWords) {
-            @Override
-            public View getView(FlowLayout parent, int position, String o) {
-                RelativeLayout view = (RelativeLayout) layoutInflater.inflate(R.layout.search_prompt_item, searchHotRview, false);
-                TextView textView = (TextView) view.findViewById(R.id.search_prompt_item_text);
-                textView.setText(o);
-                return view;
-            }
-        });
+        initChildFragments();
 
         searchText.setFocusable(true);
         searchText.requestFocus();
@@ -384,18 +294,39 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         //更新数据
         searchTypeButton.setText(SearchCondition.getSearchTypeDesc(seartchPo.getSearchType()));
         searchText.setText(seartchPo.getQ());
-        reflashSearchHisItems();
-        searchPromptPresenter.getHotSearchWords();
         isViewBuild = true;
+    }
+
+    //初始化 子flagment
+    public void initChildFragments(){
+        searchPromtOriginFragment = SearchPromtOriginFragment.newInstance();
+        searchAutoCompleteFragment = SearchAutoCompleteFragment.newInstance();
+        FragmentManager childFragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = childFragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.search_promt_flagment_area,searchPromtOriginFragment).show(searchPromtOriginFragment);
+        fragmentTransaction.add(R.id.search_promt_flagment_area,searchAutoCompleteFragment).hide(searchAutoCompleteFragment);
+        mContent = searchPromtOriginFragment;
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    //转换flagment
+    public void switchContent(Fragment from,Fragment to){
+        if (mContent != to) {
+            mContent = to;
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.search_promt_flagment_area, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
     }
 
     //刷新当前历史搜索
     public void reflashSearchHisItems(){
         String searchHistory = getSearchHistory();
         List<String> items = CommonUtils.toStringList(searchHistory);
-        hisWords.clear();
-        hisWords.addAll(items);
-        searchHisRview.getAdapter().notifyDataChanged();
+        searchPromtOriginFragment.refreshHisData(items);
     }
 
 
@@ -407,6 +338,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         seartchPo.setQ(q);
         searchTypeButton.setText(SearchCondition.getSearchTypeDesc(searchType));
         if(!TextUtils.isEmpty(q)){
+            switchContent(mContent,searchAutoCompleteFragment);
             searchPromptPresenter.searchWordsByKey(q);
             searchText.setText(q);
             searchText.setSelection(q.length());
@@ -422,10 +354,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         if(searchTypeMenu != null){
             searchTypeMenu.dismissWindow();
             searchTypeMenu = null;
-        }
-        if(autoCompleteWindow != null){
-            autoCompleteWindow.dismissWindow();
-            autoCompleteWindow = null;
         }
     }
 
@@ -449,13 +377,13 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
 
 
     //获取历史搜索
-    private String getSearchHistory(){
+    public String getSearchHistory(){
         String hisTexts = mSharePreference.getString(SEARCH_KEY, null);
         return hisTexts == null ? "" : hisTexts;
     }
 
     //保存存储记录
-    private void saveSearch(String text) {
+    public void saveSearch(String text) {
         String newText = text;
         String oldTexts = getSearchHistory();
         String resultTexts = "";
@@ -514,20 +442,42 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
     //-----------------------------------实现VIEW 接口------------------------------------------------
     @Override
     public void updateHotWords(List<String> items) {
-            hotWords.clear();
-            hotWords.addAll(items);
-            searchHotRview.getAdapter().notifyDataChanged();
+          searchPromtOriginFragment.refreshHotData(items);
     }
 
     @Override
     public void updateAutoCompHisWords(List<String> words) {
-         autoCompleteWindow.updateHisRviewData(words);
+         searchAutoCompleteFragment.refreshHisData(words);
     }
 
     @Override
     public void updateAutoCompHotWords(List<String> words) {
-        autoCompleteWindow.updateHotRviewData(words);
+         searchAutoCompleteFragment.refreshHotData(words);
     }
 
-    //-----------------------------------统计------------------------------------------------
+    //-----------------------------------供外部调用---------------------------------------------------
+    public void clickHisItem(String item){
+        seartchPo.setQ(item);
+        if (inputMethodManager.isActive()) {
+            inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
+        }
+        RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
+    }
+
+    public void clickHotItem(String item){
+        seartchPo.setQ(item);
+        saveSearch(item);
+        if (inputMethodManager.isActive()) {
+            inputMethodManager.hideSoftInputFromWindow(searchText.getApplicationWindowToken(), 0);
+        }
+        RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
+    }
+
+    public void initPromtOrigin(){
+        String searchHistory = getSearchHistory();
+        List<String> items = CommonUtils.toStringList(searchHistory);
+        searchPromtOriginFragment.refreshHisData(items);
+        searchPromptPresenter.getHotSearchWords();
+    }
+
 }

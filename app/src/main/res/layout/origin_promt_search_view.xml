@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史搜索:"
+            android:textSize="15sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/search_prompt_searchHis"/>
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/search_prompt_searchHis"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:id="@+id/searchHisRview">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/searchHisRview"
+            zhy:max_select="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/search_prompt_searchHis"
+            android:layout_marginLeft="20dp"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热门搜索:"
+            android:textSize="15sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/search_prompt_searchHot"
+            android:layout_below="@id/searchHisRview"/>
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/search_prompt_searchHot"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:id="@+id/searchHotRview">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/searchHotRview"
+            zhy:max_select="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/search_prompt_searchHot"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+    </RelativeLayout>
+</ScrollView>

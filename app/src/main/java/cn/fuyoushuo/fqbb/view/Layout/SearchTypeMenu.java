@@ -3,22 +3,21 @@ package cn.fuyoushuo.fqbb.view.Layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import com.jakewharton.rxbinding.view.RxView;
-
 import java.lang.ref.WeakReference;
-import java.util.concurrent.TimeUnit;
 
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.view.adapter.SearchMenuAdapter;
-import rx.functions.Action1;
 
 /**
  * Created by QA on 2016/7/19.
@@ -50,7 +49,7 @@ public class SearchTypeMenu extends PopupWindow {
     }
 
     public SearchTypeMenu(Context context, View belowView) {
-        super(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        super(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         this.context = new WeakReference<Context>(context);
         this.belowView = belowView;
         layoutInflater = LayoutInflater.from(context);
@@ -62,7 +61,7 @@ public class SearchTypeMenu extends PopupWindow {
         }
         contentView = layoutInflater.inflate(R.layout.search_type_menu_area, null);
         recyclerView = (RecyclerView) contentView.findViewById(R.id.searchTypeMenu);
-        belowGroudView = contentView.findViewById(R.id.below_backGroup);
+        //belowGroudView = contentView.findViewById(R.id.below_backGroup);
         SearchMenuAdapter searchMenuAdapter = new SearchMenuAdapter();
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context.get());
@@ -81,10 +80,11 @@ public class SearchTypeMenu extends PopupWindow {
         adapter.notifyDataSetChanged();
         this.setContentView(contentView);
         this.setOutsideTouchable(false);
-        RxView.clicks(belowGroudView).throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe(new Action1<Void>() {
+        this.setOnDismissListener(new OnDismissListener() {
             @Override
-            public void call(Void aVoid) {
+            public void onDismiss() {
                 dismissWindow();
+                backgroundAlpha(1.0f);
             }
         });
         return this;
@@ -103,7 +103,12 @@ public class SearchTypeMenu extends PopupWindow {
         this.setBackgroundDrawable(backgroundColor);
         //防止虚拟软键盘被弹出菜单遮住
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        this.showAsDropDown(belowView);
+        int[] location = new int[2];
+        belowView.getLocationInWindow(location);
+        int height = location[1];
+        showAtLocation(belowView, Gravity.TOP,0,height+belowView.getHeight());
+        backgroundAlpha(0.5f);
+
     }
 
     //关掉window
@@ -113,6 +118,20 @@ public class SearchTypeMenu extends PopupWindow {
         }
         this.dismiss();
     }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param alpha
+     */
+    private void backgroundAlpha(float alpha) {
+        if(context.get() != null){
+          Window window = ((FragmentActivity)(context.get())).getWindow();
+          WindowManager.LayoutParams lp = window.getAttributes();
+          lp.alpha = alpha; //0.0-1.0
+          window.setAttributes(lp);
+    }
+    }
+
 
 
 
