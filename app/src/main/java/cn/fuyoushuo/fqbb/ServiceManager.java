@@ -81,6 +81,7 @@ public class ServiceManager {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(clientBuilder.build())
                     .build();
+
             service = retrofit.create(t);
             mServiceMap.put(t.getName(), service);
         }

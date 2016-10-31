@@ -70,6 +70,11 @@ public class LoginOriginFragment extends BaseFragment {
     }
 
 
+    public void refreshAccount(String phoneNum){
+           account.setText(phoneNum);
+    }
+
+
   //--------------------------------------与 Activity 通信-------------------------------------------------
 
     public class ToRegisterOneEvent extends RxBus.BusEvent {}

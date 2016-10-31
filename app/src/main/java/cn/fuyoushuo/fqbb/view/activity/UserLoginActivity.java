@@ -1,9 +1,15 @@
 package cn.fuyoushuo.fqbb.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.TextView;
+
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.fuyoushuo.fqbb.R;
@@ -46,6 +52,11 @@ public class UserLoginActivity extends BaseActivity{
     @Bind(R.id.login_title)
     TextView headTitle;
 
+    @Bind(R.id.login_backArea)
+    View backView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +64,26 @@ public class UserLoginActivity extends BaseActivity{
         mSubscriptions = new CompositeSubscription();
         initFragments();
         initBusEventListen();
+        initView();
+    }
+
+
+    private void initView(){
+
+        RxView.clicks(backView).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        //关掉自己
+                        finish();
+                    }
+                });
+
+
+
     }
 
 
@@ -130,8 +161,21 @@ public class UserLoginActivity extends BaseActivity{
                     registerThreeFragment.refreshView(phoneNum,verifiCode);
                     switchContent(mContent,registerThreeFragment);
                 }
+                else if(busEvent instanceof RegisterThreeFragment.ToLoginAfterRegisterSuccess){
+                    RegisterThreeFragment.ToLoginAfterRegisterSuccess event = (RegisterThreeFragment.ToLoginAfterRegisterSuccess) busEvent;
+                    String phoneNum = event.getPhoneNum();
+                    loginOriginFragment.refreshAccount(phoneNum);
+                    switchContent(mContent,loginOriginFragment);
+                }
             }
         }));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mSubscriptions.hasSubscriptions()){
+            mSubscriptions.unsubscribe();
+        }
+    }
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.presenter.impl.login.RegisterThreePresenter;
 import cn.fuyoushuo.fqbb.view.flagment.BaseFragment;
 import cn.fuyoushuo.fqbb.view.view.login.RegisterThreeView;
@@ -73,9 +74,14 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
 
     @Override
     protected void initData() {
-
+        registerThreePresenter = new RegisterThreePresenter(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        registerThreePresenter.onDestroy();
+    }
 
     public static RegisterThreeFragment newInstance() {
         RegisterThreeFragment fragment = new RegisterThreeFragment();
@@ -89,12 +95,14 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
     }
 
 
-   //--------------------------------------------实现　view　层接口---------------------------------　
+   //--------------------------------------------实现　view　层接口----------------------------------
+   //当注册成功后的逻辑　
     @Override
     public void onRegistSuccess(String phoneNum) {
-
+        RxBus.getInstance().send(new ToLoginAfterRegisterSuccess(phoneNum));
     }
 
+    //当注册失败后的逻辑
     @Override
     public void onRegistFail(String phoneNum, String msg) {
 
@@ -102,4 +110,17 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
 
 
    //----------------------------------------总线EVENT定义------------------------------------------
+
+    public class ToLoginAfterRegisterSuccess extends RxBus.BusEvent{
+
+        private String phoneNum;
+
+        public ToLoginAfterRegisterSuccess(String phoneNum) {
+            this.phoneNum = phoneNum;
+        }
+
+        public String getPhoneNum() {
+            return phoneNum;
+        }
+    }
 }

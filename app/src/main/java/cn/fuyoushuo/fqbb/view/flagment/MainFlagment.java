@@ -171,7 +171,7 @@ public class MainFlagment extends BaseFragment implements MainView {
                     public void call(Void aVoid) {
                         //SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
                         Intent intent = new Intent(mactivity,UserLoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                     }
                 });
