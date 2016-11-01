@@ -17,4 +17,11 @@ public interface FqbbLocalHttpService {
     @GET("/user/doregist.htm")
     Observable<HttpResp> registerUser(@Query("phone") String phoneNum,@Query("password") String password,@Query("mobileCode") String mobileCode);
 
+    @GET("/user/mlogin.htm")
+    Observable<HttpResp> userLogin(@Query("loginid") String loginid,@Query("password") String passwordMD5);
+
+    @GET("/user/mlu.htm")
+    Observable<HttpResp> getUserInfo();
 }
+
+

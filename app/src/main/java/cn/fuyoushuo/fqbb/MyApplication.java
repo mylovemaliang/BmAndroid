@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import cn.fuyoushuo.fqbb.commonlib.utils.Constants;
+import cn.fuyoushuo.fqbb.commonlib.utils.LoginInfoStore;
 import cn.fuyoushuo.fqbb.view.crash.CrashHandler;
 
 /**
@@ -68,13 +69,14 @@ public class MyApplication extends Application{
         Fresco.initialize(context,config);
         //初始化异常拦截器
         CrashHandler.getInstance().init(this);
+        //用户登录信息管理
+        LoginInfoStore.getIntance().init(this);
         //禁用默认的统计机制
         MobclickAgent.setDebugMode(false);
         MobclickAgent.openActivityDurationTrack(true);
         displayMetrics = context.getResources().getDisplayMetrics();
         mRefWatcher = Constants.DEBUG ?  LeakCanary.install(this) : RefWatcher.DISABLED;
         initFeedBack(feedbackAppkey);
-        QbSdk.allowThirdPartyAppDownload(true);
     }
 
     public static RefWatcher getRefWatcher(Context context) {

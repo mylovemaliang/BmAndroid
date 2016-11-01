@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import cn.fuyoushuo.fqbb.commonlib.utils.Constants;
+import cn.fuyoushuo.fqbb.domain.ext.UserLocalInterceptor;
 import cn.fuyoushuo.fqbb.domain.httpservice.AlimamaHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbHttpService;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
@@ -73,7 +74,10 @@ public class ServiceManager {
                 final File cacheDir = new File(baseDir, "HttpResponseCache");
                 clientBuilder.cache(new Cache(cacheDir, Constants.HTTP_RESPONSE_DISK_CACHE_MAX_SIZE));
             }
-            clientBuilder.interceptors().add(new ServiceInterceptor());
+            if(t.getName().equals(FqbbLocalHttpService.class.getName())){
+                clientBuilder.interceptors().add(new UserLocalInterceptor());
+            }
+             clientBuilder.interceptors().add(new ServiceInterceptor());
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(getEndPoint(t))
@@ -81,6 +85,7 @@ public class ServiceManager {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(clientBuilder.build())
                     .build();
+
             service = retrofit.create(t);
             mServiceMap.put(t.getName(), service);
         }
