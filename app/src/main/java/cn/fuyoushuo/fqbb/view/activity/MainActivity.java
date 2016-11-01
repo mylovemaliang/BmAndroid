@@ -32,6 +32,7 @@ import cn.fuyoushuo.fqbb.view.flagment.MyJifenFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyOrderFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 import cn.fuyoushuo.fqbb.view.flagment.TixianFlagment;
+import cn.fuyoushuo.fqbb.view.flagment.UserCenterFragment;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -94,6 +95,8 @@ public class MainActivity extends BaseActivity {
 
     TixianFlagment tixianFlagment;
 
+    UserCenterFragment userCenterFragment;
+
     int currentShowBizPage = 0;  //0  首页    1 我的订单    2 集分宝    3 提现
 
     int preShowBizPage;
@@ -111,9 +114,10 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
 
     private final int MAIN_FRAGMENT_INDEX = 0;
-    private final int MYORDER_FRAGMENT_INDEX = 1;
-    private final int MYJIFEN_FRAGMENT_INDEX = 2;
-    private final int TIXIAN_FRAGMENT_INDEX = 3;
+    private final int USER_CENTER_INDEX = 1;
+//    private final int MYORDER_FRAGMENT_INDEX = 1;
+//    private final int MYJIFEN_FRAGMENT_INDEX = 2;
+//    private final int TIXIAN_FRAGMENT_INDEX = 3;
 
     private Fragment mContent;
 
@@ -169,12 +173,14 @@ public class MainActivity extends BaseActivity {
         //判断是否直接转发到详情页
         if(currentShowBizPage==0)
             changeView(MAIN_FRAGMENT_INDEX);
-        else if(currentShowBizPage==1)
-            changeView(MYORDER_FRAGMENT_INDEX);
-        else if(currentShowBizPage==2)
-            changeView(MYJIFEN_FRAGMENT_INDEX);
-        else if(currentShowBizPage==3)
-            changeView(TIXIAN_FRAGMENT_INDEX);
+        else if(currentShowBizPage == 1)
+            changeView(USER_CENTER_INDEX);
+//        else if(currentShowBizPage==1)
+//            changeView(MYORDER_FRAGMENT_INDEX);
+//        else if(currentShowBizPage==2)
+//            changeView(MYJIFEN_FRAGMENT_INDEX);
+//        else if(currentShowBizPage==3)
+//            changeView(TIXIAN_FRAGMENT_INDEX);
     }
 
     private void initBusEventListen(){
@@ -195,23 +201,26 @@ public class MainActivity extends BaseActivity {
         fragmentList = new ArrayList<Fragment>();
 
         mainFlagment = MainFlagment.newInstance();
-        myOrderFlagment = new MyOrderFlagment();
-        myJifenFlagment = new MyJifenFlagment();
-        tixianFlagment = new TixianFlagment();
+        userCenterFragment = UserCenterFragment.newInstance();
+        //myOrderFlagment = new MyOrderFlagment();
+        //myJifenFlagment = new MyJifenFlagment();
+        //tixianFlagment = new TixianFlagment();
 
         fragmentList.add(mainFlagment);
-        fragmentList.add(myOrderFlagment);
-        fragmentList.add(myJifenFlagment);
-        fragmentList.add(tixianFlagment);
+        fragmentList.add(userCenterFragment);
+//        fragmentList.add(myOrderFlagment);
+//        fragmentList.add(myJifenFlagment);
+//        fragmentList.add(tixianFlagment);
 
         //初始化flagment
         fragmentManager = getSupportFragmentManager();
         mContent = mainFlagment;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_area,mainFlagment).show(mainFlagment);
-        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
-        fragmentTransaction.add(R.id.main_area,myJifenFlagment).hide(myJifenFlagment);
-        fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
+        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
+//        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
+//        fragmentTransaction.add(R.id.main_area,myJifenFlagment).hide(myJifenFlagment);
+//        fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
         fragmentTransaction.commit();
         currentShowBizPage = 0;
         processIntent();
@@ -264,6 +273,8 @@ public class MainActivity extends BaseActivity {
 //                    //showMyJfbPage();
 //                    changeView(MYJIFEN_FRAGMENT_INDEX);
 //                    myJifenFlagment.loadWebviewPage();
+                      userCenterFragment.refreshUserInfo();
+                      changeView(USER_CENTER_INDEX);
                     break;
 
                     case R.id.rbjxsc:

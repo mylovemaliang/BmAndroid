@@ -30,22 +30,30 @@ public class LoginInfoStore {
 
     private String share_userinfo_key = "user_info";
 
-    private void writeUserInfo(UserInfoStore userInfoStore){
+    public void writeUserInfo(UserInfoStore userInfoStore){
          if(userInfoStore == null) return;
          SharedPreferences.Editor edit = sharedPreferences.edit();
          if(!TextUtils.isEmpty(userInfoStore.getSessionId())){
              edit.putString("sessionId",userInfoStore.getSessionId());
          }
-         else if(!TextUtils.isEmpty(userInfoStore.getToken())){
+         if(!TextUtils.isEmpty(userInfoStore.getToken())){
              edit.putString("token",userInfoStore.getToken());
          }
-         else if(!TextUtils.isEmpty(userInfoStore.getUserId())){
+         if(!TextUtils.isEmpty(userInfoStore.getUserId())){
              edit.putString("userId",userInfoStore.getUserId());
         }
         edit.commit();
     }
 
-    private UserInfoStore getUserInfoStore(){
+    //写入用户登录的账号
+    public void writeUserAccount(String account){
+       if(TextUtils.isEmpty(account)) return;
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("login_account",account);
+        edit.commit();
+    }
+
+    public UserInfoStore getUserInfoStore(){
         String sessionId = sharedPreferences.getString("sessionId","");
         String token = sharedPreferences.getString("token","");
         String userId = sharedPreferences.getString("userId","");
@@ -59,7 +67,16 @@ public class LoginInfoStore {
         return userInfoStore;
     }
 
-    private void clearUserInfo(){
+    /**
+     * 获取用户账号
+     * @return
+     */
+    public String getUserAccount(){
+        String login_account = sharedPreferences.getString("login_account", "");
+        return login_account;
+    }
+
+    public void clearUserInfo(){
         SharedPreferences.Editor edit = sharedPreferences.edit();
         if(sharedPreferences.contains("sessionId")){
             edit.remove("sessionId");
@@ -70,9 +87,9 @@ public class LoginInfoStore {
         if(sharedPreferences.contains("userId")){
             edit.remove("userId");
         }
+        if(sharedPreferences.contains("login_account")){
+            edit.remove("login_account");
+        }
         edit.commit();
     }
-
-
-
 }
