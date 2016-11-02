@@ -7,11 +7,9 @@ import java.util.Map;
 
 import cn.fuyoushuo.fqbb.ServiceManager;
 import cn.fuyoushuo.fqbb.commonlib.utils.LoginInfoStore;
-import cn.fuyoushuo.fqbb.commonlib.utils.UserInfoStore;
 import cn.fuyoushuo.fqbb.domain.ext.HttpResp;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
 import cn.fuyoushuo.fqbb.view.view.UserCenterView;
-import cn.fuyoushuo.fqbb.view.view.login.LoginOriginView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -57,7 +55,7 @@ public class UserCenterPresenter extends BasePresenter{
                    public void onNext(HttpResp httpResp) {
                        if(httpResp == null || httpResp.getS() != 1){
                            if(getMyView() != null){
-                               getMyView().onUserInfoGetError();
+                               getMyView().onLoginFail();
                            }
                        }else {
                            if(getMyView() != null){

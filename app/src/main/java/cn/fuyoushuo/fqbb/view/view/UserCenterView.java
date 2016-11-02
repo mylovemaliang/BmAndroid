@@ -10,4 +10,6 @@ public interface UserCenterView {
     void onUserInfoGetError();
 
     void onUserInfoGetSucc(JSONObject result);
+
+    void onLoginFail();
 }

@@ -98,4 +98,9 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
          useablePoints.setText(String.valueOf(validPoint));
          accountView.setText(account);
     }
+
+    @Override
+    public void onLoginFail() {
+
+    }
 }
