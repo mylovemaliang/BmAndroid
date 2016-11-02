@@ -25,8 +25,10 @@ import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.presenter.impl.AutoFanliPresenter;
+import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
 import cn.fuyoushuo.fqbb.view.Layout.AppUpdateView;
 import cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout;
+import cn.fuyoushuo.fqbb.view.flagment.AlimamaLoginDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.MainFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyJifenFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyOrderFlagment;
@@ -117,9 +119,11 @@ public class MainActivity extends BaseActivity {
     private final int USER_CENTER_INDEX = 1;
 //    private final int MYORDER_FRAGMENT_INDEX = 1;
 //    private final int MYJIFEN_FRAGMENT_INDEX = 2;
-//    private final int TIXIAN_FRAGMENT_INDEX = 3;
+    private final int TIXIAN_FRAGMENT_INDEX = 2;
 
     private Fragment mContent;
+
+    private LocalLoginPresent localLoginPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,11 +132,11 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main_layout);
         mSubscriptions = new CompositeSubscription();
         fragmentManager = getSupportFragmentManager();
+        localLoginPresent = new LocalLoginPresent();
         initButtonClick();
         initView();
         initBusEventListen();
         initAutoFanli();
-
         getUpdateInfo(true);
     }
 
@@ -167,6 +171,13 @@ public class MainActivity extends BaseActivity {
         }else if(intent.getBooleanExtra("toOrderPage", false)){
             myOrderButton.setChecked(true);
         }
+        //处理回调的任务
+        String bizCallback = intent.getStringExtra("bizCallBack");
+        bizCallback = bizCallback==null ? "" : bizCallback;
+        if("MainToUc".equals(bizCallback)){
+            userCenterFragment.refreshUserInfo();
+            changeView(USER_CENTER_INDEX);
+        }
     }
 
     private void processIntent(){
@@ -179,8 +190,8 @@ public class MainActivity extends BaseActivity {
 //            changeView(MYORDER_FRAGMENT_INDEX);
 //        else if(currentShowBizPage==2)
 //            changeView(MYJIFEN_FRAGMENT_INDEX);
-//        else if(currentShowBizPage==3)
-//            changeView(TIXIAN_FRAGMENT_INDEX);
+        else if(currentShowBizPage==3)
+           changeView(TIXIAN_FRAGMENT_INDEX);
     }
 
     private void initBusEventListen(){
@@ -193,6 +204,10 @@ public class MainActivity extends BaseActivity {
                      intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                      startActivity(intent);
                  }
+                 else if(busEvent instanceof AlimamaLoginDialogFragment.AlimamaLoginToUserCenterEvent){
+                     // TODO: 2016/11/2
+                     userCenterFragment.refreshUserInfo();
+                 }
             }
         }));
     }
@@ -204,13 +219,13 @@ public class MainActivity extends BaseActivity {
         userCenterFragment = UserCenterFragment.newInstance();
         //myOrderFlagment = new MyOrderFlagment();
         //myJifenFlagment = new MyJifenFlagment();
-        //tixianFlagment = new TixianFlagment();
+        tixianFlagment = new TixianFlagment();
 
         fragmentList.add(mainFlagment);
         fragmentList.add(userCenterFragment);
 //        fragmentList.add(myOrderFlagment);
 //        fragmentList.add(myJifenFlagment);
-//        fragmentList.add(tixianFlagment);
+        fragmentList.add(tixianFlagment);
 
         //初始化flagment
         fragmentManager = getSupportFragmentManager();
@@ -220,7 +235,7 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
 //        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
 //        fragmentTransaction.add(R.id.main_area,myJifenFlagment).hide(myJifenFlagment);
-//        fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
+        fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
         fragmentTransaction.commit();
         currentShowBizPage = 0;
         processIntent();
@@ -257,34 +272,32 @@ public class MainActivity extends BaseActivity {
                         break;
 
                     case R.id.rb_myorder:
-//                        drawerLayout.closeDrawer(drawerMenuContent);
-//                        preShowBizPage = currentShowBizPage;
-//                        currentShowBizPage = 1;
-//
-//                        changeView(MYORDER_FRAGMENT_INDEX);
-//                        myOrderFlagment.loadWebviewPage();
-//
+                        drawerLayout.closeDrawer(drawerMenuContent);
+                        preShowBizPage = currentShowBizPage;
+                        currentShowBizPage = 3;
+
+                        changeView(TIXIAN_FRAGMENT_INDEX);
+                        tixianFlagment.loadWebviewPage();
                         break;
 
                  case R.id.rb_user_center:
-//                    drawerLayout.closeDrawer(drawerMenuContent);
-//                    preShowBizPage = currentShowBizPage;
-//                    currentShowBizPage = 2;
-//                    //showMyJfbPage();
-//                    changeView(MYJIFEN_FRAGMENT_INDEX);
-//                    myJifenFlagment.loadWebviewPage();
-                      userCenterFragment.refreshUserInfo();
-                      changeView(USER_CENTER_INDEX);
-                    break;
+                      localLoginPresent.isFqbbLocalLogin(new LocalLoginPresent.LoginCallBack() {
+                          @Override
+                          public void localLoginSuccess() {
+                              userCenterFragment.refreshUserInfo();
+                              changeView(USER_CENTER_INDEX);
+                          }
+
+                          @Override
+                          public void localLoginFail() {
+                               Intent intent = new Intent(MainActivity.this,UserLoginActivity.class);
+                               intent.putExtra("biz","MainToUc");
+                               startActivity(intent);
+                          }
+                      });
+                      break;
 
                     case R.id.rbjxsc:
-//                        drawerLayout.closeDrawer(drawerMenuContent);
-//                        preShowBizPage = currentShowBizPage;
-//                        currentShowBizPage = 3;
-//                        //showTixian();
-//
-//                        changeView(TIXIAN_FRAGMENT_INDEX);
-//                        tixianFlagment.loadWebviewPage();
                         break;
 
                     default:
@@ -412,6 +425,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(localLoginPresent != null){
+            localLoginPresent.onDestroy();
+        }
         if(mSubscriptions.hasSubscriptions()){
             mSubscriptions.unsubscribe();
         }

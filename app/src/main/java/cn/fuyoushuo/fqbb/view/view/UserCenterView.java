@@ -12,4 +12,10 @@ public interface UserCenterView {
     void onUserInfoGetSucc(JSONObject result);
 
     void onLoginFail();
+
+    void onAlimamaLoginFail();
+
+    void onAlimamaLoginSuccess(JSONObject resule);
+
+    void onAlimamaLoginError();
 }

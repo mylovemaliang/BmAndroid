@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import org.apache.log4j.chainsaw.Main;
+
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -55,6 +57,8 @@ public class UserLoginActivity extends BaseActivity{
     @Bind(R.id.login_backArea)
     View backView;
 
+    private String biz = "";
+
 
 
     @Override
@@ -65,6 +69,9 @@ public class UserLoginActivity extends BaseActivity{
         initFragments();
         initBusEventListen();
         initView();
+        Intent intent = getIntent();
+        String biz = intent.getStringExtra("biz");
+        this.biz = biz == null ? "" : biz;
     }
 
 
@@ -166,6 +173,21 @@ public class UserLoginActivity extends BaseActivity{
                     String phoneNum = event.getPhoneNum();
                     loginOriginFragment.refreshAccount(phoneNum);
                     switchContent(mContent,loginOriginFragment);
+                }
+                else if(busEvent instanceof LoginOriginFragment.LoginSuccessEvent){
+                     if("".equals(biz)){
+                         Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                         startActivity(intent);
+                         finish();
+                     }
+                     else if("MainToUc".equals(biz)){
+                         Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                         intent.putExtra("bizCallBack","MainToUc");
+                         startActivity(intent);
+                         finish();
+                     }
                 }
             }
         }));

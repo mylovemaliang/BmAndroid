@@ -136,4 +136,6 @@ dependencies {
 
     compile 'com.zhy:percent-support-extends:1.0.1'
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.5.2'
 }

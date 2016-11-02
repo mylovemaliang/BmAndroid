@@ -169,10 +169,10 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        //SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
-                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
+                        SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
+//                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(intent);
                     }
                 });
     }
@@ -467,7 +467,6 @@ public class MainFlagment extends BaseFragment implements MainView {
         fgoodDataAdapter.setCurrentPage(page);
         fgoodDataAdapter.notifyDataSetChanged();
     }
-
 
     //---------------------------- 自定义事件-----------------------------------
 
