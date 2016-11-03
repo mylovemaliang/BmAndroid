@@ -267,14 +267,14 @@ public class MainActivity extends BaseActivity {
                     case R.id.rbHome:
 //                        drawerLayout.closeDrawer(drawerMenuContent);
 //                        preShowBizPage = currentShowBizPage;
-//                        currentShowBizPage = 0;
+                          currentShowBizPage = MAIN_FRAGMENT_INDEX;
                           changeView(MAIN_FRAGMENT_INDEX);
                         break;
 
                     case R.id.rb_myorder:
                         drawerLayout.closeDrawer(drawerMenuContent);
                         preShowBizPage = currentShowBizPage;
-                        currentShowBizPage = 3;
+                        currentShowBizPage = TIXIAN_FRAGMENT_INDEX;
 
                         changeView(TIXIAN_FRAGMENT_INDEX);
                         tixianFlagment.loadWebviewPage();
@@ -286,6 +286,7 @@ public class MainActivity extends BaseActivity {
                           public void localLoginSuccess() {
                               userCenterFragment.refreshUserInfo();
                               changeView(USER_CENTER_INDEX);
+                              currentShowBizPage = USER_CENTER_INDEX;
                           }
 
                           @Override

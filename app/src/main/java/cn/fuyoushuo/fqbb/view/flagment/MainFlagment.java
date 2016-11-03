@@ -182,7 +182,7 @@ public class MainFlagment extends BaseFragment implements MainView {
         parentActivity = (MainActivity) this.getActivity();
 
         //mainPresenter.getFcates();
-        mainPresenter.getFGoods(100l, 1, false);
+        mainPresenter.getFGoods(0l, 1, false);
 
         mainFlagmentHeader = layoutInflater.inflate(R.layout.flagment_main_header, null);
 
