@@ -11,4 +11,8 @@ public interface JdGoodDetailView {
 
     void onGetJdFanliSucc(JSONObject result);
 
+    void onGetCpsSucc(String cpsUrl);
+
+    void onGetCpsFail();
+
 }

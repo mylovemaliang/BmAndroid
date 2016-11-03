@@ -1,5 +1,7 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PatternMatcher;
 import android.support.annotation.Nullable;
@@ -8,12 +10,19 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+
+import org.jsoup.helper.DataUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.presenter.impl.JdGoodDetailPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
 import cn.fuyoushuo.fqbb.view.view.JdGoodDetailView;
@@ -46,14 +56,28 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
     JdGoodDetailPresenter jdGoodDetailPresenter;
 
+    @Bind(R.id.fq_jd_tip_area)
+    FrameLayout fanliTipLayout;
+
+    @Bind(R.id.jd_left_tip_text)
+    TextView leftTipText;
+
+    @Bind(R.id.jd_right_tip_text)
+    TextView rightTipText;
+
+    @Bind(R.id.jd_hide_tip)
+    TextView hideTipText;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(!TextUtils.isEmpty(getArguments().getString("initUrl",""))){
             this.initUrl = getArguments().getString("initUrl","");
             this.loadUrl = getArguments().getString("initUrl","");
         }
+        setStyle(DialogFragment.STYLE_NORMAL,R.style.fullScreenDialog);
         localLoginPresent = new LocalLoginPresent();
         jdGoodDetailPresenter = new JdGoodDetailPresenter(this);
 }
@@ -66,29 +90,50 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
         // TODO: 2016/11/3  初始化VIEW
         myJdWebView = new WebView(MyApplication.getContext());
         myJdWebView.getSettings().setJavaScriptEnabled(true);
-        //myJdWebView.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
+        //myWebView.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
         myJdWebView.getSettings().setSupportZoom(true);//是否可以缩放，默认true
         myJdWebView.getSettings().setDomStorageEnabled(true);
+
         myJdWebView.getSettings().setUseWideViewPort(true);// 设置此属性，可任意比例缩放。大视图模式
         myJdWebView.getSettings().setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
+
         myJdWebView.requestFocusFromTouch();
         myJdWebView.setWebChromeClient(new WebChromeClient());
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            myJdWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(myJdWebView, true);
+
         myJdWebView.setWebViewClient(new WebViewClient(){
+
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")){
                     String replaceUrl = url.replace("https://", "").replace("http://", "");
                     //http://item.m.jd.com/ware/view.action?wareId=3332179
+
+
+                    
+
                     if(replaceUrl.startsWith("item.m.jd.com/ware/view.action")){
-                         String itemId = getJdItemId(replaceUrl);
-
-
+                        String itemId = getJdItemId(replaceUrl);
+                        loadGoodPage(itemId);
                     }
-                    return false;
-                } else{
-                    return true;
+                    if(replaceUrl.startsWith("item.m.jd.com/product/")){
+                        String itemId = getJdItemId(replaceUrl);
+                        loadGoodPage(itemId);
+                    }
                 }
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //System.out.println("dddddd");
+                return false;
             }
 
             @Override
@@ -123,34 +168,47 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
         if(TextUtils.isEmpty(url)) return result;
         //http://item.m.jd.com/ware/view.action?wareId=3332179
         if(url.startsWith("item.m.jd.com/ware/view.action")){
+            String groupResult = "";
             Pattern pattern = Pattern.compile("wareId=([0-9]*)");
             Matcher matcher = pattern.matcher(url);
-            String groupResult = matcher.group(1);
+            if(matcher.find()){
+            groupResult = matcher.group(1);
+            }
             if(!TextUtils.isEmpty(groupResult)) result = groupResult;
         }
         //http://item.m.jd.com/product/10076124548.html?sid=dbfc3c8a253faf33265f643e30780ebf
         if(url.startsWith("item.m.jd.com/product/")){
+            String groupResult = "";
             Pattern pattern = Pattern.compile("/product/([0-9]*)\\.html");
             Matcher matcher = pattern.matcher(url);
-            String groupResult = matcher.group(1);
+            if(matcher.find()){
+               groupResult = matcher.group(1);
+            }
             if(!TextUtils.isEmpty(groupResult)) result = groupResult;
         }
         return result;
     }
 
     //获取当前商品的页面
-    private void loadGoodPage(String itemId){
+    private void loadGoodPage(final String itemId){
         if(TextUtils.isEmpty(itemId)) return;
-        String loadUrl = "http://item.m.jd.com/product/"+itemId+".html";
+        final String loadUrl = "http://item.m.jd.com/product/"+itemId+".html";
         localLoginPresent.isFqbbLocalLogin(new LocalLoginPresent.LoginCallBack() {
             @Override
             public void localLoginSuccess() {
-                      
+                leftTipText.setText("处理中");
+                leftTipText.setClickable(false);
+                jdGoodDetailPresenter.getJdFanliInfo(itemId);
+                jdGoodDetailPresenter.getJdCpsUrl(loadUrl);
+
             }
 
             @Override
             public void localLoginFail() {
-
+                // TODO: 2016/11/3 提示登录
+                leftTipText.setText("登录");
+                leftTipText.setClickable(true);
+                jdGoodDetailPresenter.getJdFanliInfo(itemId);
             }
         });
 
@@ -170,11 +228,39 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
     @Override
     public void onGetJdFanliFail() {
-
+        rightTipText.setText("返--|约--积分");
     }
 
     @Override
     public void onGetJdFanliSucc(JSONObject result) {
 
+       float percent = 0.00f;
+       float sumPrice = 0.00f;
+       if(result != null && !result.isEmpty()){
+           if(result.containsKey("rateWl")){
+               percent = result.getFloatValue("rateWl");
+           }
+           if(result.containsKey("itemPriceWl")){
+               sumPrice = result.getFloatValue("itemPriceWl");
+           }
+       }
+       String percentString = String.valueOf(percent*100);
+       String savePoints = String.valueOf(DateUtils.getFormatFloat(sumPrice*percent)*100);
+       rightTipText.setText("返"+percentString+"%|"+"约"+savePoints+"积分");
+    }
+
+    @Override
+    public void onGetCpsSucc(String cpsUrl) {
+        if(myJdWebView != null){
+            myJdWebView.loadUrl(cpsUrl);
+            this.loadUrl = cpsUrl;
+        }
+    }
+
+    @Override
+    public void onGetCpsFail() {
+        Toast.makeText(MyApplication.getContext(),"获取CPS链接失败,请重试",Toast.LENGTH_SHORT);
+        leftTipText.setText("CPS链接获取");
+        leftTipText.setClickable(true);
     }
 }

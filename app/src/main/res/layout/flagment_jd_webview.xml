@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,8 +31,54 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/jd_wv_area">
-
+        android:id="@+id/jd_wv_area"
+        android:background="@color/module_15"
+        android:layout_below="@+id/jd_wv_backarea">
     </RelativeLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fq_jd_tip_area"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/fanli_tip_border">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/jd_left_tip_text"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:text="返钱模式" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/jd_right_tip_text"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/jd_left_tip_text"
+                android:text="返50%|约177积分"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/jd_hide_tip"
+                android:layout_toRightOf="@+id/jd_right_tip_text"
+                android:layout_marginLeft="10dp"
+                android:text="隐藏"
+                android:textSize="15sp"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+</RelativeLayout>
