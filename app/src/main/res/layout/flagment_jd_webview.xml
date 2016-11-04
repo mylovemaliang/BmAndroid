@@ -5,36 +5,30 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/jd_wv_backarea"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_back" >
-        <ImageView
-            android:id="@+id/jd_wv_bakcIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/juxing_6" />
-
-        <TextView
-            android:id="@+id/jd_wv_titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textSize="15sp"
-            android:textColor="@color/detailPercent"/>
-    </RelativeLayout>
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/jd_wv_area"
-        android:background="@color/module_15"
-        android:layout_below="@+id/jd_wv_backarea">
+        android:id="@+id/jd_wv_area">
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jd_wv_back_area"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="150dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/jd_back_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="HOME"
+            android:textColor="@color/darkBackground"
+            android:padding="5dp"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -44,7 +38,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="100dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/fanli_tip_border">
+        android:background="@drawable/fanli_tip_border"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -64,7 +59,7 @@
                 android:id="@+id/jd_right_tip_text"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/jd_left_tip_text"
-                android:text="返50%|约177积分"
+                android:text="返--%|约--积分"
                 android:textSize="15sp"
                 android:layout_centerVertical="true"/>
 

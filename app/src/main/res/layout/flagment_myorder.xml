@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/myorder_header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的订单"
+            android:textSize="15sp"
+            android:layout_centerInParent="true" />
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:id="@+id/line1"
+        android:layout_below="@id/myorder_header"
+        android:background="@color/darkBackground"></View>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/myorder_type_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:tabIndicatorColor="@color/module_11"
+        app:tabSelectedTextColor="@color/module_11"
+        app:tabTextColor="@color/black"
+        android:layout_below="@+id/line1" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/order_result_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/myorder_type_title"/>
+
+</RelativeLayout>

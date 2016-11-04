@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -31,10 +30,12 @@ import cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout;
 import cn.fuyoushuo.fqbb.view.flagment.AlimamaLoginDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.MainFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyJifenFlagment;
-import cn.fuyoushuo.fqbb.view.flagment.MyOrderFlagment;
+import cn.fuyoushuo.fqbb.view.flagment.MyOrderFragment;
+import cn.fuyoushuo.fqbb.view.flagment.order.TbOrderFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 import cn.fuyoushuo.fqbb.view.flagment.TixianFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.UserCenterFragment;
+import cn.fuyoushuo.fqbb.view.view.MyOrderView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity {
     //管理的flagments
     MainFlagment mainFlagment;
 
-    MyOrderFlagment myOrderFlagment;
+    MyOrderFragment myOrderFlagment;
 
     MyJifenFlagment myJifenFlagment;
 
@@ -120,6 +121,7 @@ public class MainActivity extends BaseActivity {
 //    private final int MYORDER_FRAGMENT_INDEX = 1;
 //    private final int MYJIFEN_FRAGMENT_INDEX = 2;
     private final int TIXIAN_FRAGMENT_INDEX = 2;
+    private final int MYORDER_FRAGMENT_INDEX = 3;
 
     private Fragment mContent;
 
@@ -217,7 +219,7 @@ public class MainActivity extends BaseActivity {
 
         mainFlagment = MainFlagment.newInstance();
         userCenterFragment = UserCenterFragment.newInstance();
-        //myOrderFlagment = new MyOrderFlagment();
+        myOrderFlagment = MyOrderFragment.newInstance();
         //myJifenFlagment = new MyJifenFlagment();
         tixianFlagment = new TixianFlagment();
 
@@ -226,6 +228,7 @@ public class MainActivity extends BaseActivity {
 //        fragmentList.add(myOrderFlagment);
 //        fragmentList.add(myJifenFlagment);
         fragmentList.add(tixianFlagment);
+        fragmentList.add(myOrderFlagment);
 
         //初始化flagment
         fragmentManager = getSupportFragmentManager();
@@ -236,6 +239,7 @@ public class MainActivity extends BaseActivity {
 //        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
 //        fragmentTransaction.add(R.id.main_area,myJifenFlagment).hide(myJifenFlagment);
         fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
+        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
         fragmentTransaction.commit();
         currentShowBizPage = 0;
         processIntent();
@@ -299,6 +303,7 @@ public class MainActivity extends BaseActivity {
                       break;
 
                     case R.id.rbjxsc:
+                        changeView(MYORDER_FRAGMENT_INDEX);
                         break;
 
                     default:

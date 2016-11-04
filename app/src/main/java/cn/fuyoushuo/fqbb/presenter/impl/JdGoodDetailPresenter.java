@@ -144,6 +144,24 @@ public class JdGoodDetailPresenter extends BasePresenter{
     }
 
 
+    /**
+     * 判断用户是否进入返钱模式
+     * @return
+     */
+    public boolean isUserFanqianMode(String url){
+        if(TextUtils.isEmpty(url)) return false;
+        UserInfoStore userInfoStore = LoginInfoStore.getIntance().getUserInfoStore();
+        if(userInfoStore == null) return false;
+        String flag1 = "utm_source=www.fanqianbb.com";
+        String flag2 = "utm_campaign=t_1000043395_"+userInfoStore.getUserId();
+        String replaceUrl = url.replace("http://","").replace("https://","");
+        if(replaceUrl.startsWith("re.m.jd.com/cps/item/") && replaceUrl.indexOf(flag1) > 0 && replaceUrl.indexOf(flag2) > 0){
+            return true;
+        }
+        return false;
+    }
+
+
     private Observable<String> createCpsUrlObservable(final String encodedUrl){
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override

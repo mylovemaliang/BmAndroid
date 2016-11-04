@@ -67,28 +67,23 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_center_header"
         android:id="@+id/user_center_userInfo"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:stretchColumns="3">
 
-        <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:rowCount="2"
-        android:columnCount="3"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:padding="2dp"
-        android:background="@color/module_6">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_line1">
 
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -120,8 +115,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -153,8 +147,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -181,12 +174,19 @@
                 android:layout_marginTop="10dp"/>
           </RelativeLayout>
           </android.support.v7.widget.CardView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/info_line2"
+            android:layout_below="@+id/info_line1">
 
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -217,8 +217,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -249,8 +248,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
+            android:layout_weight="1"
             app:cardCornerRadius="0dp"
             app:cardElevation="0dp"
             android:background="@color/white">
@@ -277,8 +275,9 @@
                     android:layout_marginTop="10dp"/>
               </RelativeLayout>
           </android.support.v7.widget.CardView>
-        </GridLayout>
-    </RelativeLayout>
+        </TableRow>
+    </TableLayout>
+
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
