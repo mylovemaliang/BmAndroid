@@ -169,10 +169,10 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        //SuperfanDialogFragment.newInstance().show(getFragmentManager(),"superfan_fragment");
-                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
+                        JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"jdWebviewDialogFragment");
+//                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(intent);
                     }
                 });
     }
@@ -182,7 +182,7 @@ public class MainFlagment extends BaseFragment implements MainView {
         parentActivity = (MainActivity) this.getActivity();
 
         //mainPresenter.getFcates();
-        mainPresenter.getFGoods(100l, 1, false);
+        mainPresenter.getFGoods(0l, 1, false);
 
         mainFlagmentHeader = layoutInflater.inflate(R.layout.flagment_main_header, null);
 
@@ -467,7 +467,6 @@ public class MainFlagment extends BaseFragment implements MainView {
         fgoodDataAdapter.setCurrentPage(page);
         fgoodDataAdapter.notifyDataSetChanged();
     }
-
 
     //---------------------------- 自定义事件-----------------------------------
 

@@ -136,11 +136,7 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        Intent intent = new Intent(mactivity,MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                        //关闭当前activity
-                        mactivity.finish();
+                        RxBus.getInstance().send(new LoginSuccessEvent());
                     }
                 });
 
@@ -158,5 +154,7 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
     //--------------------------------------与 Activity 通信-------------------------------------------------
 
     public class ToRegisterOneEvent extends RxBus.BusEvent {}
+
+    public class LoginSuccessEvent extends RxBus.BusEvent{}
 
 }

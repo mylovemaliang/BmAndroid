@@ -1,8 +1,9 @@
-package cn.fuyoushuo.fqbb.view.flagment;
+package cn.fuyoushuo.fqbb.view.flagment.order;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,17 +14,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.presenter.impl.TaobaoInterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
 import cn.fuyoushuo.fqbb.view.activity.WebviewActivity;
 
-public class MyOrderFlagment extends Fragment {
+public class TbOrderFragment extends Fragment {
 
     public static final String VOLLEY_TAG_NAME = "my_order_flagment";
 
@@ -35,16 +38,21 @@ public class MyOrderFlagment extends Fragment {
 
     TextView myorderTitleText;
 
+    RelativeLayout webviewArea;
+
     private String myOrderUrl = "https://h5.m.taobao.com/taokeapp/report/detail.html?tab=2";
 
     boolean noLoginIntercept = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view =  inflater.inflate(R.layout.flagment_myorder1, container, false);
+        View view =  inflater.inflate(R.layout.flagment_tb_myorder, container, false);
         parentActivity = (MainActivity) getActivity();
 
         reflashMyOrderLl = (LinearLayout) view.findViewById(R.id.reflashMyOrderLl);
+
+        webviewArea = (RelativeLayout) view.findViewById(R.id.tb_order_wv_area);
+
         reflashMyOrderLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +62,7 @@ public class MyOrderFlagment extends Fragment {
 
         myorderTitleText = (TextView) view.findViewById(R.id.myorderTitleText);
 
-        myorderWebview = (WebView) view.findViewById(R.id.myorderWebview);
+        myorderWebview = new WebView(MyApplication.getContext());
         if(Build.VERSION.SDK_INT >= 21){
             myorderWebview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
@@ -137,8 +145,15 @@ public class MyOrderFlagment extends Fragment {
                 }
             }
         });
-
+        webviewArea.addView(myorderWebview);
         return view;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        loadWebviewPage();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     boolean firstAccess = true;
@@ -195,6 +210,10 @@ public class MyOrderFlagment extends Fragment {
 
     @Override
     public void onDestroy() {
+        if(myorderWebview != null){
+            myorderWebview.removeAllViews();
+            myorderWebview.destroy();
+        }
         //当前 flagment 销毁时,取消所有进行及等待的请求
         TaobaoInterPresenter.cancelTagedRuquests(VOLLEY_TAG_NAME);
         super.onDestroy();

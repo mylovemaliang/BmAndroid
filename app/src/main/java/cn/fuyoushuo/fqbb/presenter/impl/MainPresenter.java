@@ -16,6 +16,7 @@ import cn.fuyoushuo.fqbb.domain.entity.FCateItem;
 import cn.fuyoushuo.fqbb.domain.entity.FGoodItem;
 import cn.fuyoushuo.fqbb.domain.ext.HttpResp;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbHttpService;
+import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
 import cn.fuyoushuo.fqbb.view.view.MainView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -98,6 +99,5 @@ public class MainPresenter extends BasePresenter{
                     }
                 }));
     }
-
 
 }

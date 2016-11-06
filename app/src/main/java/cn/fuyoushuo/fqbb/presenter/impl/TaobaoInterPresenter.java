@@ -89,6 +89,7 @@ public class TaobaoInterPresenter {
         PersistentCookieStore cs = new PersistentCookieStore(MyApplication.getContext());
         URI uri = URI.create(url);
         URI uri2 = URI.create("http://pub.alimama.com");
+        URI uri3 = URI.create("http://media.alimama.com");
 
         String[] cookieValues = alimamaCookies.split(";");
         HttpCookie cookie;
@@ -103,6 +104,7 @@ public class TaobaoInterPresenter {
             cookie.setPath("/");
             cs.add(uri, cookie);
             cs.add(uri2, cookie);
+            cs.add(uri3,cookie);
         }
 
         clearRq();//已登录保存cookie,同时清理Volley的RQ,下次取Volley时会重新创建,否则,一直用老的,即便登录了,那么最后登录判断时也是未登录
