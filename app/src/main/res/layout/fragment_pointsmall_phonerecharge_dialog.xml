@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/module_13">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:id="@+id/phone_recharge_title">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/phone_recharge_backArea">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wv_back"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机充值"
+            android:textSize="18sp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/points_mall_header"
+        android:background="@color/module_15"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18516092594"
+            android:id="@+id/phone_recharge_account"
+            android:textSize="15sp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/points_mall_header"
+        android:id="@+id/phone_recharge_userInfo"
+        android:stretchColumns="3">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_line1">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前积分"
+                        android:textSize="15sp"
+                        android:id="@+id/userinfo_currentpoints_tip"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textSize="20sp"
+                        android:layout_below="@+id/userinfo_currentpoints_tip"
+                        android:id="@+id/userinfo_currentpoints_value"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="冻结积分"
+                        android:textSize="15sp"
+                        android:id="@+id/userinfo_freezepoints_tip"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textSize="20sp"
+                        android:layout_below="@+id/userinfo_freezepoints_tip"
+                        android:id="@+id/userinfo_freezepoints_value"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="可用积分"
+                        android:textSize="15sp"
+                        android:id="@+id/userinfo_useablepoints_tip"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textSize="20sp"
+                        android:layout_below="@+id/userinfo_useablepoints_tip"
+                        android:id="@+id/userinfo_useablepoints_value"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/phone_recharge_area"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="手机充值"
+            android:textSize="18sp"
+            android:id="@+id/phone_recharge_tip"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/phone_recharge_tip"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/phone_recharge_input_phoneNum"
+            android:background="@drawable/grayborder"
+            android:digits="0123456789"
+            android:text="18516092594"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/phone_recharge_good_info"
+            zhy:max_select="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_recharge_good_info"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所需积分:1000"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:id="@+id/phone_recharge_need_points"/>
+            
+            <Button
+                android:id="@+id/quick_duihuan"
+                android:layout_below="@+id/phone_recharge_need_points"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/module_11"
+                android:text="立即兑换"
+                android:textSize="20dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/quick_duihuan">
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
