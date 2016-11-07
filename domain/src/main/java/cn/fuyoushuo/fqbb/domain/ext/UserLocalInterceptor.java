@@ -36,8 +36,7 @@ public class UserLocalInterceptor implements Interceptor {
             "/user/validePhone.htm",
             "/user/valideEmail.htm",
             "/user/doFindPwd.htm",
-            "/point/getSkus.htm",
-            "/point/mpbuy.htm"
+            "/point/getSkus.htm"
     );
 
 
