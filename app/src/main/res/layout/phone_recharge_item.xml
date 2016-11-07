@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/phone_recharge_item_border">
+    <TextView
+        android:id="@+id/phone_recharge_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10元"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:singleLine="true"
+        android:layout_gravity="center"
+        android:textColor="@color/module_11"
+        android:textSize="15sp" />
+</RelativeLayout>

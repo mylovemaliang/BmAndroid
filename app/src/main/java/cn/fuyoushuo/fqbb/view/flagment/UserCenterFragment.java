@@ -3,6 +3,7 @@ package cn.fuyoushuo.fqbb.view.flagment;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,9 @@ import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.presenter.impl.UserCenterPresenter;
+import cn.fuyoushuo.fqbb.view.activity.PointMallActivity;
 import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
+import cn.fuyoushuo.fqbb.view.flagment.pointsmall.PhoneRechargeDialogFragment;
 import cn.fuyoushuo.fqbb.view.view.UserCenterView;
 import rx.functions.Action1;
 
@@ -56,6 +59,9 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
     @Bind(R.id.user_center_refreshview)
     SwipeRefreshLayout userCenterRefreshView;
 
+    @Bind(R.id.user_center_points_icon)
+    RelativeLayout pointsIcon;
+
     @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_user_center;
@@ -82,6 +88,16 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
 
             }
         });
+
+        RxView.clicks(pointsIcon).compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                         Intent intent = new Intent(mactivity, PointMallActivity.class);
+                         startActivity(intent);
+                    }
+                });
 
     }
 

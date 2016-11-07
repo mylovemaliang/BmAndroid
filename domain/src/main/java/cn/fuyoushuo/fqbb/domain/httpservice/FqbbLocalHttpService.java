@@ -25,6 +25,9 @@ public interface FqbbLocalHttpService {
 
     @GET("/mall/mjdrate.htm")
     Observable<HttpResp> getJdFanliInfo(@Query("itemid") String itemId);
+
+    @GET("/point/getSkus.htm?itemId=1")
+    Observable<HttpResp> getPhoneRechargeSkus();
 }
 
 

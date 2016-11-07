@@ -67,6 +67,12 @@
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
 
         <activity
+            android:name=".view.activity.PointMallActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|adjustResize" />
+
+        <activity
             android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"

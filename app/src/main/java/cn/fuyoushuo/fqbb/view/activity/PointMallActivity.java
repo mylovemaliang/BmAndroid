@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.jakewharton.rxbinding.view.RxView;
 
+import org.apache.log4j.chainsaw.Main;
+
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -16,6 +18,7 @@ import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
+import cn.fuyoushuo.fqbb.view.flagment.pointsmall.PhoneRechargeDialogFragment;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
@@ -94,7 +97,10 @@ public class PointMallActivity extends BaseActivity{
                  .subscribe(new Action1<Void>() {
                      @Override
                      public void call(Void aVoid) {
-                         // TODO: 2016/11/7
+                         Intent intent = new Intent(PointMallActivity.this, MainActivity.class);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                         startActivity(intent);
+                         finish();
                      }
                  });
 
@@ -103,7 +109,7 @@ public class PointMallActivity extends BaseActivity{
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 2016/11/7
+                        PhoneRechargeDialogFragment.newInstance().show(getSupportFragmentManager(), "phoneRechargeDialogFragment");
                     }
                 });
 
