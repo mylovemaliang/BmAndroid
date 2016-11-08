@@ -83,6 +83,15 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
                 });
 
 
+        //点击去找回密码界面
+        RxView.clicks(passwordForgotten).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        RxBus.getInstance().send(new ToFindPassOneEvent());
+                    }
+                });
 
 
         //点击去注册页面
@@ -156,5 +165,7 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
     public class ToRegisterOneEvent extends RxBus.BusEvent {}
 
     public class LoginSuccessEvent extends RxBus.BusEvent{}
+
+    public class ToFindPassOneEvent extends RxBus.BusEvent{}
 
 }

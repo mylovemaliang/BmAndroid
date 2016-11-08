@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/user_center_refreshview">
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +17,7 @@
 
       <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:id="@+id/user_center_title">
 
@@ -58,11 +58,11 @@
             android:layout_centerVertical="true"
             android:visibility="gone">
             <TextView
-                android:id="@+id/main_totop_icon"
+                android:id="@+id/alimama_login_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="alimama登录"/>
+                android:textSize="20sp"
+                android:text="@string/alimama_login"/>
         </FrameLayout>
     </RelativeLayout>
 
@@ -448,6 +448,30 @@
 
     </LinearLayout>
     </android.support.v7.widget.CardView>
+
+
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/logout_area"
+      android:layout_below="@+id/fun_area"
+      android:layout_marginTop="10dp"
+      app:cardCornerRadius="10dp"
+      android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:textSize="15sp"
+            android:textColor="@color/module_11"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
+</ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

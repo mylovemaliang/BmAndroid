@@ -78,8 +78,6 @@ public class RegisterTwoFragment extends BaseFragment {
                         RxBus.getInstance().send(new ToRegisterThreeEvent(phoneNum,verifiCode));
                     }
                 });
-
-
     }
 
     @Override

@@ -1,5 +1,7 @@
 package cn.fuyoushuo.fqbb.presenter.impl;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.Map;
@@ -86,6 +88,38 @@ public class LocalLoginPresent extends BasePresenter{
                 })
         );}
 
+
+    //获取register验证码
+    public void getVerifiCode(final String phoneNum,final String flag,final VerifiCodeGetCallBack verifiCodeGetCallBack){
+        if(TextUtils.isEmpty(phoneNum) || TextUtils.isEmpty(flag)) return;
+        mSubscriptions.add(ServiceManager.createService(FqbbLocalHttpService.class)
+                .getVerifiCode(flag,phoneNum)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<HttpResp>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        verifiCodeGetCallBack.onVerifiCodeGetError("获取验证码错误,请稍后再试");
+                    }
+
+                    @Override
+                    public void onNext(HttpResp httpResp) {
+                        if(httpResp == null || httpResp.getS() != 1){
+                            verifiCodeGetCallBack.onVerifiCodeGetError("获取验证码错误,请稍后再试");
+                        }else{
+                            verifiCodeGetCallBack.onVerifiCodeGetSucc(phoneNum);
+                        }
+                    }
+                })
+        );
+    }
+
     public interface LoginCallBack{
 
         void localLoginSuccess();
@@ -99,6 +133,14 @@ public class LocalLoginPresent extends BasePresenter{
         void onUserInfoGetSucc(JSONObject jsonObject);
 
         void onUserInfoGetError();
+    }
+
+    //获取验证码验证
+    public interface VerifiCodeGetCallBack{
+
+        void onVerifiCodeGetSucc(String phoneNum);
+
+        void onVerifiCodeGetError(String msg);
     }
 
 

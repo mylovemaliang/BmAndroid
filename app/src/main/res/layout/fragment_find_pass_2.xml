@@ -22,7 +22,7 @@
         android:textColorHint="@color/gray"
         android:textSize="18sp"
         android:layout_marginLeft="20dp"
-        android:id="@+id/account_value"/>
+        android:id="@+id/newpass_value"/>
 
         <ImageView
             android:layout_width="wrap_content"

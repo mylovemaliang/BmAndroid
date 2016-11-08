@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -25,6 +26,8 @@ public class SearchMenuAdapter extends BaseListAdapter<SearchMenuAdapter.RowItem
 
     public static List<RowItem> SearchRowItems;
 
+    public static List<RowItem> pointsOrderSearchItems;
+
 
     //执行初始化内容
     static{
@@ -32,6 +35,13 @@ public class SearchMenuAdapter extends BaseListAdapter<SearchMenuAdapter.RowItem
         SearchRowItems.add(new RowItem("superfan","超级返"));
         SearchRowItems.add(new RowItem("commonfan","返利搜索"));
         SearchRowItems.add(new RowItem("taobao","淘宝"));
+
+        pointsOrderSearchItems = new ArrayList<>();
+        pointsOrderSearchItems.add(new RowItem("","全部状态"));
+        pointsOrderSearchItems.add(new RowItem("1","有效"));
+        pointsOrderSearchItems.add(new RowItem("2","失效"));
+        pointsOrderSearchItems.add(new RowItem("3","已完成"));
+        pointsOrderSearchItems.add(new RowItem("4","已结算佣金"));
     }
 
     private OnRowClick onRowClick;

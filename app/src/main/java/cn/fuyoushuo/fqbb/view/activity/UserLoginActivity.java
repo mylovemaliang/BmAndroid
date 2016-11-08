@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -59,6 +60,8 @@ public class UserLoginActivity extends BaseActivity{
 
     private String biz = "";
 
+    InputMethodManager inputMethodManager;
+
 
 
     @Override
@@ -66,6 +69,7 @@ public class UserLoginActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_area);
         mSubscriptions = new CompositeSubscription();
+        inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         initFragments();
         initBusEventListen();
         initView();
@@ -81,6 +85,9 @@ public class UserLoginActivity extends BaseActivity{
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
+                        if (inputMethodManager.isActive()) {
+                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                        }
                         Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
@@ -155,6 +162,10 @@ public class UserLoginActivity extends BaseActivity{
                     headTitle.setText("注册");
                     switchContent(mContent,registerOneFragment);
                 }
+                else if(busEvent instanceof LoginOriginFragment.ToFindPassOneEvent){
+                    headTitle.setText("找回密码");
+                    switchContent(mContent,findPassOneFragment);
+                }
                 else if(busEvent instanceof RegisterOneFragment.ToRegisterTwoEvent){
                     RegisterOneFragment.ToRegisterTwoEvent event = (RegisterOneFragment.ToRegisterTwoEvent) busEvent;
                     String phoneNum = event.getPhoneNum();
@@ -188,6 +199,26 @@ public class UserLoginActivity extends BaseActivity{
                          startActivity(intent);
                          finish();
                      }
+                     else if("MainToLocalOrder".equals(biz)){
+                         Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                         intent.putExtra("bizCallBack","MainToLocalOrder");
+                         startActivity(intent);
+                         finish();
+                     }
+                }
+                else if(busEvent instanceof FindPassOneFragment.ToFindPassTwoEvent){
+                     FindPassOneFragment.ToFindPassTwoEvent event = (FindPassOneFragment.ToFindPassTwoEvent) busEvent;
+                     String account = event.getAccount();
+                     String verifiCode = event.getVerifidataCode();
+                     findPassTwoFragment.refreshView(account,verifiCode);
+                     switchContent(mContent,findPassTwoFragment);
+                }
+                else if(busEvent instanceof FindPassTwoFragment.ToLoginAfterFindPassSucc){
+                    FindPassTwoFragment.ToLoginAfterFindPassSucc event = (FindPassTwoFragment.ToLoginAfterFindPassSucc) busEvent;
+                    String account = event.getAccount();
+                    loginOriginFragment.refreshAccount(account);
+                    switchContent(mContent,loginOriginFragment);
                 }
             }
         }));

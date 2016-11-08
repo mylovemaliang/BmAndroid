@@ -28,6 +28,15 @@ public interface FqbbLocalHttpService {
 
     @GET("/point/getSkus.htm?itemId=1")
     Observable<HttpResp> getPhoneRechargeSkus();
+
+    @GET("/point/mpbuy.htm?itemId=1")
+    Observable<HttpResp> createPhoneRechargeOrder(@Query("skuId") Long skuId,@Query("diliverPhone") String phoneNum);
+
+    @GET("/user/doFindPwd.htm")
+    Observable<HttpResp> findUserPass(@Query("eop") String accountValue,@Query("code") String verifiCode,@Query("password") String newpass);
+
+    @GET("/user/mlogout.htm")
+    Observable<HttpResp> userLogout();
 }
 
 

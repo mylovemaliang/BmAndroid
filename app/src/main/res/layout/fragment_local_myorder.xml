@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="3"
         android:background="@color/module_15">
@@ -25,6 +25,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="全部状态"
+        android:textColor="@color/module_11"
         android:id = "@+id/local_order_allstate"/>
 
     <TextView

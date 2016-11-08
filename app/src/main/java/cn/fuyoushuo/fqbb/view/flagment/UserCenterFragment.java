@@ -1,7 +1,9 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import butterknife.Bind;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
+import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.presenter.impl.UserCenterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.PointMallActivity;
 import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
@@ -56,11 +59,17 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
     @Bind(R.id.user_center_alimama_login)
     View alimamaLogin;
 
+    @Bind(R.id.alimama_login_icon)
+    TextView loginText;
+
     @Bind(R.id.user_center_refreshview)
     SwipeRefreshLayout userCenterRefreshView;
 
     @Bind(R.id.user_center_points_icon)
     RelativeLayout pointsIcon;
+
+    @Bind(R.id.logout_area)
+    CardView logoutArea;
 
     @Override
     protected int getRootLayoutId() {
@@ -99,6 +108,16 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
                     }
                 });
 
+        RxView.clicks(logoutArea).compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                          userCenterPresenter.logout();
+                    }
+                });
+
+        initIconFront();
     }
 
     @Override
@@ -116,6 +135,12 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
     public void refreshUserInfo(){
         userCenterPresenter.getUserInfo();
         userCenterPresenter.getAlimamaInfo();
+    }
+
+    //初始化字体图标
+    private void initIconFront() {
+        Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfront/iconfont_alimamalogin.ttf");
+        loginText.setTypeface(iconfont);
     }
 
 
@@ -166,7 +191,7 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
 
     @Override
     public void onAlimamaLoginFail() {
-        Toast.makeText(MyApplication.getContext(),"请稍后重新登录阿里妈妈",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MyApplication.getContext(),"请稍后重新登录阿里妈妈",Toast.LENGTH_SHORT).show();
         alimamaLogin.setVisibility(View.VISIBLE);
         thisMonth20Count.setText("--");
         nextMonth20Count.setText("--");
@@ -199,4 +224,19 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
         useableCount.setText("--");
         userCenterRefreshView.setRefreshing(false);
     }
+
+    @Override
+    public void onLogoutSuccess() {
+        Toast.makeText(MyApplication.getContext(),"退出登录成功",Toast.LENGTH_SHORT).show();
+        RxBus.getInstance().send(new LogoutToMainEvent());
+    }
+
+    @Override
+    public void onLogoutFail() {
+        Toast.makeText(MyApplication.getContext(),"退出登录失败,请重试",Toast.LENGTH_SHORT).show();
+    }
+
+    //-----------------------------总线事件----------------------------------------------------
+
+    public class LogoutToMainEvent extends RxBus.BusEvent{}
 }

@@ -179,6 +179,11 @@ public class MainActivity extends BaseActivity {
         if("MainToUc".equals(bizCallback)){
             userCenterFragment.refreshUserInfo();
             changeView(USER_CENTER_INDEX);
+            ucButton.setChecked(true);
+
+        }
+        else if("MainToLocalOrder".equals(bizCallback)){
+            myOrderFlagment.reflashLocalOrder();
         }
     }
 
@@ -188,11 +193,9 @@ public class MainActivity extends BaseActivity {
             changeView(MAIN_FRAGMENT_INDEX);
         else if(currentShowBizPage == 1)
             changeView(USER_CENTER_INDEX);
-//        else if(currentShowBizPage==1)
-//            changeView(MYORDER_FRAGMENT_INDEX);
-//        else if(currentShowBizPage==2)
-//            changeView(MYJIFEN_FRAGMENT_INDEX);
         else if(currentShowBizPage==3)
+            changeView(MYORDER_FRAGMENT_INDEX);
+        else if(currentShowBizPage==2)
            changeView(TIXIAN_FRAGMENT_INDEX);
     }
 
@@ -209,6 +212,11 @@ public class MainActivity extends BaseActivity {
                  else if(busEvent instanceof AlimamaLoginDialogFragment.AlimamaLoginToUserCenterEvent){
                      // TODO: 2016/11/2
                      userCenterFragment.refreshUserInfo();
+                 }
+                 else if(busEvent instanceof UserCenterFragment.LogoutToMainEvent){
+                     changeView(MAIN_FRAGMENT_INDEX);
+                     currentShowBizPage = MAIN_FRAGMENT_INDEX;
+                     mainButton.setChecked(true);
                  }
             }
         }));
@@ -303,6 +311,7 @@ public class MainActivity extends BaseActivity {
                       break;
 
                     case R.id.rbjxsc:
+                        currentShowBizPage = MYORDER_FRAGMENT_INDEX;
                         changeView(MYORDER_FRAGMENT_INDEX);
                         break;
 

@@ -129,7 +129,7 @@ public class PointMallActivity extends BaseActivity{
                         // TODO: 2016/11/7
                     }
                 });
-        //积分明细 你
+        //积分明细
         RxView.clicks(pointsDetailArea).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override

@@ -90,6 +90,42 @@ public class UserCenterPresenter extends BasePresenter{
         );}
 
 
+    public void logout(){
+         mSubscriptions.add(ServiceManager.createService(FqbbLocalHttpService.class)
+            .userLogout()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<HttpResp>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                   if(getMyView() != null){
+                       getMyView().onLogoutFail();
+                   }
+                }
+
+                @Override
+                public void onNext(HttpResp httpResp) {
+                    if(httpResp == null || httpResp.getS() != 1){
+                        if(getMyView() != null){
+                            getMyView().onLogoutFail();
+                        }
+                    }else{
+                        LoginInfoStore.getIntance().clearUserInfo();
+                        if(getMyView() != null){
+                            getMyView().onLogoutSuccess();
+                        }
+                    }
+                }
+            })
+         );
+    }
+
+
     //获取阿里妈妈信息
     public void getAlimamaInfo(){
 
