@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
   
-public class PhoneFormatCheckUtils {  
+public class DataCheckUtils {
   
     /** 
      * 大陆号码或香港号码均可 
@@ -38,6 +38,25 @@ public class PhoneFormatCheckUtils {
         Pattern p = Pattern.compile(regExp);  
         Matcher m = p.matcher(str);  
         return m.matches();  
-    }  
-      
-}  
+    }
+
+    /**
+         * 验证邮箱
+         * @param email
+         * @return
+         */
+        public static boolean checkEmail(String email){
+            boolean flag = false;
+            try{
+                String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+                Pattern regex = Pattern.compile(check);
+                Matcher matcher = regex.matcher(email);
+                flag = matcher.matches();
+            }catch(Exception e){
+                flag = false;
+            }
+            return flag;
+        }
+
+
+    }

@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
-import cn.fuyoushuo.fqbb.commonlib.utils.PhoneFormatCheckUtils;
+import cn.fuyoushuo.fqbb.commonlib.utils.DataCheckUtils;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
 import cn.fuyoushuo.fqbb.view.flagment.BaseFragment;
@@ -66,7 +66,7 @@ public class FindPassOneFragment extends BaseFragment {
                     @Override
                     public void call(Void aVoid) {
                         // TODO: 2016/10/28  获取验证码
-                        if(!PhoneFormatCheckUtils.isChinaPhoneLegal(accountValue)){
+                        if(!DataCheckUtils.isChinaPhoneLegal(accountValue)){
                             accountView.setText("");
                             accountValue = "";
                             Toast.makeText(MyApplication.getContext(),"手机号码格式不对,请重新输入",Toast.LENGTH_SHORT).show();
@@ -108,7 +108,7 @@ public class FindPassOneFragment extends BaseFragment {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        if(!PhoneFormatCheckUtils.isChinaPhoneLegal(accountValue)){
+                        if(!DataCheckUtils.isChinaPhoneLegal(accountValue)){
                             accountView.setText("");
                             accountValue = "";
                             Toast.makeText(MyApplication.getContext(),"手机号码格式不对,请重新输入",Toast.LENGTH_SHORT).show();

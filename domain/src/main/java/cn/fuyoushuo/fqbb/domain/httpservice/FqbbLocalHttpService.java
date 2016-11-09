@@ -37,6 +37,23 @@ public interface FqbbLocalHttpService {
 
     @GET("/user/mlogout.htm")
     Observable<HttpResp> userLogout();
+
+    @GET("/user/mdoBindEmail.htm")
+    Observable<HttpResp> bindEmail(@Query("email") String email,@Query("code") String verifiCode);
+
+    @GET("/user/mdoUnBindEmail.htm")
+    Observable<HttpResp> unbindEmail(@Query("eop") String account,@Query("code") String code);
+
+    @GET("/user/validePhone.htm")
+    Observable<HttpResp> validePhone(@Query("phone") String phoneNum);
+
+    @GET("/user/valideEmail.htm")
+    Observable<HttpResp> valideEmail(@Query("email") String email);
+
+    @GET("/user/mUpdatePwd.htm")
+    Observable<HttpResp> updatePassword(@Query("currentPwd") String originPassword,@Query("newPassword") String newPassword);
+
+
 }
 
 
