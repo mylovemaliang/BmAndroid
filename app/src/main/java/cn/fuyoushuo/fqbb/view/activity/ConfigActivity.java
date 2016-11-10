@@ -1,19 +1,14 @@
 package cn.fuyoushuo.fqbb.view.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.Window;
-
-import cn.fuyoushuo.fqbb.R;
-import cn.fuyoushuo.fqbb.view.Layout.AppUpdateView;
-import cn.fuyoushuo.fqbb.view.flagment.AboutFragment;
-import cn.fuyoushuo.fqbb.view.flagment.ConfigFragment;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
+
+import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.view.flagment.AboutFragment;
+import cn.fuyoushuo.fqbb.view.flagment.ConfigFragment;
 
 public class ConfigActivity extends BaseActivity {
 

@@ -3,6 +3,7 @@ package cn.fuyoushuo.fqbb.view.flagment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
+import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.TaobaoInterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.HelpActivity;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
@@ -39,6 +41,15 @@ public class TixianFlagment extends Fragment {
     LinearLayout reflashTixianLl;
 
     LinearLayout howToTixianLl;
+
+    SelectedGoodPresenter selectedGoodPresenter;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        selectedGoodPresenter = new SelectedGoodPresenter();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){

@@ -34,7 +34,7 @@ public class Constants {
 
 
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     //日志相关
     public static final String BASE_FILE_PATH = "fanqianbb";

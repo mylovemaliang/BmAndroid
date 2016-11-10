@@ -31,6 +31,7 @@ import cn.fuyoushuo.fqbb.view.flagment.AlimamaLoginDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.MainFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyJifenFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyOrderFragment;
+import cn.fuyoushuo.fqbb.view.flagment.SelectedGoodFragment;
 import cn.fuyoushuo.fqbb.view.flagment.order.TbOrderFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 import cn.fuyoushuo.fqbb.view.flagment.TixianFlagment;
@@ -92,36 +93,27 @@ public class MainActivity extends BaseActivity {
     //管理的flagments
     MainFlagment mainFlagment;
 
+    SelectedGoodFragment selectedGoodFragment;
+
     MyOrderFragment myOrderFlagment;
-
-    MyJifenFlagment myJifenFlagment;
-
-    TixianFlagment tixianFlagment;
 
     UserCenterFragment userCenterFragment;
 
-    int currentShowBizPage = 0;  //0  首页    1 我的订单    2 集分宝    3 提现
+    int currentShowBizPage = 0;  //0  首页    1 精选商品    2 我的订单    3 个人中心
 
     int preShowBizPage;
-
-    //弹出层
-    SearchPromptFragment mySearchFlagment;
-
-    //屏幕宽度
-    int screenWidth;
-    //当前选中的项
-    int currentTab = -1;
 
     private CompositeSubscription mSubscriptions;
 
     private FragmentManager fragmentManager;
 
     private final int MAIN_FRAGMENT_INDEX = 0;
-    private final int USER_CENTER_INDEX = 1;
-//    private final int MYORDER_FRAGMENT_INDEX = 1;
-//    private final int MYJIFEN_FRAGMENT_INDEX = 2;
-    private final int TIXIAN_FRAGMENT_INDEX = 2;
-    private final int MYORDER_FRAGMENT_INDEX = 3;
+
+    private final int JXSC_FRAGMENT_INDEX = 1;
+
+    private final int MYORDER_FRAGMENT_INDEX = 2;
+
+    private final int USER_CENTER_INDEX = 3;
 
     private Fragment mContent;
 
@@ -192,11 +184,11 @@ public class MainActivity extends BaseActivity {
         if(currentShowBizPage==0)
             changeView(MAIN_FRAGMENT_INDEX);
         else if(currentShowBizPage == 1)
-            changeView(USER_CENTER_INDEX);
-        else if(currentShowBizPage==3)
-            changeView(MYORDER_FRAGMENT_INDEX);
+            changeView(JXSC_FRAGMENT_INDEX);
         else if(currentShowBizPage==2)
-           changeView(TIXIAN_FRAGMENT_INDEX);
+            changeView(MYORDER_FRAGMENT_INDEX);
+        else if(currentShowBizPage==3)
+           changeView(USER_CENTER_INDEX);
     }
 
     private void initBusEventListen(){
@@ -229,25 +221,22 @@ public class MainActivity extends BaseActivity {
         userCenterFragment = UserCenterFragment.newInstance();
         myOrderFlagment = MyOrderFragment.newInstance();
         //myJifenFlagment = new MyJifenFlagment();
-        tixianFlagment = new TixianFlagment();
+        selectedGoodFragment = SelectedGoodFragment.newInstance();
 
         fragmentList.add(mainFlagment);
-        fragmentList.add(userCenterFragment);
-//        fragmentList.add(myOrderFlagment);
-//        fragmentList.add(myJifenFlagment);
-        fragmentList.add(tixianFlagment);
+        fragmentList.add(selectedGoodFragment);
         fragmentList.add(myOrderFlagment);
+        fragmentList.add(userCenterFragment);
 
         //初始化flagment
         fragmentManager = getSupportFragmentManager();
         mContent = mainFlagment;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_area,mainFlagment).show(mainFlagment);
-        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
-//        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
-//        fragmentTransaction.add(R.id.main_area,myJifenFlagment).hide(myJifenFlagment);
-        fragmentTransaction.add(R.id.main_area,tixianFlagment).hide(tixianFlagment);
+        fragmentTransaction.add(R.id.main_area,selectedGoodFragment).hide(selectedGoodFragment);
         fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
+        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
+
         fragmentTransaction.commit();
         currentShowBizPage = 0;
         processIntent();
@@ -277,19 +266,15 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rbHome:
-//                        drawerLayout.closeDrawer(drawerMenuContent);
-//                        preShowBizPage = currentShowBizPage;
                           currentShowBizPage = MAIN_FRAGMENT_INDEX;
                           changeView(MAIN_FRAGMENT_INDEX);
                         break;
 
                     case R.id.rb_myorder:
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        preShowBizPage = currentShowBizPage;
-                        currentShowBizPage = TIXIAN_FRAGMENT_INDEX;
-
-                        changeView(TIXIAN_FRAGMENT_INDEX);
-                        tixianFlagment.loadWebviewPage();
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        preShowBizPage = currentShowBizPage;
+                        currentShowBizPage = MYORDER_FRAGMENT_INDEX;
+                        changeView(MYORDER_FRAGMENT_INDEX);
                         break;
 
                  case R.id.rb_user_center:
@@ -311,8 +296,8 @@ public class MainActivity extends BaseActivity {
                       break;
 
                     case R.id.rbjxsc:
-                        currentShowBizPage = MYORDER_FRAGMENT_INDEX;
-                        changeView(MYORDER_FRAGMENT_INDEX);
+                        currentShowBizPage = JXSC_FRAGMENT_INDEX;
+                        changeView(JXSC_FRAGMENT_INDEX);
                         break;
 
                     default:
