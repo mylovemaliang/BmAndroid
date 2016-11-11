@@ -157,7 +157,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
-            app:layout_widthPercent="40%w"
+            app:layout_widthPercent="46%w"
             android:layout_height="match_parent"
             android:id="@+id/card_chaojifan"
             app:contentPadding="3dp"
@@ -176,7 +176,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_widthPercent="60%w"
+            app:layout_widthPercent="54%w"
             app:layout_heightPercent="50%"
             android:layout_toRightOf="@+id/card_chaojifan"
             android:id="@+id/card_jkj"
@@ -196,10 +196,10 @@
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_widthPercent="60%w"
+            app:layout_widthPercent="27%w"
             app:layout_heightPercent="50%"
             android:layout_toRightOf="@+id/card_chaojifan"
-            android:id="@+id/card_jdgaofan"
+            android:id="@+id/card_chaoliu"
             android:layout_below="@+id/card_jkj"
             app:contentPadding="3dp"
             app:cardElevation="0dp"
@@ -209,14 +209,31 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/jd_gaofan_img"
+                android:src="@mipmap/chaoliu"
                 android:scaleType="fitXY"/>
+        </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="27%w"
+            app:layout_heightPercent="50%"
+            android:layout_toRightOf="@+id/card_chaoliu"
+            android:id="@+id/card_chihuo"
+            android:layout_below="@+id/card_jkj"
+            app:contentPadding="3dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="2dp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/chihuo"
+                android:scaleType="fitXY"/>
         </android.support.v7.widget.CardView>
 
     </com.zhy.android.percent.support.PercentRelativeLayout>
-
-
 
     <RelativeLayout
         android:layout_width="match_parent"

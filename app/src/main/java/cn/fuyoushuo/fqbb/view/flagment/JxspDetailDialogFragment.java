@@ -12,14 +12,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,12 +38,16 @@ import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
 import cn.fuyoushuo.fqbb.view.adapter.SelectedCatesDataAdapter;
 import cn.fuyoushuo.fqbb.view.adapter.TbGoodDataAdapter;
+import rx.functions.Action1;
 
 /**
  * Created by QA on 2016/11/10.
  */
 public class JxspDetailDialogFragment extends RxDialogFragment {
 
+
+    @Bind(R.id.jxsp_detail_backArea)
+    RelativeLayout backView;
 
     @Bind(R.id.jxsp_title)
     TextView titleView;
@@ -150,7 +157,8 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
                 selectCatesDataAdapter.notifyDataSetChanged();
                 // TODO: 2016/11/10  获取点击后数据
                 currentCatId = getCurrentCatId(cateItem.getCatId());
-                selectedGoodPresenter.getSelectedGood(currentChannel, 1, currentCatId, null, new SelectedGoodPresenter.SelectGoodGetCallBack() {
+                int level = cateItem.getLevel();
+                selectedGoodPresenter.getSelectedGood(currentChannel,1,currentCatId,level,new SelectedGoodPresenter.SelectGoodGetCallBack() {
                     @Override
                     public void onGetGoodSucc(List<TaoBaoItemVo> goodList, LinkedList<TbCateVo> cateList) {
                         if(tbGoodDataAdapter != null){
@@ -214,6 +222,16 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //返回键处理
+        RxView.clicks(backView).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                          dismissAllowingStateLoss();
+                    }
+                });
     }
 
     @Override

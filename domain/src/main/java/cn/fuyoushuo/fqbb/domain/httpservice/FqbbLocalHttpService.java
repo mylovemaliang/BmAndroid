@@ -53,6 +53,10 @@ public interface FqbbLocalHttpService {
     @GET("/user/mUpdatePwd.htm")
     Observable<HttpResp> updatePassword(@Query("currentPwd") String originPassword,@Query("newPassword") String newPassword);
 
+    //获取兑换订单
+    @GET("/point/morder-{pagenum}.htm")
+    Observable<HttpResp> getDhOrders(@Path("pagenum") int pageNum,@Query("queryStatus") Integer queryStatus);
+
 
 }
 

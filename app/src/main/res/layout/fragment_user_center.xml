@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="########"
             android:id="@+id/user_center_account"
             android:textSize="15sp"
             android:layout_centerInParent="true" />
@@ -56,14 +56,15 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:visibility="gone">
+            android:visibility="visible">
             <TextView
                 android:id="@+id/alimama_login_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 android:text="@string/alimama_login"/>
         </FrameLayout>
+
     </RelativeLayout>
 
 
@@ -273,7 +274,8 @@
                     android:id="@+id/userinfo_useable_money_value"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"/>
-              </RelativeLayout>
+
+            </RelativeLayout>
           </android.support.v7.widget.CardView>
         </TableRow>
     </TableLayout>

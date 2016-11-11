@@ -183,8 +183,8 @@ public class MainActivity extends BaseActivity {
         //判断是否直接转发到详情页
         if(currentShowBizPage==0)
             changeView(MAIN_FRAGMENT_INDEX);
-        else if(currentShowBizPage == 1)
-            changeView(JXSC_FRAGMENT_INDEX);
+//        else if(currentShowBizPage == 1)
+//            changeView(JXSC_FRAGMENT_INDEX);
         else if(currentShowBizPage==2)
             changeView(MYORDER_FRAGMENT_INDEX);
         else if(currentShowBizPage==3)

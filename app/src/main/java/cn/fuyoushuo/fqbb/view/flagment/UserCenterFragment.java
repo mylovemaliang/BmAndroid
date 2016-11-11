@@ -2,12 +2,15 @@ package cn.fuyoushuo.fqbb.view.flagment;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +95,13 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
     private String phoneNum = "";
 
     private String email = "";
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("dddddd");
+
+        return super.onCreateView(inflater,container,savedInstanceState);
+    }
 
     @Override
     protected int getRootLayoutId() {

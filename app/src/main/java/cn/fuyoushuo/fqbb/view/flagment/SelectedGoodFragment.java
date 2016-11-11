@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
+
+import org.w3c.dom.Text;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -64,8 +67,41 @@ public class SelectedGoodFragment extends BaseFragment{
 
     SelectedGoodDataAdapter sportAdapter;
 
+    @Bind(R.id.tehui_more)
+    TextView tehuiMore;
+
+    @Bind(R.id.nzjh_more)
+    TextView nzjhMore;
+
     @Bind(R.id.lz_more)
     TextView lzMore;
+
+    @Bind(R.id.meishi_more)
+    TextView meishiMore;
+
+    @Bind(R.id.jiaju_more)
+    TextView jiajuMore;
+
+    @Bind(R.id.sport_more)
+    TextView sportMore;
+
+    @Bind(R.id.channel_tehui)
+    Button tehuiButton;
+
+    @Bind(R.id.channel_nzjh)
+    Button nzjhButton;
+
+    @Bind(R.id.channel_lz)
+    Button lzButton;
+
+    @Bind(R.id.channel_meishi)
+    Button meishiButton;
+
+    @Bind(R.id.channel_jiaju)
+    Button jiajuButton;
+
+    @Bind(R.id.channel_sport)
+    Button sportButton;
 
     SelectedGoodPresenter selectGoodPresent;
 
@@ -279,6 +315,24 @@ public class SelectedGoodFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //更多按钮的响应
+        RxView.clicks(tehuiMore).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.TEHUI_CHANNEL,"特价好货","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(nzjhMore).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.NZJH_CHANNEL,"女装尖货","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
 
         RxView.clicks(lzMore).compose(this.<Void>bindToLifecycle())
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -289,6 +343,88 @@ public class SelectedGoodFragment extends BaseFragment{
                     }
                 });
 
+        RxView.clicks(meishiMore).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.HCH_CHANNEL,"淘宝汇吃","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(jiajuMore).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.JYJ_CHANNEL,"极有家","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(sportMore).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.KDC_CHANNEL,"酷动城","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        //--------------------------------------对按钮的响应---------------------------------------------------------
+
+        RxView.clicks(tehuiButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.TEHUI_CHANNEL,"特价好货","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(nzjhButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.NZJH_CHANNEL,"女装尖货","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(lzButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.IFI_CHANNEL,"流行男装","50344007").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(meishiButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.HCH_CHANNEL,"淘宝汇吃","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(jiajuButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.JYJ_CHANNEL,"极有家","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+        RxView.clicks(sportButton).compose(this.<Void>bindToLifecycle())
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.KDC_CHANNEL,"酷动城","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
     }
 
     @Override
