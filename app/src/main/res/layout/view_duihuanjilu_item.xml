@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/module_15"
+    android:id="@+id/view_duihuanjilu_item">
+
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+     <TextView
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_widthPercent = "30%w"
+         app:layout_heightPercent = "50%h"
+         android:id="@+id/dh_item_date_string"
+         android:text="2016-11-11"
+         android:textSize="18sp"
+         android:gravity="center"/>
+
+     <TextView
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_widthPercent = "40%w"
+         app:layout_heightPercent = "50%h"
+         android:id="@+id/dh_order_detail"
+         android:text="手机充值:100元"
+         android:textSize="15sp"
+         android:gravity="center"
+         android:layout_toRightOf="@+id/dh_item_date_string"/>
+
+     <TextView
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_widthPercent = "30%w"
+         app:layout_heightPercent = "50%h"
+         android:id="@+id/dh_item_time_string"
+         android:text="15:21:25"
+         android:textSize="18sp"
+         android:gravity="center"
+         android:layout_below="@+id/dh_item_date_string"/>
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          app:layout_widthPercent = "40%w"
+          app:layout_heightPercent = "50%h"
+          android:layout_toRightOf="@+id/dh_item_time_string"
+          android:layout_below="@+id/dh_order_detail"
+          android:id="@+id/dh_phone_value"
+          android:text="18711346638"
+          android:textSize="18sp"
+          android:textColor="@color/module_11"
+          android:gravity="center"/>
+
+        <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          app:layout_widthPercent = "30%w"
+          app:layout_heightPercent = "100%h"
+          android:layout_toRightOf="@+id/dh_phone_value">
+
+          <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="审核失败"
+              android:textColor="@color/white"
+              android:background="@color/module_6"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:paddingLeft="10dp"
+              android:paddingRight = "10dp"
+              android:id="@+id/dh_status_string"
+              android:layout_centerInParent="true"/>
+      </RelativeLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+</android.support.v7.widget.CardView>

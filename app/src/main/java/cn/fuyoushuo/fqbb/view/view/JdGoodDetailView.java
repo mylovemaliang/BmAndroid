@@ -9,7 +9,7 @@ public interface JdGoodDetailView {
 
     void onGetJdFanliFail();
 
-    void onGetJdFanliSucc(JSONObject result);
+    void onGetJdFanliSucc(JSONObject result,String loadUrl);
 
     void onGetCpsSucc(String cpsUrl);
 

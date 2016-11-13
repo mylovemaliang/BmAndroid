@@ -36,7 +36,7 @@ public abstract class BaseFragment extends RxFragment {
      */
     protected abstract int getRootLayoutId();
 
-    protected abstract void initView();
+    protected void initView(){}
 
     /**
      * 初始化组件数据
@@ -60,9 +60,13 @@ public abstract class BaseFragment extends RxFragment {
             ButterKnife.bind(this,inflateView);
         }
         initView();
+        initView(inflateView);
         isInit = true;
         return inflateView;
     }
+
+
+    protected  void initView(View inflateView){};
 
     @Override
     public void onDestroy() {

@@ -1,5 +1,6 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,9 +24,11 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jakewharton.rxbinding.view.RxView;
+import com.trello.rxlifecycle.components.support.RxDialogFragment;
 
 import org.jsoup.helper.DataUtil;
 
+import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +40,7 @@ import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.presenter.impl.JdGoodDetailPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
+import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
 import cn.fuyoushuo.fqbb.view.view.JdGoodDetailView;
 import rx.functions.Action1;
 
@@ -44,12 +48,14 @@ import rx.functions.Action1;
  * 处理京东详情页的相关逻辑
  * Created by QA on 2016/11/3.
  */
-public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDetailView {
+public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodDetailView {
 
 
     private String initUrl = "";
 
-    private String loadUrl = "";
+    private String currentLoadGoodUrl = "";
+
+    private String currentItemId = "";
 
     private WebView myJdWebView;
 
@@ -60,8 +66,8 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
     JdGoodDetailPresenter jdGoodDetailPresenter;
 
-    @Bind(R.id.jd_wv_back_area)
-    FrameLayout backView;
+    @Bind(R.id.wv_back_area)
+    RelativeLayout backView;
 
     @Bind(R.id.fq_jd_tip_area)
     FrameLayout fanliTipLayout;
@@ -75,25 +81,34 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
     @Bind(R.id.jd_hide_tip)
     TextView hideTipText;
 
+    @Bind(R.id.show_fanli)
+    FrameLayout showFanliLayout;
+
+    /**
+     * 0 默认情况 1 去登陆 2 重新获取CPS链接  3 重新获取商品CPS跳转
+     */
+    private int leftTipBiz = 0;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!TextUtils.isEmpty(getArguments().getString("initUrl",""))){
-            this.initUrl = getArguments().getString("initUrl","");
-            this.loadUrl = getArguments().getString("initUrl","");
+        if (!TextUtils.isEmpty(getArguments().getString("initUrl", ""))) {
+            this.initUrl = getArguments().getString("initUrl", "");
+            this.currentLoadGoodUrl = "";
+            this.currentItemId = "";
         }
-        setStyle(DialogFragment.STYLE_NORMAL,R.style.fullScreenDialog);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.fullScreenDialog);
         localLoginPresent = new LocalLoginPresent();
         jdGoodDetailPresenter = new JdGoodDetailPresenter(this);
-}
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.flagment_jd_webview, container);
-        ButterKnife.bind(this,inflate);
+        ButterKnife.bind(this, inflate);
         // TODO: 2016/11/3  初始化VIEW
         myJdWebView = new WebView(MyApplication.getContext());
         myJdWebView.getSettings().setJavaScriptEnabled(true);
@@ -107,25 +122,25 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
         myJdWebView.requestFocusFromTouch();
         myJdWebView.setWebChromeClient(new WebChromeClient());
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             myJdWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(myJdWebView, true);
         }
 
-        myJdWebView.setWebViewClient(new WebViewClient(){
+        myJdWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")){
+                if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")) {
                     String replaceUrl = url.replace("https://", "").replace("http://", "");
                     //http://item.m.jd.com/ware/view.action?wareId=3332179
-                    if(isPageGoodDetail(url) && url.indexOf("jd_pop") == -1 ){
-                        if(!url.contains("#ns")){
-                         String itemId = getJdItemId(replaceUrl);
-                         loadGoodPage(itemId);
+                    if (isOriginPageGoodDetail(url) && url.indexOf("jd_pop") == -1) {
+                        if (!url.contains("#ns")) {
+                            String itemId = getJdItemId(replaceUrl);
+                            loadGoodPage(itemId);
                         }
                     }
                 }
@@ -135,7 +150,7 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if(jdGoodDetailPresenter.isUserFanqianMode(url)){
+                if (jdGoodDetailPresenter.isUserFanqianMode(url)) {
                     leftTipText.setText("返钱模式");
                     leftTipText.setClickable(false);
                     fanliTipLayout.setVisibility(View.VISIBLE);
@@ -146,11 +161,11 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                if(jdGoodDetailPresenter.isUserFanqianMode(url)){
+                if (jdGoodDetailPresenter.isUserFanqianMode(url)) {
                     fanliTipLayout.setVisibility(View.VISIBLE);
-                }else if(isPageGoodDetail(url)){
+                } else if (isPageGoodDetail(url)) {
                     fanliTipLayout.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     fanliTipLayout.setVisibility(View.GONE);
                 }
                 super.onPageFinished(view, url);
@@ -166,15 +181,34 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RxView.clicks(backView).throttleFirst(1000, TimeUnit.MILLISECONDS)
+        RxView.clicks(backView).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                         dismissAllowingStateLoss();
+                        goback();
                     }
                 });
 
-        if(myJdWebView != null){
+        RxView.clicks(leftTipText).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        if (leftTipBiz == 0) return;
+                        else if (leftTipBiz == 1) {
+                            Intent intent = new Intent(getActivity(), UserLoginActivity.class);
+                            intent.putExtra("biz", "MainToJdWv");
+                            startActivity(intent);
+                        }
+                        else if (leftTipBiz == 2) {
+
+                        }
+                        else if(leftTipBiz == 3){
+                            jdGoodDetailPresenter.getJdCpsUrl(currentLoadGoodUrl);
+                        }
+                    }
+                });
+
+        if (myJdWebView != null) {
             myJdWebView.loadUrl(initUrl);
         }
     }
@@ -182,7 +216,7 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
     @Override
     public void onDestroy() {
-        if(myJdWebView != null){
+        if (myJdWebView != null) {
             myJdWebView.removeAllViews();
             myJdWebView.destroy();
         }
@@ -190,72 +224,102 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
     }
 
 
-
-
-    private boolean isPageGoodDetail(String url){
-        if(TextUtils.isEmpty(url)) return false;
-        String replaceUrl = url.replace("http://","").replace("https://","");
-        if(replaceUrl.startsWith("item.m.jd.com/ware/view.action")){
+    private boolean isOriginPageGoodDetail(String url) {
+        if (TextUtils.isEmpty(url)) return false;
+        String replaceUrl = url.replace("http://", "").replace("https://", "");
+        if (replaceUrl.startsWith("item.m.jd.com/ware/view.action")) {
+            return true;
+        } else if (replaceUrl.startsWith("item.m.jd.com/product/")) {
             return true;
         }
-        else if(replaceUrl.startsWith("item.m.jd.com/product/")){
+        return false;
+    }
+
+    private boolean isPageGoodDetail(String url) {
+        if (TextUtils.isDigitsOnly(url)) return false;
+        String replaceUrl = url.replace("http://", "").replace("https://", "");
+        if (replaceUrl.startsWith("item.m.jd.com/ware/view.action")) {
+            return true;
+        } else if (replaceUrl.startsWith("item.m.jd.com/product/")) {
+            return true;
+        } else if (replaceUrl.startsWith("mitem.jd.hk/product/")) {
             return true;
         }
-            return false;
+        return false;
     }
 
 
     //获取商品的id
-    private String getJdItemId(String url){
+    private String getJdItemId(String url) {
         String result = "";
-        if(TextUtils.isEmpty(url)) return result;
+        if (TextUtils.isEmpty(url)) return result;
         //http://item.m.jd.com/ware/view.action?wareId=3332179
-        if(url.startsWith("item.m.jd.com/ware/view.action")){
+        if (url.startsWith("item.m.jd.com/ware/view.action")) {
             String groupResult = "";
             Pattern pattern = Pattern.compile("wareId=([0-9]*)");
             Matcher matcher = pattern.matcher(url);
-            if(matcher.find()){
-            groupResult = matcher.group(1);
+            if (matcher.find()) {
+                groupResult = matcher.group(1);
             }
-            if(!TextUtils.isEmpty(groupResult)) result = groupResult;
+            if (!TextUtils.isEmpty(groupResult)) result = groupResult;
         }
         //http://item.m.jd.com/product/10076124548.html?sid=dbfc3c8a253faf33265f643e30780ebf
-        if(url.startsWith("item.m.jd.com/product/")){
+        if (url.startsWith("item.m.jd.com/product/")) {
             String groupResult = "";
             Pattern pattern = Pattern.compile("/product/([0-9]*)\\.html");
             Matcher matcher = pattern.matcher(url);
-            if(matcher.find()){
-               groupResult = matcher.group(1);
+            if (matcher.find()) {
+                groupResult = matcher.group(1);
             }
-            if(!TextUtils.isEmpty(groupResult)) result = groupResult;
+            if (!TextUtils.isEmpty(groupResult)) result = groupResult;
         }
         return result;
     }
 
     //获取当前商品的页面
-    private void loadGoodPage(final String itemId){
-        if(TextUtils.isEmpty(itemId)) return;
-        final String loadUrl = "http://item.m.jd.com/product/"+itemId+".html";
+    private void loadGoodPage(final String itemId) {
+        if (TextUtils.isEmpty(itemId)) return;
+        final String loadUrl = "http://item.m.jd.com/product/" + itemId + ".html";
+        currentLoadGoodUrl = loadUrl;
+        currentItemId = itemId;
         fanliTipLayout.setVisibility(View.VISIBLE);
         localLoginPresent.isFqbbLocalLogin(new LocalLoginPresent.LoginCallBack() {
             @Override
             public void localLoginSuccess() {
                 leftTipText.setText("处理中");
                 leftTipText.setClickable(false);
-                jdGoodDetailPresenter.getJdFanliInfo(itemId);
-                jdGoodDetailPresenter.getJdCpsUrl(loadUrl);
-
+                jdGoodDetailPresenter.getJdFanliInfo(itemId, loadUrl);
             }
 
             @Override
             public void localLoginFail() {
                 // TODO: 2016/11/3 提示登录
-                leftTipText.setText("登录");
+                leftTipText.setText("去登录");
                 leftTipText.setClickable(true);
-                jdGoodDetailPresenter.getJdFanliInfo(itemId);
+                leftTipBiz = 1;
+                jdGoodDetailPresenter.getJdFanliInfo(itemId,"");
             }
         });
+    }
 
+    public void reloadGoodPage() {
+        if(TextUtils.isEmpty(currentItemId) || TextUtils.isEmpty(currentLoadGoodUrl)){
+            return;
+        }else{
+            leftTipText.setText("去返利");
+            leftTipText.setClickable(true);
+            leftTipBiz = 3;
+        }
+    }
+
+    /**
+     * webview 倒退
+     */
+    private void goback(){
+         if(myJdWebView != null && myJdWebView.canGoBack()){
+             myJdWebView.goBack();
+
+         }
     }
 
 
@@ -272,11 +336,12 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
 
     @Override
     public void onGetJdFanliFail() {
-        rightTipText.setText("返--|约--积分");
+        leftTipText.setText("");
+        rightTipText.setText("当前商品没有返利");
     }
 
     @Override
-    public void onGetJdFanliSucc(JSONObject result) {
+    public void onGetJdFanliSucc(JSONObject result,String loadUrl) {
 
        float percent = 0.00f;
        float sumPrice = 0.00f;
@@ -291,13 +356,15 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
        String percentString = String.valueOf(percent*100);
        String savePoints = String.valueOf(DateUtils.getFormatFloat(sumPrice*percent)*100);
        rightTipText.setText("返"+percentString+"%|"+"约"+savePoints+"积分");
+       if(jdGoodDetailPresenter != null && !TextUtils.isEmpty(loadUrl)){
+          jdGoodDetailPresenter.getJdCpsUrl(loadUrl);
+       }
     }
 
     @Override
     public void onGetCpsSucc(String cpsUrl) {
         if(myJdWebView != null){
             myJdWebView.loadUrl(cpsUrl);
-            this.loadUrl = cpsUrl;
         }
     }
 
@@ -306,5 +373,6 @@ public class JdWebviewDialogFragment extends DialogFragment implements JdGoodDet
         Toast.makeText(MyApplication.getContext(),"获取CPS链接失败,请重试",Toast.LENGTH_SHORT);
         leftTipText.setText("CPS链接获取");
         leftTipText.setClickable(true);
+        leftTipBiz = 2;
     }
 }

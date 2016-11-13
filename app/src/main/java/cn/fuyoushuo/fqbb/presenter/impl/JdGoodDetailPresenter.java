@@ -57,7 +57,7 @@ public class JdGoodDetailPresenter extends BasePresenter{
 
 
     //获取京东的返利信息
-    public void getJdFanliInfo(String itemId){
+    public void getJdFanliInfo(String itemId, final String loadUrl){
 
        mSubscriptions.add(ServiceManager.createService(FqbbLocalHttpService.class)
                .getJdFanliInfo(itemId)
@@ -88,7 +88,7 @@ public class JdGoodDetailPresenter extends BasePresenter{
                                JSONArray resultArray = new JSONArray((List<Object>) result);
                                if(!resultArray.isEmpty()){
                                    if(getMyView() != null){
-                                       getMyView().onGetJdFanliSucc(resultArray.getJSONObject(0));
+                                       getMyView().onGetJdFanliSucc(resultArray.getJSONObject(0),loadUrl);
                                    }
                                }
                            }

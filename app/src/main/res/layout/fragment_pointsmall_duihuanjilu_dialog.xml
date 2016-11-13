@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/duihuanjilu_header"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/duihuanjilu_backArea">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wv_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="积分兑换记录"
+            android:id="@+id/duihuanjilu_title"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+      <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="全部记录"
+            android:textColor="@color/module_11"
+            android:textSize="14sp"
+            android:id="@+id/dhjl_allRecord_button"
+            android:layout_weight="1"
+            android:background="@null"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="审核中"
+            android:textSize="14sp"
+            android:id="@+id/dhjl_underReview_button"
+            android:layout_weight="1"
+            android:background="@null"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="已兑换"
+            android:textSize="14sp"
+            android:id="@+id/dhjl_exchanged_button"
+            android:layout_weight="1"
+            android:background="@null"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="审核失败"
+            android:textSize="14sp"
+            android:id="@+id/dhjl_reviewFailed_button"
+            android:layout_weight="1"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <cn.fuyoushuo.fqbb.view.Layout.RefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/dhjl_result_refreshView">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dhjl_result_rview">
+        </android.support.v7.widget.RecyclerView>
+
+    </cn.fuyoushuo.fqbb.view.Layout.RefreshLayout>
 
 </LinearLayout>

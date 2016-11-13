@@ -19,10 +19,11 @@
         android:layout_centerVertical="true"
         android:background="@null"
         android:hint="请输入新密码"
+        android:inputType="textPassword"
         android:textColorHint="@color/gray"
         android:textSize="18sp"
         android:layout_marginLeft="20dp"
-        android:id="@+id/account_value"/>
+        android:id="@+id/newpass_value"/>
 
         <ImageView
             android:layout_width="wrap_content"

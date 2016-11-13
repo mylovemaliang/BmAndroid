@@ -18,4 +18,8 @@ public interface UserCenterView {
     void onAlimamaLoginSuccess(JSONObject resule);
 
     void onAlimamaLoginError();
+
+    void onLogoutSuccess();
+
+    void onLogoutFail();
 }

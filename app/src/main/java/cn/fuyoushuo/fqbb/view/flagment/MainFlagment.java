@@ -169,7 +169,7 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"jdWebviewDialogFragment");
+                        JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
 //                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
 //                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 //                        startActivity(intent);

@@ -200,38 +200,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/points_mall_tixian"
-        android:layout_below="@+id/points_mall_phone_recharge"
-        android:layout_marginTop="1dp"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提现"
-            android:textSize="18sp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="20dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/jx_9"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:id="@+id/points_mall_duihuanjilu"
-        android:layout_below="@+id/points_mall_tixian"
+        android:layout_below="@+id/points_mall_phone_recharge"
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
@@ -269,6 +239,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="积分明细"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:paddingRight="20dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/jx_9"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/points_mall_tixian"
+        android:layout_below="@+id/points_mall_pointsDetail"
+        android:layout_marginTop="1dp"
+        android:background="@color/gray"
+        android:clickable="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现"
             android:textSize="18sp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

@@ -67,10 +67,8 @@ public class MyOrderFragment extends BaseFragment{
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 0){
-                    ((TbOrderFragment)(fragmentMap.get("tbOrder"))).loadWebviewPage();
-                }else{
-
+                if(position == 1){
+                    ((LocalOrderFragment)(fragmentMap.get("localOrder"))).loadWebview();
                 }
             }
 
@@ -92,6 +90,10 @@ public class MyOrderFragment extends BaseFragment{
         fragment.getFragmentMap().put("tbOrder",new TbOrderFragment());
         fragment.getFragmentMap().put("localOrder",LocalOrderFragment.newInstance());
         return fragment;
+    }
+
+    public void reflashLocalOrder(){
+        ((LocalOrderFragment)(fragmentMap.get("localOrder"))).loadWebview();
     }
 
     static class MyPageAdapter extends FragmentPagerAdapter {

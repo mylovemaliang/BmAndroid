@@ -1,30 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.zhy.android.percent.support.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/jd_wv_header"
+            android:background="@color/module_11">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_widthPercent="15%w"
+                app:layout_heightPercent="100%h"
+                android:id="@+id/wv_back_area">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wv_back"
+                    android:src="@mipmap/back"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="京东好货"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/jd_wv_area">
+        android:id="@+id/jd_wv_area"
+        android:layout_below="@+id/jd_wv_header">
     </RelativeLayout>
+
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/jd_wv_back_area"
+        android:id="@+id/show_fanli"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="150dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/jd_back_border">
+        android:background="@drawable/jd_back_border"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="HOME"
+            android:text="show"
             android:textColor="@color/darkBackground"
             android:padding="5dp"/>
 
@@ -36,7 +72,7 @@
         android:id="@+id/fq_jd_tip_area"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="150dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/fanli_tip_border"
         android:visibility="gone">
