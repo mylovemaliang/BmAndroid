@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
@@ -31,6 +32,7 @@ import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.domain.entity.FCateItem;
 import cn.fuyoushuo.fqbb.domain.entity.FGoodItem;
 import cn.fuyoushuo.fqbb.presenter.impl.MainPresenter;
+import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
 import cn.fuyoushuo.fqbb.view.Layout.MyGridLayoutManager;
 import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
@@ -63,12 +65,6 @@ public class MainFlagment extends BaseFragment implements MainView {
     @Bind(R.id.main_feedback)
     View mainFeedback;
 
-    //ImageCycleView mImageCycleView;
-
-    //private int LUNBO_DELAY_TIME = 2000;
-
-    //public List<ImageCycleView.ImageInfo> listImgsInfo = new ArrayList<ImageCycleView.ImageInfo>();
-
     private MainPresenter mainPresenter;
 
     //private CatesDataAdapter fcatesDataAdapter;
@@ -78,21 +74,30 @@ public class MainFlagment extends BaseFragment implements MainView {
 
     LayoutInflater layoutInflater;
 
-    //LinearLayout topMyOrder;
-
-    //LinearLayout topMyJfb;
-
-    //LinearLayout topTixian;
-
-    //View moreArea;
-
     //recycleview 的头部
     View mainFlagmentHeader;
 
     @Bind(R.id.main_toolbar_searchLayout)
     View mainSearchInputLayout;
 
+    RelativeLayout mainJdArea;
+
+    RelativeLayout mainTbArea;
+
+    RelativeLayout mainTmArea;
+
+    RelativeLayout myTbArea;
+
+
     View chaojifanArea;
+
+    View jiukuaijiuArea;
+
+    View chaoliuArea;
+
+    View chihuoArea;
+
+
 
     //private SharedPreferences lunboImgInfosCache;
 
@@ -164,15 +169,81 @@ public class MainFlagment extends BaseFragment implements MainView {
                     }
         });
 
+        //超级返
         RxView.clicks(chaojifanArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
-//                        Intent intent = new Intent(mactivity,UserLoginActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                        startActivity(intent);
+                        SuperfanDialogFragment.newInstance().show(getFragmentManager(),"SuperfanDialogFragment");
+                    }
+                });
+        //九块九
+        RxView.clicks(jiukuaijiuArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                         JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.JKJ_CHANNEL,"九块九还包邮","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+        //潮流
+        RxView.clicks(chaoliuArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.IFI_CHANNEL,"潮流穿搭","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+        //吃货
+        RxView.clicks(chihuoArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.HCH_CHANNEL,"吃货盛宴","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                    }
+                });
+
+
+        //京东
+        RxView.clicks(mainJdArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                       JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
+                    }
+                });
+
+        //淘宝
+        RxView.clicks(mainTbArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // TODO: 2016/11/14  
+                    }
+                });
+
+        //天猫
+        RxView.clicks(mainTmArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // TODO: 2016/11/14  
+                    }
+                });
+
+        //我的淘宝
+        RxView.clicks(myTbArea).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        // TODO: 2016/11/14  
                     }
                 });
     }
@@ -191,6 +262,20 @@ public class MainFlagment extends BaseFragment implements MainView {
         //moreArea = mainFlagmentHeader.findViewById(R.id.main_more_area);
 
         chaojifanArea = mainFlagmentHeader.findViewById(R.id.card_chaojifan);
+
+        jiukuaijiuArea = mainFlagmentHeader.findViewById(R.id.card_jkj);
+
+        chaoliuArea  = mainFlagmentHeader.findViewById(R.id.card_chaoliu);
+
+        chihuoArea = mainFlagmentHeader.findViewById(R.id.card_chihuo);
+
+        mainJdArea = (RelativeLayout) mainFlagmentHeader.findViewById(R.id.main_jd_icon);
+
+        mainTbArea = (RelativeLayout) mainFlagmentHeader.findViewById(R.id.main_tb_icon);
+
+        mainTmArea = (RelativeLayout) mainFlagmentHeader.findViewById(R.id.main_tm_icon);
+
+        myTbArea = (RelativeLayout) mainFlagmentHeader.findViewById(R.id.main_mytb_icon);
 
         refreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override

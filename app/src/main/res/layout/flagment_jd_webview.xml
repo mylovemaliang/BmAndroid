@@ -35,6 +35,23 @@
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
                 />
+
+             <RelativeLayout
+                 android:layout_width="0dp"
+                 android:layout_height="0dp"
+                 app:layout_widthPercent="15%w"
+                 app:layout_heightPercent="100%h"
+                 android:layout_alignParentRight="true"
+                 android:id="@+id/jd_wv_close">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="关闭"
+                     android:textColor="@color/white"
+                     android:textSize="15sp"
+                     android:layout_centerInParent="true"/>
+             </RelativeLayout>
+
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <RelativeLayout
@@ -53,16 +70,16 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="150dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/jd_back_border"
+        android:background="@drawable/fanli_show_border"
         android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="show"
-            android:textColor="@color/darkBackground"
-            android:padding="5dp"/>
+            android:textSize="18sp"
+            android:text="返"
+            android:textColor="#ffffff"
+            android:padding="10dp"/>
 
     </FrameLayout>
 
@@ -87,6 +104,7 @@
                 android:id="@+id/jd_left_tip_text"
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
+                android:textColor="#ffffff"
                 android:text="返钱模式" />
 
             <TextView
@@ -96,6 +114,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/jd_left_tip_text"
                 android:text="返--%|约--积分"
+                android:textColor="#ffffff"
                 android:textSize="15sp"
                 android:layout_centerVertical="true"/>
 
@@ -105,6 +124,7 @@
                 android:id="@+id/jd_hide_tip"
                 android:layout_toRightOf="@+id/jd_right_tip_text"
                 android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"
                 android:text="隐藏"
                 android:textSize="15sp"
                 android:layout_centerVertical="true" />

@@ -41,6 +41,8 @@ public class SelectedGoodPresenter extends BasePresenter{
      //酷动城
      public static final String KDC_CHANNEL = "kdc";
 
+     //九块九
+     public static final String JKJ_CHANNEL = "9k9";
 
 
       //获取精选商品

@@ -8,6 +8,7 @@ import android.os.PatternMatcher;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     @Bind(R.id.show_fanli)
     FrameLayout showFanliLayout;
 
+    @Bind(R.id.jd_wv_close)
+    RelativeLayout closeArea;
+
     /**
      * 0 默认情况 1 去登陆 2 重新获取CPS链接  3 重新获取商品CPS跳转
      */
@@ -156,6 +160,10 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                     fanliTipLayout.setVisibility(View.VISIBLE);
                     return false;
                 }
+                if(isPageGoodDetail(url) && url.contains("#ns")){
+                    Log.d("jdGoodDetail",url);
+                    return true;
+                }
                 return false;
             }
 
@@ -167,6 +175,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                     fanliTipLayout.setVisibility(View.VISIBLE);
                 } else {
                     fanliTipLayout.setVisibility(View.GONE);
+                    showFanliLayout.setVisibility(View.GONE);
                 }
                 super.onPageFinished(view, url);
             }
@@ -207,6 +216,37 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                         }
                     }
                 });
+
+        RxView.clicks(hideTipText).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        if(fanliTipLayout.isShown()){
+                             fanliTipLayout.setVisibility(View.GONE);
+                             showFanliLayout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+        RxView.clicks(showFanliLayout).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                         if(!(fanliTipLayout.isShown())){
+                             showFanliLayout.setVisibility(View.GONE);
+                             fanliTipLayout.setVisibility(View.VISIBLE);
+                         }
+                    }
+                });
+
+        RxView.clicks(closeArea).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        dismissAllowingStateLoss();
+                    }
+                });
+
 
         if (myJdWebView != null) {
             myJdWebView.loadUrl(initUrl);
@@ -317,8 +357,13 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
      */
     private void goback(){
          if(myJdWebView != null && myJdWebView.canGoBack()){
-             myJdWebView.goBack();
-
+             String url = myJdWebView.getUrl();
+             if(!TextUtils.isEmpty(url) || jdGoodDetailPresenter.isUserFanqianMode(url)){
+                  //返回首页
+                  myJdWebView.loadUrl("http://m.jd.com");
+             }else{
+                myJdWebView.goBack();
+             }
          }
     }
 
