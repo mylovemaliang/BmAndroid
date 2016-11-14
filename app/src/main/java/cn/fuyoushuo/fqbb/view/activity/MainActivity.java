@@ -29,10 +29,12 @@ import cn.fuyoushuo.fqbb.view.Layout.AppUpdateView;
 import cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout;
 import cn.fuyoushuo.fqbb.view.flagment.AlimamaLoginDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.JdWebviewDialogFragment;
+import cn.fuyoushuo.fqbb.view.flagment.JxspDetailDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.MainFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyJifenFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.MyOrderFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SelectedGoodFragment;
+import cn.fuyoushuo.fqbb.view.flagment.TbSearchResFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.order.TbOrderFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 import cn.fuyoushuo.fqbb.view.flagment.TixianFlagment;
@@ -216,6 +218,16 @@ public class MainActivity extends BaseActivity {
                      changeView(MAIN_FRAGMENT_INDEX);
                      currentShowBizPage = MAIN_FRAGMENT_INDEX;
                      mainButton.setChecked(true);
+                 }
+                 else if(busEvent instanceof JxspDetailDialogFragment.JxscToGoodInfoEvent){
+                     JxspDetailDialogFragment.JxscToGoodInfoEvent event = (JxspDetailDialogFragment.JxscToGoodInfoEvent) busEvent;
+                    /*Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                    intent.putExtra("goodUrl",event.getGoodUrl());*/
+                     Intent intent = new Intent(MainActivity.this, WebviewActivity.class);
+                     intent.putExtra("loadUrl",event.getGoodUrl());
+                     intent.putExtra("forSearchGoodInfo",false);
+                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                     startActivity(intent);
                  }
             }
         }));

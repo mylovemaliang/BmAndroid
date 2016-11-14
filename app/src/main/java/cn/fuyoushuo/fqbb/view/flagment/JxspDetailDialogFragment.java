@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.CommonUtils;
+import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.domain.entity.TaoBaoItemVo;
 import cn.fuyoushuo.fqbb.domain.entity.TbCateVo;
 import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
@@ -208,6 +209,10 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
                 // TODO: 2016/11/10 点击商品逻辑实现
+                String goodUrl = goodItem.getUrl();
+                if(!TextUtils.isEmpty(goodUrl)) {
+                    RxBus.getInstance().send(new JxscToGoodInfoEvent(goodUrl));
+                }
             }
 
             @Override
@@ -289,4 +294,23 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
            }
         }
     }
+
+   //----------------------------------event时间统计----------------------------------------------
+
+   public class JxscToGoodInfoEvent extends RxBus.BusEvent{
+
+       private String goodUrl;
+
+       public String getGoodUrl() {
+           return goodUrl;
+       }
+
+       public void setGoodUrl(String goodUrl) {
+           this.goodUrl = goodUrl;
+       }
+
+       public JxscToGoodInfoEvent(String goodUrl) {
+           this.goodUrl = goodUrl;
+       }
+   }
 }

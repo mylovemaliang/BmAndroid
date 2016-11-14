@@ -2,6 +2,7 @@ package cn.fuyoushuo.fqbb.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -208,6 +209,8 @@ public class SearchActivity extends BaseActivity {
         if(mSubscriptions.hasSubscriptions()){
             mSubscriptions.unsubscribe();
         }
+        //退出所在进程
+        System.exit(0);
     }
 
     //-----------------------------------------------通信接口--------------------------------------

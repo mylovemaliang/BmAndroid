@@ -1,7 +1,12 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.net.http.SslError;
+import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -9,7 +14,6 @@ import android.widget.LinearLayout;
 import java.net.URLEncoder;
 
 import butterknife.Bind;
-import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 
 /**
@@ -27,6 +31,7 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
     @Bind(R.id.jd_search_webview_container)
     LinearLayout myJdContainer;
 
+    @Bind(R.id.jd_search_webview)
     WebView myJdWebView;
 
     @Override
@@ -36,16 +41,23 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
 
     @Override
     protected void initView() {
-        myJdWebView = new WebView(MyApplication.getContext());
         myJdWebView.getSettings().setJavaScriptEnabled(true);
-        //myJdWebView.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
         myJdWebView.getSettings().setSupportZoom(true);//是否可以缩放，默认true
         myJdWebView.getSettings().setDomStorageEnabled(true);
         myJdWebView.getSettings().setUseWideViewPort(true);// 设置此属性，可任意比例缩放。大视图模式
         myJdWebView.getSettings().setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
-        myJdWebView.requestFocusFromTouch();
-
+        //myJdWebView.requestFocusFromTouch();
+        myJdWebView.getSettings().setAllowContentAccess(true);
+        myJdWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            myJdWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        }
         myJdWebView.setWebChromeClient(new WebChromeClient());
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            myJdWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(myJdWebView, true);
 
         myJdWebView.setWebViewClient(new WebViewClient(){
             @Override
@@ -55,6 +67,11 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
                     if(replaceUrl.startsWith(jd_search_url_prifix)){
                         view.loadUrl(url);
                         return true;
+                    }
+                    //去到京东详情页处理
+                    if(isPageGoodDetail(url)){
+                         JdWebviewDialogFragment.newInstance(url).show(getFragmentManager(),"JdWebviewDialogFragment");
+                         return true;
                     }
                     return false;
                 }else{
@@ -66,8 +83,21 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
             }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                if(url.startsWith("http://stat.m.jd.com/m/access")){
+                    System.out.println("333333");
+                }
+                super.onLoadResource(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                System.out.println("1111111");
+                super.onReceivedSslError(view, handler, error);
+            }
         });
-        myJdContainer.addView(myJdWebView);
         if(!isInit){
             myJdWebView.loadUrl(getCurrentUrl(this.q));
         }
@@ -76,6 +106,21 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
     @Override
     protected void initData() {
 
+    }
+
+    private boolean isPageGoodDetail(String url) {
+        if (TextUtils.isEmpty(url)) return false;
+        String replaceUrl = url.replace("http://", "").replace("https://", "");
+        if (replaceUrl.startsWith("item.m.jd.com/ware/view.action")) {
+            return true;
+        } else if (replaceUrl.startsWith("item.m.jd.com/product/")) {
+            return true;
+        } else if (replaceUrl.startsWith("mitem.jd.hk/product/")){
+            return true;
+        } else if(replaceUrl.startsWith("mitem.jd.hk/ware/view.action")){
+            return true;
+        }
+        return false;
     }
     /**
      * 获取当前url

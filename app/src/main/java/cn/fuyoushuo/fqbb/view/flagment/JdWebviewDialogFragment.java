@@ -141,7 +141,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                 if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")) {
                     String replaceUrl = url.replace("https://", "").replace("http://", "");
                     //http://item.m.jd.com/ware/view.action?wareId=3332179
-                    if (isOriginPageGoodDetail(url) && url.indexOf("jd_pop") == -1) {
+                    if (isPageGoodDetail(url) && url.indexOf("jd_pop") == -1) {
                         if (!url.contains("#ns")) {
                             String itemId = getJdItemId(replaceUrl);
                             loadGoodPage(itemId);
@@ -263,38 +263,29 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         super.onDestroy();
     }
 
-
-    private boolean isOriginPageGoodDetail(String url) {
+    //http://mitem.jd.hk/product/3336062.html?sid=6891dd56029cece0e25bbf3a7ea56e69
+    //http://mitem.jd.hk/ware/view.action?wareId=2457625&cachekey=3114863cc00f80
+    private boolean isPageGoodDetail(String url) {
         if (TextUtils.isEmpty(url)) return false;
         String replaceUrl = url.replace("http://", "").replace("https://", "");
         if (replaceUrl.startsWith("item.m.jd.com/ware/view.action")) {
             return true;
         } else if (replaceUrl.startsWith("item.m.jd.com/product/")) {
             return true;
-        }
-        return false;
-    }
-
-    private boolean isPageGoodDetail(String url) {
-        if (TextUtils.isDigitsOnly(url)) return false;
-        String replaceUrl = url.replace("http://", "").replace("https://", "");
-        if (replaceUrl.startsWith("item.m.jd.com/ware/view.action")) {
+        } else if (replaceUrl.startsWith("mitem.jd.hk/product/")){
             return true;
-        } else if (replaceUrl.startsWith("item.m.jd.com/product/")) {
-            return true;
-        } else if (replaceUrl.startsWith("mitem.jd.hk/product/")) {
+        } else if(replaceUrl.startsWith("mitem.jd.hk/ware/view.action")){
             return true;
         }
         return false;
     }
-
 
     //获取商品的id
     private String getJdItemId(String url) {
         String result = "";
         if (TextUtils.isEmpty(url)) return result;
         //http://item.m.jd.com/ware/view.action?wareId=3332179
-        if (url.startsWith("item.m.jd.com/ware/view.action")) {
+        if (url.startsWith("item.m.jd.com/ware/view.action") || url.startsWith("mitem.jd.hk/ware/view.action")) {
             String groupResult = "";
             Pattern pattern = Pattern.compile("wareId=([0-9]*)");
             Matcher matcher = pattern.matcher(url);
@@ -304,7 +295,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             if (!TextUtils.isEmpty(groupResult)) result = groupResult;
         }
         //http://item.m.jd.com/product/10076124548.html?sid=dbfc3c8a253faf33265f643e30780ebf
-        if (url.startsWith("item.m.jd.com/product/")) {
+        if (url.startsWith("item.m.jd.com/product/") || url.startsWith("mitem.jd.hk/product/")) {
             String groupResult = "";
             Pattern pattern = Pattern.compile("/product/([0-9]*)\\.html");
             Matcher matcher = pattern.matcher(url);

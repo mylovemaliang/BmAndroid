@@ -58,6 +58,8 @@
             android:name=".view.activity.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/SearchActivityTheme"
+            android:process=":searchProcess"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
 
         <activity
@@ -81,6 +83,7 @@
             android:name=".view.activity.WebviewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"
+            android:process=":webview"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
         <activity
             android:name=".view.activity.HelpActivity"
