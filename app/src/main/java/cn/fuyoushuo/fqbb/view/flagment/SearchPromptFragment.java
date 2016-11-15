@@ -75,11 +75,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
     @Bind(R.id.search_prompt_flagment_toolbar)
     RelativeLayout toolbar;
 
-
-    @Bind(R.id.search_prompt_flagment_searchtype_btn)
-    TextView searchTypeButton;
-
-
     @Bind(R.id.serach_prompt_flagment_searchText)
     EditText searchText;
 
@@ -216,7 +211,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
             @Override
             public void onclick(View view, SearchMenuAdapter.RowItem rowItem) {
                 searchTypeMenu.dismissWindow();
-                searchTypeButton.setText(rowItem.getRowDesc());
                 if (SearchCondition.search_cate_superfan.equals(rowItem.getSortCode())) {
                     seartchPo.setSearchType(SearchCondition.search_cate_superfan);
                 } else if (SearchCondition.search_cate_commonfan.equals(rowItem.getSortCode())) {
@@ -254,15 +248,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
             }
         });
 
-        RxView.clicks(searchTypeButton).throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        searchTypeMenu.showWindow();
-                    }
-        });
-
         RxView.clicks(cancelView).throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<Void>() {
@@ -295,7 +280,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         searchText.requestFocus();
 
         //更新数据
-        searchTypeButton.setText(SearchCondition.getSearchTypeDesc(seartchPo.getSearchType()));
         searchText.setText(seartchPo.getQ());
         isViewBuild = true;
     }
@@ -339,7 +323,6 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         String q = po.getQ();
         seartchPo.setSearchType(searchType);
         seartchPo.setQ(q);
-        searchTypeButton.setText(SearchCondition.getSearchTypeDesc(searchType));
         if(!TextUtils.isEmpty(q)){
             switchContent(mContent,searchAutoCompleteFragment);
             searchPromptPresenter.searchWordsByKey(q);

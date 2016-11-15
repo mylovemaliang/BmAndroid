@@ -57,6 +57,9 @@ public interface FqbbLocalHttpService {
     @GET("/point/morder-{pagenum}.htm")
     Observable<HttpResp> getDhOrders(@Path("pagenum") int pageNum,@Query("queryStatus") Integer queryStatus);
 
+    //获取兑换详情
+    @GET("/point/mpdetail-{pagenum}.htm?pagesize=50")
+    Observable<HttpResp> getDhDetails(@Path("pagenum") int pageNum);
 
 }
 

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/darkBackground"
-        android:textSize="13sp"
+        android:textSize="15sp"
         android:id="@+id/top_recycle_item_text"
         android:gravity="center" />
 

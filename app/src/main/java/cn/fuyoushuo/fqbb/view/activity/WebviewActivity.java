@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,7 +185,7 @@ public class WebviewActivity extends BaseActivity {
 
         myWebView.setWebViewClient(new WebViewClient(){
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
                 if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")){
                     //Log.i("taobao webview shouldOverrideUrlLoading", url);
                     if(url.contains("ali_trackid=2:mm_") || url.contains("ali_trackid=2%3Amm_")){
@@ -202,11 +203,12 @@ public class WebviewActivity extends BaseActivity {
                     //https://buy.m.tmall.com/order/confirmOrderWap.htm?enc=%E2%84%A2&buyNow=true&_input_charset=utf-8&itemId=533800099546&skuId=3184727994633&quantity=1&divisionCode=310100&x-itemid=533800099546&x-uid=589338408
                     //进入淘宝下单页面需要判断阿里妈妈是否在线
                     if(url.replace("http://","").replace("https://","").startsWith("h5.m.taobao.com/awp/base/order.htm") ||
-                       url.replace("http://","").replace("https://","").startsWith("buy.m.tmall.com/order/confirmOrderWap.htm") ){
+                       isTmallOrderPage(url) ){
                         TaobaoInterPresenter.judgeAlimamaLogin(new TaobaoInterPresenter.LoginCallback() {
                            @Override
                            public void hasLoginCallback() {
-                               // TODO: 2016/10/14  
+                               // TODO: 2016/10/14
+                               view.loadUrl(url);
                            }
 
                            @Override
@@ -225,6 +227,7 @@ public class WebviewActivity extends BaseActivity {
                                // TODO: 2016/10/14     
                            }
                        },VOLLEY_TAG_NAME);
+                        return true;
                     }
 
                     if(isTaobaoItemDetail(url)){//是商品详情页
@@ -974,6 +977,24 @@ public class WebviewActivity extends BaseActivity {
 
             }
         },VOLLEY_TAG_NAME);
+    }
+
+
+    //判断是否是天猫下单页面
+    private boolean isTmallOrderPage(String url){
+        if(TextUtils.isEmpty(url)) return false;
+        else if(url.replace("http://","").replace("https://","").startsWith("buy.m.tmall.com/order/confirmOrderWap.htm")) {
+            return true;
+        }
+        else if(url.replace("http://","").replace("https://","").startsWith("login.tmall.com/")){
+            Map<String, String> paramsMapByUrlStr = getParamsMapByUrlStr(url);
+            if(!paramsMapByUrlStr.isEmpty()){
+                if((paramsMapByUrlStr.containsKey("redirectURL") && paramsMapByUrlStr.get("redirectURL").contains("detail.m.tmall.com%2Fitem.htm"))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void isLoginForMyTaobao(){

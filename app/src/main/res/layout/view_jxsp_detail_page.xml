@@ -26,15 +26,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="女装"
+            android:textStyle="bold"
             android:id="@+id/jxsp_title"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
       android:layout_width="match_parent"
-      android:layout_height="35dp"
+      android:layout_height="50dp"
       android:id="@+id/jxsp_detail_topRcycleView"
       android:layout_below="@+id/jxsp_detail_header">
     </android.support.v7.widget.RecyclerView>
