@@ -54,12 +54,12 @@
 
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
-    <RelativeLayout
+    <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/jd_wv_area"
+        android:id="@+id/jd_wv"
         android:layout_below="@+id/jd_wv_header">
-    </RelativeLayout>
+    </WebView>
 
 
     <FrameLayout

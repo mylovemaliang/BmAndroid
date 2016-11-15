@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -223,7 +224,10 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 2016/11/14  
+                        // TODO: 2016/11/15
+                        Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                        intent.putExtra("loadUrl","https://m.taobao.com");
+                        startActivity(intent);
                     }
                 });
 
@@ -233,7 +237,10 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 2016/11/14  
+                        // TODO: 2016/11/14
+                        Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                        intent.putExtra("loadUrl","https://www.tmall.com/?from=m");
+                        startActivity(intent);
                     }
                 });
 
@@ -243,7 +250,12 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        // TODO: 2016/11/14  
+                        // TODO: 2016/11/14
+                        Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent.putExtra("loadUrl", "https://h5.m.taobao.com/mlapp/mytaobao.html#mlapp-mytaobao");
+                        intent.putExtra("forSearchGoodInfo", false);
+                        startActivity(intent);
                     }
                 });
     }

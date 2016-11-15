@@ -2,7 +2,6 @@ package cn.fuyoushuo.fqbb.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -66,18 +65,11 @@ public class SearchActivity extends BaseActivity {
         //处理crash
         //int resultcode = processCrash();
         //Log.i("testmy","c0"+resultcode);
+         fragmentTransaction.hide(searchFlagment);
+         fragmentTransaction.show(searchPromptFragment);
+         mContent = searchPromptFragment;
+         currentFlag = FLAG_SEARCHPROMT;
 
-        if(processIntent(false)){
-            fragmentTransaction.hide(searchPromptFragment);
-            fragmentTransaction.show(searchFlagment);
-            mContent = searchFlagment;
-            currentFlag = FLAG_SEARCH;
-        }else if(!processIntent(false)){
-            fragmentTransaction.hide(searchFlagment);
-            fragmentTransaction.show(searchPromptFragment);
-            mContent = searchPromptFragment;
-            currentFlag = FLAG_SEARCHPROMT;
-        }
         fragmentTransaction.commitAllowingStateLoss();
     }
 
@@ -85,26 +77,27 @@ public class SearchActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        if(processIntent(true)){
-            switchContent(searchPromptFragment,searchFlagment);
+        if(processIntent()){
+            initFragmentToOrigin();
         }
     }
 
-    private boolean processIntent(boolean isFlagmentExist){
-        //判断是否直接转发到详情页
+    //判断是否重新重置页面
+    private boolean processIntent(){
         Intent intent = getIntent();
-        boolean intentFromMainMore = intent.getBooleanExtra("intentFromMainMore", false);
-        String searchKey = intent.getStringExtra("searchKey");
-        SeartchPo po = new SeartchPo();
-        po.setSearchType(SearchCondition.search_cate_superfan);
-        po.setQ(searchKey);
+        boolean intentFromMain = intent.getBooleanExtra("intentFromMain",true);
         //重置
-        if(!intentFromMainMore){
-            return false;
+        if(intentFromMain){
+            return true;
         }
-        searchFlagment.refreshSearchView(po);
-        return true;
+        return false;
     }
+
+    private void initFragmentToOrigin(){
+        searchPromptFragment.initToOrigin();
+        switchContent(searchFlagment,searchPromptFragment);
+    }
+
 
     //处理crash恢复
     private int processCrash(){
@@ -164,7 +157,6 @@ public class SearchActivity extends BaseActivity {
                     Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
-                    finish();
                 }
                 if (busEvent instanceof SearchPromptFragment.BacktoSearchFlagEvent) {
                     switchContent(mContent, searchFlagment);
@@ -195,7 +187,6 @@ public class SearchActivity extends BaseActivity {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -209,8 +200,6 @@ public class SearchActivity extends BaseActivity {
         if(mSubscriptions.hasSubscriptions()){
             mSubscriptions.unsubscribe();
         }
-        //退出所在进程
-        System.exit(0);
     }
 
     //-----------------------------------------------通信接口--------------------------------------

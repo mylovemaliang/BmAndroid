@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -58,10 +59,8 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
 
     private String currentItemId = "";
 
-    private WebView myJdWebView;
-
-    @Bind(R.id.jd_wv_area)
-    RelativeLayout webViewArea;
+    @Bind(R.id.jd_wv)
+    WebView myJdWebView;
 
     LocalLoginPresent localLoginPresent;
 
@@ -114,7 +113,6 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         View inflate = inflater.inflate(R.layout.flagment_jd_webview, container);
         ButterKnife.bind(this, inflate);
         // TODO: 2016/11/3  初始化VIEW
-        myJdWebView = new WebView(MyApplication.getContext());
         myJdWebView.getSettings().setJavaScriptEnabled(true);
         //myWebView.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
         myJdWebView.getSettings().setSupportZoom(true);//是否可以缩放，默认true
@@ -180,8 +178,6 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                 super.onPageFinished(view, url);
             }
         });
-
-        webViewArea.addView(myJdWebView);
         return inflate;
     }
 
@@ -257,9 +253,15 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     @Override
     public void onDestroy() {
         if (myJdWebView != null) {
+            ViewGroup viewGroup = (ViewGroup) myJdWebView.getParent();
+            if(viewGroup!=null){
+                viewGroup.removeView(myJdWebView);
+            }
             myJdWebView.removeAllViews();
             myJdWebView.destroy();
         }
+        localLoginPresent.onDestroy();
+        jdGoodDetailPresenter.onDestroy();
         super.onDestroy();
     }
 

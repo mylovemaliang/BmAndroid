@@ -19,29 +19,15 @@
             app:layout_marginLeftPercent="10%"
             android:background="@drawable/textborder"
             android:layout_centerVertical="true">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:text="超级返"
-                android:gravity="center"
-                android:id="@+id/search_prompt_flagment_searchtype_btn"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="1dp"
-                android:background="@mipmap/search_promt_spinner"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:layout_marginLeft="10dp"
                 android:imeOptions="actionSearch"
                 android:textSize="15sp"
                 android:singleLine="true"
+                android:gravity="center"
                 android:hint="请输入相关商品"
                 android:textCursorDrawable="@null"
                 android:id="@+id/serach_prompt_flagment_searchText"/>

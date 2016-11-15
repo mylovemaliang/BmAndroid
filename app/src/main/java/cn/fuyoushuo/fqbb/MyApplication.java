@@ -1,11 +1,13 @@
 package cn.fuyoushuo.fqbb;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.alibaba.sdk.android.feedback.util.IWxCallback;
@@ -48,6 +50,8 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        Log.d("application init",getCurProcessName(context));
+        if(getCurProcessName(context) != null || !"cn.fuyoushuo.fqbb:searchProcess".equals(getCurProcessName(context))){
         try {
             ApplicationInfo appInfo = this.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             feedbackAppkey = String.valueOf(appInfo.metaData.getInt("feedback_appkey"));
@@ -77,6 +81,7 @@ public class MyApplication extends Application{
         displayMetrics = context.getResources().getDisplayMetrics();
         mRefWatcher = Constants.DEBUG ?  LeakCanary.install(this) : RefWatcher.DISABLED;
         initFeedBack(feedbackAppkey);
+      }
     }
 
     public static RefWatcher getRefWatcher(Context context) {
@@ -134,6 +139,19 @@ public class MyApplication extends Application{
 
             }
         });
+    }
+
+    private String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 
     //----------------------------------------activity 管理 --------------------------------------------

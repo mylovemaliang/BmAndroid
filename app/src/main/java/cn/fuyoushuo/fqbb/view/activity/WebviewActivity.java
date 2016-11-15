@@ -710,6 +710,7 @@ public class WebviewActivity extends BaseActivity {
 
             isFromGoodSearch = false;
             Intent intent = new Intent(WebviewActivity.this, SearchActivity.class);
+            intent.putExtra("intentFromMain",false);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             finish();

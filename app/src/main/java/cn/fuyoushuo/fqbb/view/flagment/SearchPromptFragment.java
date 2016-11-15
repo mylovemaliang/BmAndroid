@@ -232,12 +232,15 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     //保存当前搜索词
-                    saveSearch(seartchPo.getQ());
+                    String q = seartchPo.getQ();
                     /*隐藏软键盘*/
                     if (inputMethodManager.isActive()) {
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
                     }
-                    RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
+                    if(!TextUtils.isEmpty(q)){
+                       saveSearch(q);
+                       RxBus.getInstance().send(new ToSearchFlagmentEvent(seartchPo));
+                    }
                 }
 //                if(keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN){
 //                    //解决键盘删除的BUG
@@ -479,5 +482,14 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         searchPromtOriginFragment.refreshHisData(items);
         searchPromptPresenter.getHotSearchWords();
     }
+
+    //初始化原始状态
+    public void initToOrigin(){
+        this.seartchPo = new SeartchPo();
+        searchText.setText("");
+        initPromtOrigin();
+        switchContent(searchAutoCompleteFragment,searchPromtOriginFragment);
+    }
+
 
 }

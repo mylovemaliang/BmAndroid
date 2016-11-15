@@ -3,7 +3,6 @@
     package="cn.fuyoushuo.fqbb">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -11,10 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--<uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>-->
+    <!--
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    -->
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".MyApplication"
@@ -22,25 +23,22 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true">
-
-        <activity android:name=".view.activity.LauncherActivity"
-                  android:configChanges="orientation|keyboardHidden"
-                  android:theme="@style/AppTheme"
-                  android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
+        <activity
+            android:name=".view.activity.LauncherActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.UserguideActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize">
-        </activity>
-
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
         <activity
             android:name=".view.activity.AppstartActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -58,21 +56,17 @@
             android:name=".view.activity.SearchActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/SearchActivityTheme"
-            android:process=":searchProcess"
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
-
         <activity
             android:name=".view.activity.UserLoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/LoginActivityTheme"
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
-
         <activity
             android:name=".view.activity.PointMallActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustUnspecified|adjustResize" />
-
         <activity
             android:name=".view.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -82,7 +76,6 @@
             android:name=".view.activity.WebviewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"
-            android:process=":webview"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
         <activity
             android:name=".view.activity.HelpActivity"
@@ -95,9 +88,19 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" />
 
-        <meta-data android:value="57aabc7de0f55a1987001856" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
-        <meta-data android:value="23441360" android:name="feedback_appkey"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57aabc7de0f55a1987001856" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+        <meta-data
+            android:name="feedback_appkey"
+            android:value="23441360" />
+
+        <service
+            android:name=".PreLoadService"
+            android:process=":searchProcess"></service>
     </application>
 
 </manifest>

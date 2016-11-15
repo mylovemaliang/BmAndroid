@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import cn.fuyoushuo.fqbb.PreLoadService;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
@@ -125,7 +126,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main_layout);
         mSubscriptions = new CompositeSubscription();
         fragmentManager = getSupportFragmentManager();
@@ -208,6 +208,7 @@ public class MainActivity extends BaseActivity {
                      // TODO: 2016/7/5
                      Intent intent = new Intent(MainActivity.this,SearchActivity.class);
                      intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                     intent.putExtra("intentFromMain",true);
                      startActivity(intent);
                  }
                  else if(busEvent instanceof AlimamaLoginDialogFragment.AlimamaLoginToUserCenterEvent){
@@ -458,6 +459,7 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         exit();
     }
+
 
     //所有Activity退出
     public void exit() {
