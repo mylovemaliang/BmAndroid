@@ -20,8 +20,10 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/selected_good_image"/>
+        android:layout_height="150dp"
+        android:id="@+id/selected_good_image"
+        android:src="@mipmap/jxsc_head"
+        android:scaleType="fitXY"/>
 
      <LinearLayout
         android:layout_width="match_parent"

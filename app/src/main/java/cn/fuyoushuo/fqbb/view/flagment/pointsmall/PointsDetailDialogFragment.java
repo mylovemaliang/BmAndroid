@@ -25,6 +25,7 @@ import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.domain.entity.DuihuanDetail;
 import cn.fuyoushuo.fqbb.presenter.impl.pointsmall.DuihuanDetailPresent;
+import cn.fuyoushuo.fqbb.view.Layout.DhDetailDecoration;
 import cn.fuyoushuo.fqbb.view.Layout.DhOrderDecoration;
 import cn.fuyoushuo.fqbb.view.Layout.MyGridLayoutManager;
 import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
@@ -75,7 +76,7 @@ public class PointsDetailDialogFragment extends RxDialogFragment implements Duih
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         resultRview.setLayoutManager(gridLayoutManager);
         resultRview.setAdapter(duihuanDetailAdapter);
-        resultRview.addItemDecoration(new DhOrderDecoration());
+        resultRview.addItemDecoration(new DhDetailDecoration());
         return inflate;
     }
 
