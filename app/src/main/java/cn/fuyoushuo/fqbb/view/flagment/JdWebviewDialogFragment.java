@@ -136,7 +136,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")) {
+                 if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")) {
                     String replaceUrl = url.replace("https://", "").replace("http://", "");
                     //http://item.m.jd.com/ware/view.action?wareId=3332179
                     if (isPageGoodDetail(url) && url.indexOf("jd_pop") == -1) {
@@ -391,7 +391,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                sumPrice = result.getFloatValue("itemPriceWl");
            }
        }
-       String percentString = String.valueOf(percent*100);
+       String percentString = String.valueOf(DateUtils.getFormatFloat(percent*100));
        String savePoints = String.valueOf(DateUtils.getFormatFloat(sumPrice*percent)*100);
        rightTipText.setText("返"+percentString+"%|"+"约"+savePoints+"积分");
        if(jdGoodDetailPresenter != null && !TextUtils.isEmpty(loadUrl)){

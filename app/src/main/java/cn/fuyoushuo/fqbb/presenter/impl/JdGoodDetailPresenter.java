@@ -90,6 +90,10 @@ public class JdGoodDetailPresenter extends BasePresenter{
                                    if(getMyView() != null){
                                        getMyView().onGetJdFanliSucc(resultArray.getJSONObject(0),loadUrl);
                                    }
+                               }else{
+                                   if(getMyView() != null){
+                                       getMyView().onGetJdFanliFail();
+                                   }
                                }
                            }
                        }

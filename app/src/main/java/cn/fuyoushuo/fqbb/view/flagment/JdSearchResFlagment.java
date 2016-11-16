@@ -158,4 +158,11 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
            }
        }
     }
+
+    @Override
+    public void initState() {
+        if(myJdWebView != null){
+            myJdWebView.loadUrl("about:blank");
+        }
+    }
 }

@@ -26,17 +26,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="阿里妈妈登录"
             android:id="@+id/alimama_login_title"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:orientation="horizontal"
+        android:id="@+id/line1"
+        android:layout_below="@+id/alimama_login_headler"
+        android:background="@color/gray"
+        ></LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/alimama_login_webview_area"
-        android:layout_below="@+id/alimama_login_headler">
+        android:layout_below="@+id/line1">
 
     </RelativeLayout>
 

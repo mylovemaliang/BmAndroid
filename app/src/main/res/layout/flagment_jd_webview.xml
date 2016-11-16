@@ -104,7 +104,7 @@
                 android:id="@+id/jd_left_tip_text"
                 android:layout_centerVertical="true"
                 android:textSize="15sp"
-                android:textColor="#ffffff"
+                android:textColor="@color/module_6"
                 android:text="返钱模式" />
 
             <TextView

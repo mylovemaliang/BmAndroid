@@ -32,10 +32,18 @@
         android:layout_centerInParent="true"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:orientation="horizontal"
+        android:background="@color/gray"
+        android:id="@+id/line1"
+        android:layout_below="@+id/login_header"></LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/login_fragment_area"
-        android:layout_below="@+id/login_header"/>
+        android:layout_below="@+id/line1"/>
 
 </RelativeLayout>

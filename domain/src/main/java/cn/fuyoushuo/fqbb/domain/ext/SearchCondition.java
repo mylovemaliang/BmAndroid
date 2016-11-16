@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by QA on 2016/7/7.
@@ -222,6 +223,18 @@ public class SearchCondition implements Serializable{
          }
         SearchItem searchItem = searchItems.get(key);
         searchItem.setValues(values);
+    }
+
+    public void deleteSortItem(){
+        if(searchItems != null && !searchItems.isEmpty()){
+            Set<Map.Entry<String, SearchItem>> entries = searchItems.entrySet();
+            for(Map.Entry<String, SearchItem> entry : entries){
+                if(search_type_sort == entry.getValue().getType()){
+                     searchItems.remove(entry.getKey());
+                     break;
+                }
+            }
+        }
     }
 
     //获取搜索描述

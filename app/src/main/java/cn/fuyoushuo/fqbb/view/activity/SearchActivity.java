@@ -95,6 +95,7 @@ public class SearchActivity extends BaseActivity {
 
     private void initFragmentToOrigin(){
         searchPromptFragment.initToOrigin();
+        searchFlagment.initToOrigin();
         switchContent(searchFlagment,searchPromptFragment);
     }
 

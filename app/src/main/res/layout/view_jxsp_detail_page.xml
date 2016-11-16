@@ -33,11 +33,19 @@
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:orientation="horizontal"
+        android:background="@color/gray"
+        android:layout_below="@+id/jxsp_detail_header"
+        android:id="@+id/line1"></LinearLayout>
+
     <android.support.v7.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:id="@+id/jxsp_detail_topRcycleView"
-      android:layout_below="@+id/jxsp_detail_header">
+      android:layout_below="@+id/line1">
     </android.support.v7.widget.RecyclerView>
 
     <cn.fuyoushuo.fqbb.view.Layout.RefreshLayout
@@ -46,6 +54,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/jxsp_detail_topRcycleView">
 
         <android.support.v7.widget.RecyclerView

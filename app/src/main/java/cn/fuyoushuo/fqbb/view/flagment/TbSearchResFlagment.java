@@ -376,6 +376,8 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView,Sear
         this.q = q;
         rightSearchViewMap.clear();
         //changeSearchType(searchType);
+        searchleftBtn.setText("综合排序");
+        searchCondition.deleteSortItem();
         searchCondition.updateSearchKeyValue("q",q);
         searchPresenter.getSearchResult(searchCondition,false);
     }
@@ -936,6 +938,19 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView,Sear
             changeSearchType(searchCateString);
             searchPresenter.getSearchResult(searchCondition,false);
         }
+    }
+
+    //初始化全部状态
+    @Override
+    public void initState() {
+        searchleftBtn.setText("综合排序");
+        searchCondition.deleteSortItem();
+        rightSearchViewMap.clear();
+        rightSearchView = null;
+        this.q = "";
+        tbGoodDataAdapter.clearData();
+        tbGoodDataAdapter.notifyDataSetChanged();
+        searchCondition = searchCondition.newInstance(searchCateString);
     }
 
 }

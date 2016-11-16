@@ -199,6 +199,18 @@ public class SearchFlagment extends BaseFragment{
     }
 
     /**
+     * 当需要初始化信息的时候，触发各fragment 执行
+     */
+    private void dispatchWhenToInit(){
+        Map<String,Fragment> fragmentMap = getFragmentMap();
+        if(fragmentMap != null && fragmentMap.size() > 0){
+            for(Map.Entry<String,Fragment> entry : fragmentMap.entrySet()){
+                ((doUpdateWithQ)entry.getValue()).initState();
+            }
+        }
+    }
+
+    /**
      * 释放相关 popupwindow 的资源
      */
     private void destoryPopupWindow() {
@@ -208,8 +220,16 @@ public class SearchFlagment extends BaseFragment{
         }
     }
 
+    public void initToOrigin() {
+        dispatchWhenToInit();
+        if(viewPager != null){
+            //回到初始位置
+            viewPager.setCurrentItem(0);
+        }
+    }
 
-   //--------------------------------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------------------------------
 
     static class MyPageAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
@@ -278,6 +298,8 @@ public class SearchFlagment extends BaseFragment{
          * @param q
          */
         void updateQ(String q);
+
+        void initState();
 
     }
 }

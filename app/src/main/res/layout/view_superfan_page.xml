@@ -32,11 +32,20 @@
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:orientation="horizontal"
+        android:id="@+id/line1"
+        android:layout_below="@+id/superfan_header"
+        android:background="@color/gray"
+        ></LinearLayout>
+
     <android.support.v7.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="35dp"
       android:id="@+id/superfan_topRcycleView"
-      android:layout_below="@+id/superfan_header">
+      android:layout_below="@+id/line1">
     </android.support.v7.widget.RecyclerView>
 
     <cn.fuyoushuo.fqbb.view.Layout.RefreshLayout
