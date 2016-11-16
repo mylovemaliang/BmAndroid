@@ -20,6 +20,7 @@ import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
 import cn.fuyoushuo.fqbb.view.flagment.pointsmall.DuihuanjiluDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.pointsmall.PhoneRechargeDialogFragment;
+import cn.fuyoushuo.fqbb.view.flagment.pointsmall.PointsDetailDialogFragment;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
@@ -137,6 +138,7 @@ public class PointMallActivity extends BaseActivity{
                     @Override
                     public void call(Void aVoid) {
                         // TODO: 2016/11/7
+                        PointsDetailDialogFragment.newInstance().show(getSupportFragmentManager(),"PointsDetailDialogFragment");
                     }
                 });
 

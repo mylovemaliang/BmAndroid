@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
     android:id="@+id/view_duihuanjilu_item"
-    app:cardBackgroundColor="@color/module_16">
+    app:cardBackgroundColor="@color/module_16"
+    app:contentPadding="10dp">
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -16,62 +17,49 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_widthPercent = "100%w"
-        app:layout_heightPercent = "40%h"
+        app:layout_heightPercent = "30%h"
         android:id="@+id/dh_detail_head_area">
 
      <TextView
          android:layout_width="0dp"
          android:layout_height="0dp"
-         app:layout_widthPercent = "20%w"
+         app:layout_widthPercent = "50%w"
          app:layout_heightPercent = "100%h"
          android:id="@+id/dh_detail_item_date_string"
-         android:text="2016-11-11"
-         android:textSize="16sp"
-         android:gravity="center"/>
+         android:text="2016-11-11 14:58:25"
+         android:textSize="18sp"
+         android:gravity="left|center_vertical" />
 
-    <TextView
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_widthPercent = "20%w"
-        app:layout_heightPercent = "100%h"
-        android:id="@+id/dh_detail_item_time_string"
-        android:text="15:21:25"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_toRightOf="@+id/dh_detail_item_date_string"/>
+        app:layout_widthPercent = "100%w"
+        app:layout_heightPercent = "30%h"
+        android:id="@+id/dh_detail_middle_area"
+        android:layout_below="@+id/dh_detail_head_area">
 
-     <TextView
-         android:layout_width="0dp"
-         android:layout_height="0dp"
-         app:layout_widthPercent = "30%w"
-         app:layout_heightPercent = "100%h"
-         android:id="@+id/dh_detail_order_state"
-         android:text="订单无效"
-         android:textSize="16sp"
-         android:gravity="center"
-         android:layout_toRightOf="@+id/dh_detail_item_time_string"/>
+        <TextView
+             android:layout_width="0dp"
+             android:layout_height="0dp"
+             app:layout_widthPercent = "100%w"
+             app:layout_heightPercent = "100%h"
+             android:id="@+id/dh_detail_order_detail"
+             android:text="京东购物订单有效--订单编号[44047474702]"
+             android:textSize="18sp"
+             android:gravity="center_vertical"
+             android:layout_toRightOf="@+id/dh_detail_item_time_string"/>
 
-
-
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          app:layout_widthPercent = "30%w"
-          app:layout_heightPercent = "100%h"
-          android:layout_toRightOf="@+id/dh_detail_order_state"
-          android:id="@+id/dh_detail_order_num"
-          android:text="18711346638"
-          android:textSize="16sp"
-          android:textColor="@color/module_11"
-          android:gravity="center"/>
     </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_widthPercent = "100%w"
-        app:layout_heightPercent = "60%h"
-        android:layout_below="@+id/dh_detail_head_area"
+        app:layout_heightPercent = "40%h"
+        android:layout_below="@+id/dh_detail_middle_area"
         android:id="@+id/dh_detail_bottom_area">
 
         <TextView
@@ -82,12 +70,12 @@
             android:id="@+id/dh_detail_order_type"
             android:text="类型:冻结积分"
             android:textSize="18sp"
-            android:gravity="center"/>
+            android:gravity="left|center_vertical"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_widthPercent = "40%w"
+            app:layout_widthPercent = "30%w"
             app:layout_heightPercent = "100%h"
             android:id="@+id/dh_detail_points_changed_text"
             android:text="-315"
@@ -98,7 +86,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_widthPercent = "30%w"
+            app:layout_widthPercent = "40%w"
             app:layout_heightPercent = "100%h"
             android:id="@+id/dh_detail_points_changed_detail"
             android:text="1098 --> 785"

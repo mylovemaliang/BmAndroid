@@ -18,7 +18,11 @@ public class DuihuanDetail implements Serializable {
 
      private Integer pointType;
 
+     private String pointTypeStr;
+
      private Integer increase;
+
+     private String increaseStr;
 
      private String orderId;
 
@@ -32,6 +36,7 @@ public class DuihuanDetail implements Serializable {
 
      private String userName;
 
+     private String pfSource;
 
     public Long getAfterPoint() {
         return afterPoint;
@@ -65,44 +70,12 @@ public class DuihuanDetail implements Serializable {
         this.bizType = bizType;
     }
 
-    public Integer getIncrease() {
-        return increase;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setIncrease(Integer increase) {
-        this.increase = increase;
-    }
-
-    public String getOrderDesc() {
-        return orderDesc;
-    }
-
-    public void setOrderDesc(String orderDesc) {
-        this.orderDesc = orderDesc;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getPoint() {
-        return point;
-    }
-
-    public void setPoint(Long point) {
-        this.point = point;
-    }
-
-    public Integer getPointType() {
-        return pointType;
-    }
-
-    public void setPointType(Integer pointType) {
-        this.pointType = pointType;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Long getPrePoint() {
@@ -121,11 +94,67 @@ public class DuihuanDetail implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPointTypeStr() {
+        return pointTypeStr;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPointTypeStr(String pointTypeStr) {
+        this.pointTypeStr = pointTypeStr;
+    }
+
+    public String getPfSource() {
+        return pfSource;
+    }
+
+    public void setPfSource(String pfSource) {
+        this.pfSource = pfSource;
+    }
+
+    public Long getPoint() {
+        return point;
+    }
+
+    public void setPoint(Long point) {
+        this.point = point;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getPointType() {
+        return pointType;
+    }
+
+    public void setPointType(Integer pointType) {
+        this.pointType = pointType;
+    }
+
+    public String getOrderDesc() {
+        return orderDesc;
+    }
+
+    public void setOrderDesc(String orderDesc) {
+        this.orderDesc = orderDesc;
+    }
+
+    public String getIncreaseStr() {
+        return increaseStr;
+    }
+
+    public void setIncreaseStr(String increaseStr) {
+        this.increaseStr = increaseStr;
+    }
+
+    public Integer getIncrease() {
+        return increase;
+    }
+
+    public void setIncrease(Integer increase) {
+        this.increase = increase;
     }
 }

@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.fuyoushuo.fqbb.MyApplication;
@@ -42,7 +46,53 @@ public class DuihuanDetailAdapter extends BaseListAdapter<DuihuanDetail>{
         super.onBindViewHolder(holder, position);
         final ItemViewHolder currentHolder = (ItemViewHolder) holder;
         final DuihuanDetail item = getItem(position);
+        //head
+        Long bizTime = item.getBizTime();
+        if(bizTime != null){
+            String dateTime = String.valueOf(bizTime);
+            try {
+                Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse(dateTime);
+                String dateTimeString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+                currentHolder.dateString.setText(dateTimeString);
+            } catch (ParseException e) {
+                currentHolder.dateString.setText("");
+            }
+        }
+        //middle
+        String pfSource = item.getPfSource();
+        if(!TextUtils.isEmpty(pfSource)){
+            currentHolder.orderDetail.setText(pfSource);
+        }else{
+            currentHolder.orderDetail.setText("");
+        }
+        //bottom
+        String pointTypeStr = item.getPointTypeStr();
+        if(!TextUtils.isEmpty(pointTypeStr)){
+            currentHolder.orderType.setText(pointTypeStr);
+        }else{
+            currentHolder.orderType.setText("");
+        }
 
+        String increaseStr = item.getIncreaseStr();
+        Integer increase = item.getIncrease();
+        if(!TextUtils.isEmpty(increaseStr)){
+            currentHolder.pointsChangedText.setText(increaseStr);
+            if (increase == 1){
+              currentHolder.pointsChangedText.setTextColor(MyApplication.getContext().getResources().getColor(R.color.module_7));
+            }else{
+              currentHolder.pointsChangedText.setTextColor(MyApplication.getContext().getResources().getColor(R.color.module_11));
+            }
+        }else{
+            currentHolder.orderType.setText("");
+        }
+
+        Long prePoint = item.getPrePoint();
+        Long afterPoint = item.getAfterPoint();
+        if(prePoint!=null && afterPoint !=null){
+            currentHolder.pointsChangedDetail.setText(String.valueOf(prePoint)+"-->"+String.valueOf(afterPoint));
+        }else{
+            currentHolder.pointsChangedDetail.setText("");
+        }
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -50,14 +100,8 @@ public class DuihuanDetailAdapter extends BaseListAdapter<DuihuanDetail>{
         @Bind(R.id.dh_detail_item_date_string)
         TextView dateString;
 
-        @Bind(R.id.dh_detail_item_time_string)
-        TextView timeString;
-
-        @Bind(R.id.dh_detail_order_state)
-        TextView orderState;
-
-        @Bind(R.id.dh_detail_order_num)
-        TextView orderNum;
+        @Bind(R.id.dh_detail_order_detail)
+        TextView orderDetail;
 
         @Bind(R.id.dh_detail_order_type)
         TextView orderType;
