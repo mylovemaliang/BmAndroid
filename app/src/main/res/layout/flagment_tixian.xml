@@ -46,6 +46,26 @@
                 android:src="@mipmap/reflash" />
         </LinearLayout>
 
+        <RelativeLayout android:id="@+id/closeArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/reflashTixianLl"
+            android:background="@drawable/selector_back">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="关闭"
+                android:textColor="@color/module_11"
+                android:textSize="13sp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/tixianTitleText"
             android:layout_width="wrap_content"

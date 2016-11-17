@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import org.apache.log4j.chainsaw.Main;
+
 import cn.fuyoushuo.fqbb.R;
 
 public class HelpActivity extends BaseActivity {
@@ -26,6 +28,8 @@ public class HelpActivity extends BaseActivity {
     ImageView helpWebviewBackImg;
 
     boolean howToTixian = false;
+
+    boolean jdOrderNoEffect = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +78,13 @@ public class HelpActivity extends BaseActivity {
 
         Intent in = getIntent();
         howToTixian = in.getBooleanExtra("howToTixian", false);
+        jdOrderNoEffect = in.getBooleanExtra("jdOrderNoEffect",false);
         if(howToTixian){
             helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwq4.html");
-        }else{
+        }
+        else if(jdOrderNoEffect){
+            helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwq13.html");
+        } else{
             helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwqlist.html");
         }
     }
@@ -111,6 +119,16 @@ public class HelpActivity extends BaseActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             this.finish();
+        }
+
+        if(jdOrderNoEffect){
+             jdOrderNoEffect = false;
+
+             helpWebview.setVisibility(View.GONE);
+             Intent intent = new Intent(HelpActivity.this,MainActivity.class);
+             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+             startActivity(intent);
+             this.finish();
         }
 
         if(currentUrl.contains("www.fanqianbb.com/mfwq") && !currentUrl.contains("www.fanqianbb.com/mfwq/fwqlist.html")){

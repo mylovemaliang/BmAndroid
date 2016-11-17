@@ -4,7 +4,7 @@ package cn.fuyoushuo.fqbb.view.flagment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +13,19 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle.components.support.RxDialogFragment;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
-import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.TaobaoInterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.HelpActivity;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
 
-public class TixianFlagment extends Fragment {
+public class TixianFlagment extends RxDialogFragment {
 
     public static final String VOLLEY_TAG_NAME = "my_tixian_flagment";
 
@@ -42,13 +43,12 @@ public class TixianFlagment extends Fragment {
 
     LinearLayout howToTixianLl;
 
-    SelectedGoodPresenter selectedGoodPresenter;
-
+    RelativeLayout closeArea;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedGoodPresenter = new SelectedGoodPresenter();
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.fullScreenDialog);
     }
 
     @Override
@@ -69,11 +69,18 @@ public class TixianFlagment extends Fragment {
             @Override
             public void onClick(View v) {
                 MobclickAgent.onEvent(parentActivity, EventIdConstants.TIXIANYEMIAN_TOP_LEFT_FAQ_BTN);
-
                 Intent intent = new Intent(parentActivity, HelpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("howToTixian", true);
                 startActivity(intent);
+            }
+        });
+
+        closeArea = (RelativeLayout) view.findViewById(R.id.closeArea);
+        closeArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               dismissAllowingStateLoss();
             }
         });
 
@@ -138,6 +145,18 @@ public class TixianFlagment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadWebviewPage();
+    }
+
+    public static TixianFlagment newInstance() {
+        TixianFlagment fragment = new TixianFlagment();
+        return fragment;
+    }
+
     public void loadWebviewPage(){
         if(firstAccess){//第一次访问
             firstAccess = false;
@@ -187,6 +206,14 @@ public class TixianFlagment extends Fragment {
     @Override
     public void onDestroy() {
         TaobaoInterPresenter.cancelTagedRuquests(VOLLEY_TAG_NAME);
+        if(mytixianWebview!=null){
+            ViewGroup viewGroup = (ViewGroup) mytixianWebview.getParent();
+            if(viewGroup!=null){
+                viewGroup.removeView(mytixianWebview);
+            }
+            mytixianWebview.removeAllViews();
+            mytixianWebview.destroy();
+        }
         super.onDestroy();
     }
 }

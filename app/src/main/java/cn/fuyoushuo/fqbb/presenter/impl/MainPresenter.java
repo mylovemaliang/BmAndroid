@@ -1,5 +1,7 @@
 package cn.fuyoushuo.fqbb.presenter.impl;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -27,12 +29,15 @@ import rx.schedulers.Schedulers;
  */
 public class MainPresenter extends BasePresenter{
 
+    private static final String shared_pre_key = "main_tip_info";
+
     private MainView mMainView;
+
+    private SharedPreferences sharedPreferences = MyApplication.getContext().getSharedPreferences(shared_pre_key,Context.MODE_PRIVATE);
 
     public MainPresenter(MainView mainView) {
         mMainView = mainView;
     }
-
 
     public void getFcates(){
         mSubscriptions.add(ServiceManager.createService(FqbbHttpService.class).getCates()
@@ -100,4 +105,54 @@ public class MainPresenter extends BasePresenter{
                 }));
     }
 
+
+    /**
+     * 获取是否需要提示
+     * @param flag
+     */
+    public boolean isNeedTip(int flag){
+      boolean result = false;
+      if(flag == 1){
+         result = sharedPreferences.getBoolean("tipForTaobao",false);
+         if(!result){
+             result = sharedPreferences.getBoolean("short_time_tipForTaobao",false);
+         }
+      }
+      if(flag == 2){
+         result = sharedPreferences.getBoolean("tipForJd",false);
+          if(!result){
+              result = sharedPreferences.getBoolean("short_time_tipForJd",false);
+          }
+      }
+      if(result){
+          return false;
+      }else{
+          return true;
+      }
+    }
+
+    /**
+     * 更新提示状态
+     * @param flag
+     * @param isTip
+     */
+    public void setTipState(int flag,boolean isTip){
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        if(!isTip){
+            if(flag == 1){
+                 edit.putBoolean("short_time_tipForTaobao",true);
+            }
+            if(flag == 2){
+                edit.putBoolean("short_time_tipForJd",true);
+            }
+        }else{
+            if(flag == 1){
+                  edit.putBoolean("tipForTaobao",true);
+            }
+            if(flag == 2){
+                  edit.putBoolean("tipForJd",true);
+            }
+        }
+        edit.commit();
+    }
 }

@@ -3,23 +3,38 @@ package cn.fuyoushuo.fqbb.view.flagment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.feedback.impl.FeedbackAPI;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.umeng.analytics.MobclickAgent;
+
+import org.xml.sax.XMLReader;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,17 +45,23 @@ import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.CommonUtils;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
+import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
 import cn.fuyoushuo.fqbb.domain.entity.FCateItem;
 import cn.fuyoushuo.fqbb.domain.entity.FGoodItem;
+import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
 import cn.fuyoushuo.fqbb.presenter.impl.MainPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
+import cn.fuyoushuo.fqbb.view.Layout.ItemDecoration;
 import cn.fuyoushuo.fqbb.view.Layout.MyGridLayoutManager;
 import cn.fuyoushuo.fqbb.view.Layout.RefreshLayout;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
+import cn.fuyoushuo.fqbb.view.activity.HelpActivity;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
 import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
 import cn.fuyoushuo.fqbb.view.activity.WebviewActivity;
 import cn.fuyoushuo.fqbb.view.adapter.GoodDataAdapter;
+import cn.fuyoushuo.fqbb.view.adapter.SearchMenuAdapter;
+import cn.fuyoushuo.fqbb.view.listener.MyTagHandler;
 import cn.fuyoushuo.fqbb.view.view.MainView;
 import rx.functions.Action1;
 
@@ -176,7 +197,11 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        SuperfanDialogFragment.newInstance().show(getFragmentManager(),"SuperfanDialogFragment");
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else{
+                             SuperfanDialogFragment.newInstance().show(getFragmentManager(),"SuperfanDialogFragment");
+                        }
                     }
                 });
         //九块九
@@ -185,7 +210,11 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                         JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.JKJ_CHANNEL,"九块九还包邮","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else {
+                            JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.JKJ_CHANNEL, "九块九还包邮", "").show(getFragmentManager(), "JxspDetailDialogFragment");
+                        }
                     }
                 });
         //潮流
@@ -194,7 +223,11 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.IFI_CHANNEL,"潮流穿搭","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else {
+                            JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.IFI_CHANNEL,"潮流穿搭","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                        }
                     }
                 });
         //吃货
@@ -203,7 +236,11 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.HCH_CHANNEL,"吃货盛宴","").show(getFragmentManager(),"JxspDetailDialogFragment");
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else {
+                            JxspDetailDialogFragment.newInstance(SelectedGoodPresenter.HCH_CHANNEL, "吃货盛宴", "").show(getFragmentManager(), "JxspDetailDialogFragment");
+                        }
                     }
                 });
 
@@ -214,7 +251,11 @@ public class MainFlagment extends BaseFragment implements MainView {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                       JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
+                        if(mainPresenter.isNeedTip(2)){
+                            setTipDialogIfNeed(2);
+                        }else {
+                            JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
+                        }
                     }
                 });
 
@@ -225,9 +266,13 @@ public class MainFlagment extends BaseFragment implements MainView {
                     @Override
                     public void call(Void aVoid) {
                         // TODO: 2016/11/15
-                        Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                        intent.putExtra("loadUrl","https://m.taobao.com");
-                        startActivity(intent);
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else {
+                            Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                            intent.putExtra("loadUrl","https://m.taobao.com");
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -238,9 +283,13 @@ public class MainFlagment extends BaseFragment implements MainView {
                     @Override
                     public void call(Void aVoid) {
                         // TODO: 2016/11/14
-                        Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                        intent.putExtra("loadUrl","https://www.tmall.com/?from=m");
-                        startActivity(intent);
+                        if(mainPresenter.isNeedTip(1)){
+                            setTipDialogIfNeed(1);
+                        }else {
+                            Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                            intent.putExtra("loadUrl","https://www.tmall.com/?from=m");
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -374,15 +423,18 @@ public class MainFlagment extends BaseFragment implements MainView {
 
             @Override
             public void onGoodItemClick(View clickView, FGoodItem goodItem) {
-                String url = goodItem.getItemUrl();
-                MainActivity ma = (MainActivity) getActivity();
-                //ma.showWebviewFragment(url, false,false);
-
-                Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.putExtra("loadUrl", url);
-                intent.putExtra("forSearchGoodInfo", false);
-                startActivity(intent);
+                if(mainPresenter.isNeedTip(1)){
+                    setTipDialogIfNeed(1);
+                }else {
+                  String url = goodItem.getItemUrl();
+                  MainActivity ma = (MainActivity) getActivity();
+                  //ma.showWebviewFragment(url, false,false);
+                  Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                  intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                  intent.putExtra("loadUrl", url);
+                  intent.putExtra("forSearchGoodInfo", false);
+                  startActivity(intent);
+                }
             }
         });
         mainBottomRView.setAdapter(fgoodDataAdapter);
@@ -563,6 +615,66 @@ public class MainFlagment extends BaseFragment implements MainView {
         fgoodDataAdapter.setCateId(cateId);
         fgoodDataAdapter.setCurrentPage(page);
         fgoodDataAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     *  1.淘宝 2.京东
+     * @param flag
+     */
+    public void setTipDialogIfNeed(final int flag){
+        final AlertDialog alertDialog = new AlertDialog.Builder(mactivity).create();
+        View dialog = layoutInflater.inflate(R.layout.main_tip_content_dialog, null);
+        TextView content = (TextView) dialog.findViewById(R.id.main_tip_content);
+        Button leftButton = (Button) dialog.findViewById(R.id.leftCommit);
+        Button rightButton = (Button) dialog.findViewById(R.id.rightCommit);
+        RxView.clicks(leftButton).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                         mainPresenter.setTipState(flag,true);
+                         alertDialog.dismiss();
+                    }
+                });
+
+        RxView.clicks(rightButton).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                          mainPresenter.setTipState(flag,false);
+                          alertDialog.dismiss();
+                    }
+                });
+
+        String htmlForTaobao = "1.商品详情页才会显示返利信息<br>2.进入返钱模式才能拿到返利<br>3.新用户需要进行身份验证后才能进入返钱模式<br>4.通常付款后5分钟就可以查到返利订单<br>5.确认收货后次月20日结算返利";
+        String htmlForJd = "1.导致京东订单失效原因非常多，务必了解后再购买<br><font color=\"blue\"><jdReason>京东订单失效原因</jdReason></font><br>2.进入返钱模式才能拿到返利<br>3.新用户需要登陆返钱宝宝账号后才能进入返钱模式<br>4.提交订单后无需付款，每个整点过10分钟时同步订单，建议检查后再付款<br><font color=\"red\">京东订单不保证返利效果，介意者慎用</font>";
+        if(flag == 1){
+            content.setText(Html.fromHtml(htmlForTaobao));
+        }
+        else if(flag == 2){
+            content.setText(Html.fromHtml(htmlForJd,null,new MyTagHandler("jdReason", new MyTagHandler.OnClickTag() {
+                @Override
+                public void onClick() {
+                    Intent intent = new Intent(mactivity, HelpActivity.class);
+                    intent.putExtra("jdOrderNoEffect",true);
+                    startActivity(intent);
+                }
+
+            })));
+            content.setHighlightColor(getResources().getColor(android.R.color.transparent));
+            content.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        else{
+
+        }
+        int mScreenWidth = MyApplication.getDisplayMetrics().widthPixels;
+        alertDialog.show();
+        WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+        params.width = CommonUtils.getIntHundred(mScreenWidth*0.8f);
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        alertDialog.getWindow().setAttributes(params);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 0, 0, 0)));
+        alertDialog.setContentView(dialog);
+        alertDialog.setCanceledOnTouchOutside(false);
     }
 
     //---------------------------- 自定义事件-----------------------------------
