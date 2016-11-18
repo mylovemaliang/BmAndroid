@@ -13,5 +13,9 @@ public interface PhoneRechargeView {
 
     void onPhoneRechargeSkuGetFail();
 
+    void onPhoneRechargeSucc();
+
+    void onPhoneRechargeFail(String msg);
+
 
 }

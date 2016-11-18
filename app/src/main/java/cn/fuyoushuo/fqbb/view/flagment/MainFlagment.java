@@ -92,8 +92,6 @@ public class MainFlagment extends BaseFragment implements MainView {
     //private CatesDataAdapter fcatesDataAdapter;
     private GoodDataAdapter fgoodDataAdapter;
 
-    RecyclerView mainTopRView;
-
     LayoutInflater layoutInflater;
 
     //recycleview 的头部
@@ -110,7 +108,6 @@ public class MainFlagment extends BaseFragment implements MainView {
 
     RelativeLayout myTbArea;
 
-
     View chaojifanArea;
 
     View jiukuaijiuArea;
@@ -118,12 +115,6 @@ public class MainFlagment extends BaseFragment implements MainView {
     View chaoliuArea;
 
     View chihuoArea;
-
-
-
-    //private SharedPreferences lunboImgInfosCache;
-
-    //private final String lunboImgInfosFile = "fplunbo";
 
     public MainFlagment() {
         // Required empty public constructor
@@ -313,14 +304,9 @@ public class MainFlagment extends BaseFragment implements MainView {
     public void initView() {
         parentActivity = (MainActivity) this.getActivity();
 
-        //mainPresenter.getFcates();
         mainPresenter.getFGoods(0l, 1, false);
 
         mainFlagmentHeader = layoutInflater.inflate(R.layout.flagment_main_header, null);
-
-        //mainTopRView = (RecyclerView) mainFlagmentHeader.findViewById(R.id.main_topRcycleView);
-
-        //moreArea = mainFlagmentHeader.findViewById(R.id.main_more_area);
 
         chaojifanArea = mainFlagmentHeader.findViewById(R.id.card_chaojifan);
 
@@ -350,11 +336,6 @@ public class MainFlagment extends BaseFragment implements MainView {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //progressBar.setVisibility(View.VISIBLE);
-                //int cateCount = fcatesDataAdapter.getItemCount();
-//                if(cateCount == 0){
-//                    mainPresenter.getFcates();
-//                }
                 Long cateId = fgoodDataAdapter.getCateId();
                 Integer page = fgoodDataAdapter.getCurrentPage();
                 mainPresenter.getFGoods(cateId, 1, true);
@@ -362,32 +343,6 @@ public class MainFlagment extends BaseFragment implements MainView {
                 return;
             }
         });
-
-//      mainSearchText.setText("请你输入");
-//      mainSearchText.clearFocus();
-
-//        mainTopRView.setHasFixedSize(true);
-//        final LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(mactivity);
-//        linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        mainTopRView.setLayoutManager(linearLayoutManager1);
-//        mainTopRView.addItemDecoration(new CateItemsDecoration());
-//        fcatesDataAdapter = new CatesDataAdapter();
-//        fcatesDataAdapter.setOnCateClick(new CatesDataAdapter.OnCateClick() {
-//            @Override
-//            public void onClick(View view, FCateItem cateItem, int lastPosition) {
-//
-//                cateItem.setIsRed(true);
-//                FCateItem item = fcatesDataAdapter.getItem(lastPosition);
-//                item.setIsRed(false);
-//                fcatesDataAdapter.notifyDataSetChanged();
-//
-//                mainPresenter.getFGoods(cateItem.getId(), 1, true);
-//                //布局移动到顶部
-//                mainBottomRView.scrollToPosition(0);
-//            }
-//        });
-//
-//      mainTopRView.setAdapter(fcatesDataAdapter);
 
         mainBottomRView.setHasFixedSize(true);
         //mainBottomRView.addItemDecoration(new GoodItemsDecoration(10,5));
@@ -438,7 +393,8 @@ public class MainFlagment extends BaseFragment implements MainView {
             }
         });
         mainBottomRView.setAdapter(fgoodDataAdapter);
-        mainBottomRView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mainBottomRView.addOnScrollListener(
+                new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (gridLayoutManager.findFirstVisibleItemPosition() == 0) {
@@ -450,116 +406,8 @@ public class MainFlagment extends BaseFragment implements MainView {
             }
         });
 
-//        mImageCycleView = (ImageCycleView) mainFlagmentHeader.findViewById(R.id.icv_topView);
-//        mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
-//            @Override
-//            public void onClick(View imageView, ImageCycleView.ImageInfo imageInfo) {
-//                if (imageInfo.value != null && !"".equals(imageInfo.value.toString().trim())) {
-//                    Intent intent = new Intent(getActivity(), WebviewActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                    intent.putExtra("loadUrl", imageInfo.value.toString().trim());
-//                    intent.putExtra("forSearchGoodInfo", false);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-//
-//        if (lunboImgInfosCache == null) {
-//            lunboImgInfosCache = parentActivity.getApplicationContext().getSharedPreferences(lunboImgInfosFile, Context.MODE_PRIVATE);
-//        }
-//      initLunbo();//显示轮播图片
-//      reloadLunboImg();//重新异步加载新的轮播图片，避免阻塞
         initIconFront();
     }
-
-//    public void reloadLunboImg() {
-//        final String lunboImgInfoUrl = "http://www.fanqianbb.com/adv/mpicFp.htm";
-//
-//        RequestQueue volleyRq = Volley.newRequestQueue(parentActivity.getApplicationContext(), new OkHttpStack(parentActivity.getApplicationContext()));
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, lunboImgInfoUrl,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        if (response != null && !"".equals(response.trim())) {
-//                            SharedPreferences.Editor prefsWriter = lunboImgInfosCache.edit();
-//                            prefsWriter.putString("lunboImgs", response.trim());
-//                            prefsWriter.commit();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//
-//        // 把这个请求加入请求队列
-//        volleyRq.add(stringRequest);
-//    }
-
-//    private void initLunbo() {
-//        boolean useLocalImg = false;
-//
-//        String lunboImgsInfos = lunboImgInfosCache.getString("lunboImgs", "");
-//        if (lunboImgsInfos != null && !"".equals(lunboImgsInfos.trim())) {
-//            JSONArray imagesListJson = null;
-//            try{
-//                JSONObject jsonObj = JSONObject.parseObject(lunboImgsInfos.trim());
-//                imagesListJson = jsonObj.getJSONArray("r");
-//            }catch(Exception e){
-//
-//            }
-//            if (imagesListJson != null && imagesListJson.size() > 0) {
-//                listImgsInfo.clear();
-//                for (int i = 0; i < imagesListJson.size(); i++) {
-//                    JSONObject oneImageInfo = imagesListJson.getJSONObject(i);
-//                    String imgUrl = oneImageInfo.getString("imgUrl");
-//                    String textContent = oneImageInfo.getString("textContent");
-//                    String linkUrl = oneImageInfo.getString("linkUrl");
-//                    listImgsInfo.add(new ImageCycleView.ImageInfo(imgUrl, textContent, linkUrl));
-//                }
-//            } else {
-//                listImgsInfo.add(new ImageCycleView.ImageInfo(R.mipmap.lb, "", ""));//默认使用步骤的轮播图，是本地图片
-//                useLocalImg = true;
-//            }
-//        } else {
-//            listImgsInfo.add(new ImageCycleView.ImageInfo(R.mipmap.lb, "", ""));//默认使用步骤的轮播图，是本地图片
-//            useLocalImg = true;
-//        }
-//
-//        if (useLocalImg) {
-//            mImageCycleView.loadData(listImgsInfo, new ImageCycleView.LoadImageCallBack() {
-//                @Override
-//                public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
-//                    SimpleDraweeView view = new SimpleDraweeView(parentActivity);
-//                    view.setImageResource(Integer.parseInt(imageInfo.image.toString()));
-//                    return view;
-//                }
-//            });
-//        } else {
-//            mImageCycleView.loadData(listImgsInfo, new ImageCycleView.LoadImageCallBack() {
-//                @Override
-//                public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
-//                    SimpleDraweeView view = new SimpleDraweeView(parentActivity);
-//                    view.setImageURI(Uri.parse(imageInfo.image.toString()));
-//                    return view;
-//                }
-//            });
-//        }
-//    }
-
-    //横移标准线
-//    private void moveCateItem(final TextView textView, final View redline) {
-//        int[] textLocation = new int[2];
-//        int[] redlineLocation = new int[2];
-//        textView.getLocationOnScreen(textLocation);
-//        redline.getLocationOnScreen(redlineLocation);
-//        final int cx = redlineLocation[0];
-//        final int tox = textLocation[0];
-//        int left = redline.getLeft();
-//        redline.scrollBy(cx - tox, 0);
-//    }
 
     /**
      * Use this factory method to create a new instance of
@@ -627,7 +475,7 @@ public class MainFlagment extends BaseFragment implements MainView {
         TextView content = (TextView) dialog.findViewById(R.id.main_tip_content);
         Button leftButton = (Button) dialog.findViewById(R.id.leftCommit);
         Button rightButton = (Button) dialog.findViewById(R.id.rightCommit);
-        RxView.clicks(leftButton).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+        RxView.clicks(leftButton).throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
@@ -636,7 +484,7 @@ public class MainFlagment extends BaseFragment implements MainView {
                     }
                 });
 
-        RxView.clicks(rightButton).compose(this.<Void>bindToLifecycle()).throttleFirst(1000,TimeUnit.MILLISECONDS)
+        RxView.clicks(rightButton).throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {

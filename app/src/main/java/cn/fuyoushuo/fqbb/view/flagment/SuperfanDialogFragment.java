@@ -1,6 +1,7 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
+import com.trello.rxlifecycle.FragmentEvent;
+import com.trello.rxlifecycle.components.support.RxDialogFragment;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +45,7 @@ import rx.functions.Action1;
 /**
  * Created by QA on 2016/10/27.
  */
-public class SuperfanDialogFragment extends DialogFragment implements MainView{
+public class SuperfanDialogFragment extends RxDialogFragment implements MainView{
 
 
     @Bind(R.id.superfan_backArea)
@@ -55,6 +59,12 @@ public class SuperfanDialogFragment extends DialogFragment implements MainView{
 
     @Bind(R.id.superfan_flagment_refreshLayout)
     RefreshLayout refreshLayout;
+
+    @Bind(R.id.main_totop_icon)
+    TextView toTopIcon;
+
+    @Bind(R.id.main_totop_area)
+    View toTopView;
 
     CatesDataAdapter fcatesDataAdapter;
 
@@ -165,6 +175,18 @@ public class SuperfanDialogFragment extends DialogFragment implements MainView{
                 startActivity(intent);
             }
         });
+        bottomRview.addOnScrollListener(
+                new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        if (gridLayoutManager.findFirstVisibleItemPosition() == 0) {
+                            toTopView.setVisibility(View.GONE);
+                        }
+                        if (gridLayoutManager.findFirstVisibleItemPosition() != 0) {
+                            toTopView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
         bottomRview.setAdapter(fgoodDataAdapter);
 //        bottomRview.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -177,6 +199,7 @@ public class SuperfanDialogFragment extends DialogFragment implements MainView{
 //                }
 //            }
 //        });
+        initIconFront();
         return inflate;
     }
 
@@ -193,6 +216,16 @@ public class SuperfanDialogFragment extends DialogFragment implements MainView{
                          dismissAllowingStateLoss();
                     }
                 });
+
+        RxView.clicks(toTopView).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        bottomRview.scrollToPosition(0);
+                        toTopView.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
@@ -201,6 +234,11 @@ public class SuperfanDialogFragment extends DialogFragment implements MainView{
         mainPresenter.onDestroy();
     }
 
+    //初始化字体图标
+    private void initIconFront() {
+        Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfront/iconfont.ttf");
+        toTopIcon.setTypeface(iconfont);
+    }
 
     //---------------------------------实现VIEW层的接口----------------------------------------------------
 

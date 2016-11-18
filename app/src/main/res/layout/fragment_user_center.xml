@@ -68,21 +68,23 @@
     </RelativeLayout>
 
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_below="@+id/user_center_header"
         android:id="@+id/user_center_userInfo"
-        android:layout_marginTop="10dp"
-        android:stretchColumns="3">
+        android:layout_marginTop="10dp">
 
-        <TableRow
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/info_line1">
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="33%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -114,7 +116,8 @@
 
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="34%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -146,7 +149,8 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="33%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -175,9 +179,9 @@
                 android:layout_marginTop="10dp"/>
           </RelativeLayout>
           </android.support.v7.widget.CardView>
-        </TableRow>
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <TableRow
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -185,7 +189,8 @@
             android:layout_below="@+id/info_line1">
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="33%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -216,7 +221,8 @@
          </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="34%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -247,7 +253,8 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_widthPercent="33%w"
             android:layout_height="70dp"
             android:layout_weight="1"
             app:cardCornerRadius="0dp"
@@ -274,11 +281,10 @@
                     android:id="@+id/userinfo_useable_money_value"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"/>
-
             </RelativeLayout>
           </android.support.v7.widget.CardView>
-        </TableRow>
-    </TableLayout>
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </LinearLayout>
 
 
     <android.support.v7.widget.CardView
@@ -292,10 +298,10 @@
         >
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:weightSum="4"
-        android:orientation="horizontal">
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:weightSum="4"
+          android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -318,9 +324,9 @@
                 android:textColor="#666666"
                 android:textSize="15sp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
                 android:layout_below="@+id/user_center_help_imgage"
                 android:layout_centerHorizontal="true" />
-
 
         </RelativeLayout>
 

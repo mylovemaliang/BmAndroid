@@ -66,4 +66,23 @@
 
     </cn.fuyoushuo.fqbb.view.Layout.RefreshLayout>
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/to_top_border"
+        android:id="@+id/main_totop_area"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/main_totop_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/to_top_iconfront"/>
+    </FrameLayout>
+
 </RelativeLayout>

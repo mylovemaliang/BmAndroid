@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,7 +82,15 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
 
     private List<JSONObject> phoneRecharges;
 
+    //手机充值账号
     private String inputPhoneNumValue = "";
+    //可用积分
+    private float useAblePoints = 0f;
+    //需要使用的积分
+    private float toUsePoints = 0f;
+
+    //当前选中的skuId
+    private Long skuId = null;
 
     LayoutInflater layoutInflater;
 
@@ -128,7 +137,11 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
                 JSONObject result = phoneRecharges.get(position);
                 if(result != null && !result.isEmpty()){
                     String needPoints = result.getInteger("price").toString();
-                    rechargeNeedPoints.setText("所需积分:"+needPoints);
+                    skuId = result.getLong("skuId");
+                    if(!TextUtils.isEmpty(needPoints)){
+                      toUsePoints = Float.valueOf(needPoints);
+                      rechargeNeedPoints.setText("所需积分:"+needPoints);
+                    }
                 }
                 return true;
             }
@@ -157,6 +170,9 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
                     @Override
                     public void call(Void aVoid) {
                         // TODO: 2016/11/7
+                        if(skuId != null && useAblePoints > 0 && useAblePoints >= toUsePoints && !TextUtils.isEmpty(inputPhoneNumValue)){
+                            phoneRechargePresent.createPhoneRechargeOrder(skuId,inputPhoneNumValue);
+                        }
                     }
                 });
 
@@ -208,6 +224,7 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
         String account = "";
         if(result.containsKey("validPoint")){
             validPoint = DateUtils.getFormatFloat(result.getFloatValue("validPoint"));
+            useAblePoints = validPoint;
         }
         if(result.containsKey("orderFreezePoint")){
             orderFreezePoint = DateUtils.getFormatFloat(result.getFloatValue("orderFreezePoint"));
@@ -246,6 +263,31 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
     @Override
     public void onPhoneRechargeSkuGetFail() {
         Toast.makeText(MyApplication.getContext(),"手机兑换券获取失败,请稍后重试",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPhoneRechargeSucc() {
+        Toast.makeText(MyApplication.getContext(),"手机充值成功",Toast.LENGTH_SHORT).show();
+        localLoginPresent.getUserInfo(new LocalLoginPresent.UserInfoCallBack() {
+            @Override
+            public void onUserInfoGetSucc(JSONObject jsonObject) {
+                initUserInfo(jsonObject);
+            }
+
+            @Override
+            public void onUserInfoGetError() {
+                currentPoints.setText("--");
+                freezePoints.setText("--");
+                useablePoints.setText("--");
+                accountView.setText("--");
+                Toast.makeText(MyApplication.getContext(),"获取用户信息失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onPhoneRechargeFail(String msg) {
+        Toast.makeText(MyApplication.getContext(),"手机充值失败",Toast.LENGTH_SHORT).show();
     }
 
     //----------------------------------处理编辑框-------------------------------------------------------

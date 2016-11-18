@@ -642,16 +642,16 @@ public class WebviewActivity extends BaseActivity {
                     doGoBack = true;
                     return;
                 }
+            }else{
+                if(myWebView.canGoBack()){
+                    myWebView.goBack();
+                    doGoBack = true;
+                    return;
+                }
             }
         }else{
             Log.i("in goback url--->","null or empty");
-            if(myWebView.canGoBack()){
-                myWebView.goBack();
-                doGoBack = true;
-                return;
-            }
         }
-
         closeWebviewActivity();
     }
 

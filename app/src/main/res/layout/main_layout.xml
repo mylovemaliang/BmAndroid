@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -77,10 +75,10 @@
         android:id="@+id/main_viewpager_layout"
         android:layout_above="@+id/bottomRadioGroupLayout">
 
-        <cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout
-            android:id="@+id/drawerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <!--<cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout-->
+            <!--android:id="@+id/drawerLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" >-->
 
             <!-- VIewPager 主要是加载内容的 -->
             <RelativeLayout
@@ -89,18 +87,18 @@
                 android:layout_height="match_parent"/>
 
             <!-- 侧滑菜单 -->
-            <RelativeLayout
-                android:id="@+id/rightMenu"
-                android:layout_width="260dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:background="@color/white"
-                android:clickable="true">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rightMenu"-->
+                <!--android:layout_width="260dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="end"-->
+                <!--android:background="@color/white"-->
+                <!--android:clickable="true">-->
 
-                <include layout="@layout/menu_right"/>
+                <!--<include layout="@layout/menu_right"/>-->
 
-            </RelativeLayout>
-        </cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout>
+            <!--</RelativeLayout>-->
+        <!--</cn.fuyoushuo.fqbb.view.Layout.SafeDrawerLayout>-->
 
     </RelativeLayout>
 

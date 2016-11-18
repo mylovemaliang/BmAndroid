@@ -1,5 +1,7 @@
 package cn.fuyoushuo.fqbb.presenter.impl.pointsmall;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.fuyoushuo.fqbb.ServiceManager;
+import cn.fuyoushuo.fqbb.commonlib.utils.DataCheckUtils;
 import cn.fuyoushuo.fqbb.domain.ext.HttpResp;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
 import cn.fuyoushuo.fqbb.presenter.impl.BasePresenter;
@@ -75,6 +78,51 @@ public class PhoneRechargePresent extends BasePresenter{
                     }
                 })
         );
+    }
+
+    /**
+     * 创建积分兑换话费订单
+     * @param skuId 充值的商品skuid
+     * @param phoneNum 需要充值的手机号码
+     */
+    public void createPhoneRechargeOrder(Long skuId,String phoneNum){
+         if(skuId == null || TextUtils.isEmpty(phoneNum) || !DataCheckUtils.isPhoneLegal(phoneNum)){
+             if(getMyView() != null){
+                 getMyView().onPhoneRechargeFail("数据校验失败");
+             }
+             return;
+         }
+         mSubscriptions.add(ServiceManager.createService(FqbbLocalHttpService.class)
+             .createPhoneRechargeOrder(skuId,phoneNum)
+             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
+             .subscribe(new Subscriber<HttpResp>() {
+                 @Override
+                 public void onCompleted() {
+
+                 }
+
+                 @Override
+                 public void onError(Throwable e) {
+                    if(getMyView() != null){
+                        getMyView().onPhoneRechargeFail("充值失败,请稍后再试");
+                    }
+                 }
+
+                 @Override
+                 public void onNext(HttpResp httpResp) {
+                     if(httpResp == null || httpResp.getS() != 1){
+                         if(getMyView() != null){
+                             getMyView().onPhoneRechargeFail("充值失败,请稍后再试");
+                         }
+                     }else{
+                         if(getMyView() != null){
+                             getMyView().onPhoneRechargeSucc();
+                         }
+                     }
+                 }
+             })
+         );
     }
 
 

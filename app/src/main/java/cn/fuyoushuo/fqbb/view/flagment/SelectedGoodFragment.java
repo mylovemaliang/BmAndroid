@@ -1,7 +1,9 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,6 +30,7 @@ import cn.fuyoushuo.fqbb.presenter.impl.SelectedGoodPresenter;
 import cn.fuyoushuo.fqbb.view.Layout.CateItemsDecoration;
 import cn.fuyoushuo.fqbb.view.Layout.SelectedGoodsDecoration;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
+import cn.fuyoushuo.fqbb.view.activity.WebviewActivity;
 import cn.fuyoushuo.fqbb.view.adapter.SelectedGoodDataAdapter;
 import rx.functions.Action1;
 
@@ -103,6 +106,9 @@ public class SelectedGoodFragment extends BaseFragment{
     @Bind(R.id.channel_sport)
     Button sportButton;
 
+    @Bind(R.id.selected_swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     SelectedGoodPresenter selectGoodPresent;
 
     private boolean isLoaded = false;
@@ -150,7 +156,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         tehuiRview.setAdapter(tehuiAdapter);
@@ -181,7 +192,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         nzRview.setAdapter(nzAdapter);
@@ -212,7 +228,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         lzRview.setAdapter(lzAdapter);
@@ -243,7 +264,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         meishiRview.setAdapter(meishiAdapter);
@@ -274,7 +300,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         jiajuRview.setAdapter(jiajuAdapter);
@@ -305,7 +336,12 @@ public class SelectedGoodFragment extends BaseFragment{
 
             @Override
             public void onItemClick(View view, TaoBaoItemVo goodItem) {
-
+                String url = goodItem.getUrl();
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("loadUrl", url);
+                intent.putExtra("forSearchGoodInfo", false);
+                startActivity(intent);
             }
         });
         sportRview.setAdapter(sportAdapter);
@@ -315,6 +351,16 @@ public class SelectedGoodFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshResult();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         //更多按钮的响应
         RxView.clicks(tehuiMore).compose(this.<Void>bindToLifecycle())
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -445,7 +491,7 @@ public class SelectedGoodFragment extends BaseFragment{
         selectGoodPresent.getSelectedGood(SelectedGoodPresenter.TEHUI_CHANNEL, 1, null,null,new SelectedGoodPresenter.SelectGoodGetCallBack() {
             @Override
             public void onGetGoodSucc(List<TaoBaoItemVo> goodList, LinkedList<TbCateVo> cateList) {
-                 if(tehuiAdapter != null){
+                 if(tehuiAdapter != null) {
                      tehuiAdapter.setData(goodList);
                      tehuiAdapter.notifyDataSetChanged();
                  }

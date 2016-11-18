@@ -1,5 +1,8 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -15,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -30,6 +35,10 @@ import com.trello.rxlifecycle.components.support.RxDialogFragment;
 
 import org.jsoup.helper.DataUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -91,6 +100,19 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
      * 0 默认情况 1 去登陆 2 重新获取CPS链接  3 重新获取商品CPS跳转
      */
     private int leftTipBiz = 0;
+
+    /**
+     * 是否登录
+     */
+    private boolean isLocalLogin = false;
+
+    /**
+     * 是否进入返利
+     */
+    private boolean isHasFanli = false;
+
+
+    private boolean isFanliState = false;
 
 
     @Override
@@ -158,11 +180,73 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                     fanliTipLayout.setVisibility(View.VISIBLE);
                     return false;
                 }
+                if (isPageGoodDetail(url) && url.indexOf("jd_pop") > -1){
+                    isFanliState = true;
+                }
                 if(isPageGoodDetail(url) && url.contains("#ns")){
                     Log.d("jdGoodDetail",url);
                     return true;
                 }
+
+                //http://p.m.jd.com/norder/order.action?wareId=1750531&wareNum=1&enterOrder=true&sid=13c72c6665914925103c4af7aff54ebe
+                //付款的时候拦截
+                if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") > -1){
+                     if(!isHasFanli){
+                         return false;
+                     }else{
+                         if(!isLocalLogin){
+                             showFanliLoginDialog();
+                             return true;
+                         }
+                     }
+                }
+                //购物车结算时拦截
+                else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1){
+
+                }
                 return false;
+            }
+
+            //兼容 android 5.0 以上
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public WebResourceResponse shouldInterceptRequest(final WebView webView, WebResourceRequest webResourceRequest) {
+                String url = webResourceRequest.getUrl().toString();
+                if(!isFanliState && !TextUtils.isEmpty(url) && url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/cart/add.json")){
+                    myJdWebView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showFanliTipDialogWhenBalance();
+                        }
+                    });
+                     String result = "{}";
+                     InputStream resultInputStream = null;
+                    try {
+                        resultInputStream = new ByteArrayInputStream(result.getBytes("utf-8"));
+                        WebResourceResponse webResourceResponse = new WebResourceResponse("application/json","utf-8",resultInputStream);
+                        return webResourceResponse;
+                    } catch (UnsupportedEncodingException e) {
+                        return null;
+                    }finally {
+                        if(resultInputStream != null){
+                            try {
+                                resultInputStream.close();
+                            } catch (IOException e) {
+
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+
+            //兼容 android 4.4 及以上
+            @Override
+            public WebResourceResponse shouldInterceptRequest(final WebView view, final String url) {//也能拦截iframe的链接,图片,css,js等
+                //淘宝立即购买的登录
+                //http://login.m.taobao.com/login.htm?ttid=h5%40iframe&tpl_redirect_url=http%3A%2F%2Fh5.m.taobao.com%2Fother%2Floginend.html%3Forigin%3Dhttp%253A%252F%252Fh5.m.taobao.com
+                return super.shouldInterceptRequest(view, url);
+
             }
 
             @Override
@@ -206,9 +290,6 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                         }
                         else if (leftTipBiz == 2) {
 
-                        }
-                        else if(leftTipBiz == 3){
-                            jdGoodDetailPresenter.getJdCpsUrl(currentLoadGoodUrl);
                         }
                     }
                 });
@@ -309,10 +390,60 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         return result;
     }
 
+    private void showFanliLoginDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("登录到返利模式才会获得返利!");
+
+        builder.setCancelable(false);
+        builder.setPositiveButton("返利登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), UserLoginActivity.class);
+                intent.putExtra("biz", "MainToJdWv");
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    //加入购物车的时候进行提示
+    private void showFanliTipDialogWhenBalance() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("在返利模式下加入购物车的商品才能获得返利,亲!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), UserLoginActivity.class);
+                intent.putExtra("biz", "MainToJdWv");
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    //点击加入购物车进行拦截
+    private void showFanliTipDialogWhenClickChart(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("在返利模式下加入购物车的商品才能获得返利,亲!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadGoodPage(currentItemId);
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
     //获取当前商品的页面
     private void loadGoodPage(final String itemId) {
         if (TextUtils.isEmpty(itemId)) return;
         final String loadUrl = "http://item.m.jd.com/product/" + itemId + ".html";
+        isFanliState = false;
         currentLoadGoodUrl = loadUrl;
         currentItemId = itemId;
         fanliTipLayout.setVisibility(View.VISIBLE);
@@ -321,12 +452,14 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             public void localLoginSuccess() {
                 leftTipText.setText("处理中");
                 leftTipText.setClickable(false);
+                isLocalLogin = true;
                 jdGoodDetailPresenter.getJdFanliInfo(itemId, loadUrl);
             }
 
             @Override
             public void localLoginFail() {
                 // TODO: 2016/11/3 提示登录
+                isLocalLogin = false;
                 leftTipText.setText("去登录");
                 leftTipText.setClickable(true);
                 leftTipBiz = 1;
@@ -339,9 +472,8 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         if(TextUtils.isEmpty(currentItemId) || TextUtils.isEmpty(currentLoadGoodUrl)){
             return;
         }else{
-            leftTipText.setText("去返利");
-            leftTipText.setClickable(true);
-            leftTipBiz = 3;
+            isLocalLogin = true;
+            jdGoodDetailPresenter.getJdCpsUrl(currentLoadGoodUrl);
         }
     }
 
@@ -374,13 +506,14 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
 
     @Override
     public void onGetJdFanliFail() {
+        isHasFanli = false;
         leftTipText.setText("");
         rightTipText.setText("当前商品没有返利");
     }
 
     @Override
     public void onGetJdFanliSucc(JSONObject result,String loadUrl) {
-
+       isHasFanli = true;
        float percent = 0.00f;
        float sumPrice = 0.00f;
        if(result != null && !result.isEmpty()){

@@ -1,5 +1,6 @@
 package cn.fuyoushuo.fqbb.view.flagment;
 
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
+import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
 
 import java.util.LinkedList;
@@ -61,6 +63,12 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
 
     @Bind(R.id.jxsp_detail_bottomRcycleView)
     RecyclerView goodRview;
+
+    @Bind(R.id.main_totop_icon)
+    TextView toTopIcon;
+
+    @Bind(R.id.main_totop_area)
+    View toTopView;
 
     SelectedCatesDataAdapter selectCatesDataAdapter;
 
@@ -220,13 +228,37 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
                   return;
             }
         });
+        goodRview.addOnScrollListener(
+                new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        if (gridLayoutManager.findFirstVisibleItemPosition() == 0) {
+                            toTopView.setVisibility(View.GONE);
+                        }
+                        if (gridLayoutManager.findFirstVisibleItemPosition() != 0) {
+                            toTopView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
         goodRview.setAdapter(tbGoodDataAdapter);
+        initIconFront();
         return inflate;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        RxView.clicks(toTopView).throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        goodRview.scrollToPosition(0);
+                        toTopView.setVisibility(View.GONE);
+                    }
+                });
 
         //返回键处理
         RxView.clicks(backView).compose(this.<Void>bindToLifecycle())
@@ -272,6 +304,13 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
         super.onDestroy();
         selectedGoodPresenter.onDestroy();
     }
+
+    //初始化字体图标
+    private void initIconFront() {
+        Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfront/iconfont.ttf");
+        toTopIcon.setTypeface(iconfont);
+    }
+
 
     public static JxspDetailDialogFragment newInstance(String channel,String title,String catId){
         Bundle args = new Bundle();

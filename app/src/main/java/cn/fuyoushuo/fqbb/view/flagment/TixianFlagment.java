@@ -33,7 +33,7 @@ public class TixianFlagment extends RxDialogFragment {
 
     public WebView mytixianWebview;
 
-    private String tixianPageUrl = "http://media.alimama.com/account/account.htm";
+    private String tixianPageUrl = "http://media.alimama.com/account/overview.htm";
 
     TextView tixianTitleText;
 

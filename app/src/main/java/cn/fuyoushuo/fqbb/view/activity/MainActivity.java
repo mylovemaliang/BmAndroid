@@ -65,32 +65,32 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.rb_user_center)
     RadioButton ucButton;
 
-    @Bind(R.id.drawerLayout)
-    SafeDrawerLayout drawerLayout;
+//    @Bind(R.id.drawerLayout)
+//    SafeDrawerLayout drawerLayout;
 
-    @Bind(R.id.rightMenu)
-    RelativeLayout drawerMenuContent;
+//    @Bind(R.id.rightMenu)
+//    RelativeLayout drawerMenuContent;
 
-    @Bind(R.id.rmMyTaobaoLo)
-    RelativeLayout rightMenuMyTaobao;
-
-    @Bind(R.id.rmFirstpageLo)
-    RelativeLayout rightMenuMyFirstpage;
-
-    @Bind(R.id.rmTixianLo)
-    RelativeLayout rightMenuTixian;
-
-    /*@Bind(R.id.rmMyjfbLo)
-    RelativeLayout rightMenuMyJfb;*/
-
-    @Bind(R.id.rmHelpLo)
-    RelativeLayout rightMenuHelp;
-
-    @Bind(R.id.rmMyOrderLo)
-    RelativeLayout rightMenuMyOrder;
-
-    @Bind(R.id.rmConfigLo)
-    RelativeLayout rightMenuConfig;
+//    @Bind(R.id.rmMyTaobaoLo)
+//    RelativeLayout rightMenuMyTaobao;
+//
+//    @Bind(R.id.rmFirstpageLo)
+//    RelativeLayout rightMenuMyFirstpage;
+//
+//    @Bind(R.id.rmTixianLo)
+//    RelativeLayout rightMenuTixian;
+//
+//    /*@Bind(R.id.rmMyjfbLo)
+//    RelativeLayout rightMenuMyJfb;*/
+//
+//    @Bind(R.id.rmHelpLo)
+//    RelativeLayout rightMenuHelp;
+//
+//    @Bind(R.id.rmMyOrderLo)
+//    RelativeLayout rightMenuMyOrder;
+//
+//    @Bind(R.id.rmConfigLo)
+//    RelativeLayout rightMenuConfig;
 
     List<Fragment> fragmentList;
 
@@ -334,47 +334,47 @@ public class MainActivity extends BaseActivity {
 //                drawerLayout.openDrawer(drawerMenuContent);
 //            }
 //        });
-        RxView.clicks(rightMenuMyFirstpage).throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                drawerLayout.closeDrawer(drawerMenuContent);
-
-                preShowBizPage = currentShowBizPage;
-                currentShowBizPage = 0;
-
-                if(!mainButton.isChecked()){
-                    mainButton.setChecked(true);
-                }else{
-                    changeView(MAIN_FRAGMENT_INDEX);
-                }
-                bottomRgLayout.setVisibility(View.VISIBLE);
-            }
-        });
-        RxView.clicks(rightMenuMyTaobao).throttleFirst(1000,TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                //统计侧边栏我的淘宝按钮
-                MobclickAgent.onEvent(MainActivity.this, EventIdConstants.SLIDER_MY_TAOBAO_BTN);
-                drawerLayout.closeDrawer(drawerMenuContent);
-                showMyTaobaoPage();
-            }
-        });
-        RxView.clicks(rightMenuMyOrder).throttleFirst(1000,TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                drawerLayout.closeDrawer(drawerMenuContent);
-                if(currentShowBizPage!=1){
-                    clickMyOrder();
-                    //bottomRgLayout.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+//        RxView.clicks(rightMenuMyFirstpage).throttleFirst(1000, TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//            @Override
+//            public void call(Void aVoid) {
+//                drawerLayout.closeDrawer(drawerMenuContent);
+//
+//                preShowBizPage = currentShowBizPage;
+//                currentShowBizPage = 0;
+//
+//                if(!mainButton.isChecked()){
+//                    mainButton.setChecked(true);
+//                }else{
+//                    changeView(MAIN_FRAGMENT_INDEX);
+//                }
+//                bottomRgLayout.setVisibility(View.VISIBLE);
+//            }
+//        });
+//        RxView.clicks(rightMenuMyTaobao).throttleFirst(1000,TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//            @Override
+//            public void call(Void aVoid) {
+//                //统计侧边栏我的淘宝按钮
+//                MobclickAgent.onEvent(MainActivity.this, EventIdConstants.SLIDER_MY_TAOBAO_BTN);
+//                drawerLayout.closeDrawer(drawerMenuContent);
+//                showMyTaobaoPage();
+//            }
+//        });
+//        RxView.clicks(rightMenuMyOrder).throttleFirst(1000,TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//            @Override
+//            public void call(Void aVoid) {
+//                drawerLayout.closeDrawer(drawerMenuContent);
+//                if(currentShowBizPage!=1){
+//                    clickMyOrder();
+//                    //bottomRgLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
         /*RxView.clicks(rightMenuMyJfb).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
@@ -385,41 +385,41 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });*/
-        RxView.clicks(rightMenuTixian).throttleFirst(1000,TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle()).subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        if(currentShowBizPage!=3){
-                            clickTixian();
-                            //bottomRgLayout.setVisibility(View.VISIBLE);
-                        }
-                    }
-        });
-        RxView.clicks(rightMenuHelp).throttleFirst(1000,TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        //统计侧边栏使用帮助
-                        MobclickAgent.onEvent(MainActivity.this, EventIdConstants.SLIDER_USERHELPER_FAQ_BTN);
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        Intent intent = new Intent(MainActivity.this,HelpActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                    }
-        });
-        RxView.clicks(rightMenuConfig).throttleFirst(500, TimeUnit.MILLISECONDS)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        drawerLayout.closeDrawer(drawerMenuContent);
-                        Intent intent = new Intent(MainActivity.this, ConfigActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                    }
-        });
+//        RxView.clicks(rightMenuTixian).throttleFirst(1000,TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle()).subscribe(new Action1<Void>() {
+//                    @Override
+//                    public void call(Void aVoid) {
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        if(currentShowBizPage!=3){
+//                            clickTixian();
+//                            //bottomRgLayout.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//        });
+//        RxView.clicks(rightMenuHelp).throttleFirst(1000,TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//                    @Override
+//                    public void call(Void aVoid) {
+//                        //统计侧边栏使用帮助
+//                        MobclickAgent.onEvent(MainActivity.this, EventIdConstants.SLIDER_USERHELPER_FAQ_BTN);
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        Intent intent = new Intent(MainActivity.this,HelpActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(intent);
+//                    }
+//        });
+//        RxView.clicks(rightMenuConfig).throttleFirst(500, TimeUnit.MILLISECONDS)
+//                .compose(this.<Void>bindToLifecycle())
+//                .subscribe(new Action1<Void>() {
+//                    @Override
+//                    public void call(Void aVoid) {
+//                        drawerLayout.closeDrawer(drawerMenuContent);
+//                        Intent intent = new Intent(MainActivity.this, ConfigActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(intent);
+//                    }
+//        });
     }
 
     public void clickMyOrder(){

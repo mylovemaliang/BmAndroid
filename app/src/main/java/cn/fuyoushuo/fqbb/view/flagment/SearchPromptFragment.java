@@ -302,9 +302,9 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
             mContent = to;
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             if (!to.isAdded()) {    // 先判断是否被add过
-                transaction.hide(from).add(R.id.search_promt_flagment_area, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.search_promt_flagment_area, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
