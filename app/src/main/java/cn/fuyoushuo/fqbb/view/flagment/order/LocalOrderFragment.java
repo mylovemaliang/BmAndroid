@@ -1,5 +1,7 @@
 package cn.fuyoushuo.fqbb.view.flagment.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -62,6 +64,11 @@ public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
     private LocalOrderPresenter localOrderPresenter;
 
     private LocalLoginPresent localLoginPresent;
+
+    @Override
+    protected String getPageName() {
+        return "localOrderSearch";
+    }
 
     @Override
     protected int getRootLayoutId() {
@@ -151,7 +158,6 @@ public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        isAll = false;
                         isLast30Day = !isLast30Day;
                         if(isLast30Day){
                             last30DayText.setTextColor(getResources().getColor(R.color.module_11));
@@ -211,11 +217,27 @@ public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
 
             @Override
             public void localLoginFail() {
-                Intent intent = new Intent(getActivity(), UserLoginActivity.class);
-                intent.putExtra("biz","MainToLocalOrder");
-                startActivity(intent);
+                showLocalLoginDialog();
             }
         });
+    }
+
+
+    private void showLocalLoginDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("登录状态下才能查看订单信息!");
+
+        builder.setCancelable(true);
+        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), UserLoginActivity.class);
+                intent.putExtra("biz", "MainToLocalOrder");
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     //---------------------------------------view层回调------------------------------------------------
@@ -229,6 +251,6 @@ public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
 
     @Override
     public void onGetLoadUrlFail() {
-
+       Toast.makeText(MyApplication.getContext(),"订单信息获取失败",Toast.LENGTH_SHORT).show();
     }
 }

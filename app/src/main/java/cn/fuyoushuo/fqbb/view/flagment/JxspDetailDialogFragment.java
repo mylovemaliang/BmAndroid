@@ -21,6 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -320,6 +321,19 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
         JxspDetailDialogFragment fragment = new JxspDetailDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("alimama_channel_"+currentChannel);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageStart("alimama_channel_-"+currentChannel);
     }
 
     private String getCurrentCatId(String currentCatId){

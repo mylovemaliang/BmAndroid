@@ -21,6 +21,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -169,6 +170,18 @@ public class UnbindEmailDialogFragment extends RxDialogFragment{
         UnbindEmailDialogFragment fragment = new UnbindEmailDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("unbindEmail");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("unbindEmail");
     }
 
     private void timeForVerifiCode() {

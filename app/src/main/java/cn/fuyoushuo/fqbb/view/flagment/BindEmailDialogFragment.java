@@ -19,6 +19,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -203,6 +204,18 @@ public class BindEmailDialogFragment extends RxDialogFragment{
 
         BindEmailDialogFragment fragment = new BindEmailDialogFragment();
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("bindEmail");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("bindEmail");
     }
 
     private void timeForVerifiCode() {

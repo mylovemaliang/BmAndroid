@@ -30,6 +30,11 @@ public class SearchAutoCompleteFragment extends BaseFragment{
 
 
     @Override
+    protected String getPageName() {
+        return "searchTip_autoComplete";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.auto_complete_search_view;
     }

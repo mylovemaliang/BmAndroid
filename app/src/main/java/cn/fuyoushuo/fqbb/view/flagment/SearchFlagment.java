@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,7 +27,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
 import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
@@ -74,6 +77,11 @@ public class SearchFlagment extends BaseFragment{
 
     public void setFragmentMap(Map<String, Fragment> fragmentMap) {
         this.fragmentMap = fragmentMap;
+    }
+
+    @Override
+    protected String getPageName() {
+        return "searchResult";
     }
 
     @Override
@@ -182,6 +190,7 @@ public class SearchFlagment extends BaseFragment{
         if(isInit){
             searchText.setText(q);
         }
+        MobclickAgent.onEvent(MyApplication.getContext(), EventIdConstants.SEARCH_TYPE_FOR_ALL);
         dispatchWhenQChanged(this.q);
     }
 

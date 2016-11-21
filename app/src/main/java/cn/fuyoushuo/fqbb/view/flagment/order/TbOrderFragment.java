@@ -89,6 +89,7 @@ public class TbOrderFragment extends Fragment {
                             || replaceUrl.startsWith("www.taobao.com/market/ju/detail_wap.php")
                             ){//是商品详情页
                         Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                        intent.putExtra("bizString","tbGoodDetail");
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("loadUrl", url);
                         intent.putExtra("forSearchGoodInfo", false);
@@ -134,7 +135,6 @@ public class TbOrderFragment extends Fragment {
                         public void nologinCallback() {//阿里妈妈也没有登录
                             myorderWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
                             myorderTitleText.setText("淘宝账户登录");
-                            MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_ORDER_PAGE);
                         }
 
                         @Override
@@ -191,7 +191,6 @@ public class TbOrderFragment extends Fragment {
                 if(myorderWebview!=null){
                     myorderTitleText.setText("淘宝账户登录");
                     myorderWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
-                    MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_ORDER_PAGE);
                 }
             }
 
@@ -217,5 +216,17 @@ public class TbOrderFragment extends Fragment {
         //当前 flagment 销毁时,取消所有进行及等待的请求
         TaobaoInterPresenter.cancelTagedRuquests(VOLLEY_TAG_NAME);
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("tbOrderSearch");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("tbOrderSearch");
     }
 }

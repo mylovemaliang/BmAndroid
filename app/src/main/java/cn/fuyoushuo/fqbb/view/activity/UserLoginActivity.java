@@ -90,6 +90,8 @@ public class UserLoginActivity extends BaseActivity{
                         }
                         Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        //从MAIN页面转发而来,直接回到Main页面
+                        intent.putExtra("noLoginFromMain",true);
                         startActivity(intent);
                         //关掉自己
                         finish();

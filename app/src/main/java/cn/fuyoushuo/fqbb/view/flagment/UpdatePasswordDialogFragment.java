@@ -21,6 +21,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -146,6 +147,17 @@ public class UpdatePasswordDialogFragment extends RxDialogFragment{
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("updatePassword");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("updatePassword");
+    }
     //-------------------------------------------用于处理键盘--------------------------------------------------------
     private void setupUI(View view,final Activity context) {
         //Set up touch listener for non-text box views to hide keyboard.

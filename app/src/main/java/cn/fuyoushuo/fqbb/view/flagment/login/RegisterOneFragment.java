@@ -52,6 +52,11 @@ public class RegisterOneFragment extends BaseFragment implements RegisterOneView
 
 
     @Override
+    protected String getPageName() {
+        return "register-1";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_register_1;
     }

@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -158,6 +159,19 @@ public class AlimamaLoginDialogFragment extends DialogFragment{
                break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("alimamaLoginPage");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("alimamaLoginPage");
+    }
+
     //---------------------------------实现总线事件----------------------------------------------------
     public class AlimamaLoginToUserCenterEvent extends RxBus.BusEvent{}
 

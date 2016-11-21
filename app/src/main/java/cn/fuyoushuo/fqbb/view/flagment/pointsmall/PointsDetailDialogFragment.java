@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -130,6 +131,17 @@ public class PointsDetailDialogFragment extends RxDialogFragment implements Duih
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("pointsMall-pointsDetail");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("pointsMall-pointsDetail");
+    }
 
     //--------------------------------------回调VIEW接口----------------------------------------------
 

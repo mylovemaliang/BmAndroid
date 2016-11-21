@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.view.activity.ConfigActivity;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
@@ -43,4 +45,15 @@ public class AboutFragment extends Fragment {
         parentActivity.showFragment(0);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("aboutPage");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("aboutPage");
+    }
 }

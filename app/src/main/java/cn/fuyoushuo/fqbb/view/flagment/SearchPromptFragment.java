@@ -112,6 +112,11 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         seartchPo.setSearchType(SearchCondition.search_cate_superfan);
     }
 
+    @Override
+    protected String getPageName() {
+        return "searchTip";
+    }
+
     //绑定 flagment 的来源
     public void bindFromFlagment(int from){
         this.fromFlagment = from;

@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -170,6 +171,7 @@ public class SuperfanDialogFragment extends RxDialogFragment implements MainView
 
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -238,6 +240,18 @@ public class SuperfanDialogFragment extends RxDialogFragment implements MainView
     private void initIconFront() {
         Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfront/iconfont.ttf");
         toTopIcon.setTypeface(iconfont);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("superFanPage");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("superFanPage");
     }
 
     //---------------------------------实现VIEW层的接口----------------------------------------------------

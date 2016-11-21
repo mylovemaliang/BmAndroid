@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import org.jsoup.helper.DataUtil;
 
@@ -49,6 +50,7 @@ import butterknife.ButterKnife;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
+import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.presenter.impl.JdGoodDetailPresenter;
 import cn.fuyoushuo.fqbb.presenter.impl.LocalLoginPresent;
 import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
@@ -175,6 +177,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if (jdGoodDetailPresenter.isUserFanqianMode(url)) {
+                    MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.NUMBER_OF_FANLI_FOR_JD);
                     leftTipText.setText("返钱模式");
                     leftTipText.setClickable(false);
                     fanliTipLayout.setVisibility(View.VISIBLE);
@@ -185,7 +188,10 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                 }
                 if(isPageGoodDetail(url) && url.contains("#ns")){
                     Log.d("jdGoodDetail",url);
-                    return true;
+                    return false;
+                }
+                if(url.replace("http://","").replace("https://","").startsWith("pay.m.jd.com/cpay/finish.html")){
+                     MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SUCCESS_BUY_FOR_JD);
                 }
 
                 //http://p.m.jd.com/norder/order.action?wareId=1750531&wareNum=1&enterOrder=true&sid=13c72c6665914925103c4af7aff54ebe
@@ -202,7 +208,12 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                 }
                 //购物车结算时拦截
                 else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1){
-
+                    myJdWebView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showFanliTipDialogWhenClickBalance();
+                        }
+                    });
                 }
                 return false;
             }
@@ -212,11 +223,11 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             @Override
             public WebResourceResponse shouldInterceptRequest(final WebView webView, WebResourceRequest webResourceRequest) {
                 String url = webResourceRequest.getUrl().toString();
-                if(!isFanliState && !TextUtils.isEmpty(url) && url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/cart/add.json")){
+                if(isHasFanli && !isFanliState && !TextUtils.isEmpty(url) && url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/cart/add.json")){
                     myJdWebView.post(new Runnable() {
                         @Override
                         public void run() {
-                            showFanliTipDialogWhenBalance();
+                            showFanliTipDialogWhenClickCart();
                         }
                     });
                      String result = "{}";
@@ -243,10 +254,32 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             //兼容 android 4.4 及以上
             @Override
             public WebResourceResponse shouldInterceptRequest(final WebView view, final String url) {//也能拦截iframe的链接,图片,css,js等
-                //淘宝立即购买的登录
-                //http://login.m.taobao.com/login.htm?ttid=h5%40iframe&tpl_redirect_url=http%3A%2F%2Fh5.m.taobao.com%2Fother%2Floginend.html%3Forigin%3Dhttp%253A%252F%252Fh5.m.taobao.com
-                return super.shouldInterceptRequest(view, url);
+                if(isHasFanli && !isFanliState && !TextUtils.isEmpty(url) && url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/cart/add.json")){
+                    myJdWebView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showFanliTipDialogWhenClickCart();
+                        }
+                    });
+                    String result = "{}";
+                    InputStream resultInputStream = null;
+                    try {
+                        resultInputStream = new ByteArrayInputStream(result.getBytes("utf-8"));
+                        WebResourceResponse webResourceResponse = new WebResourceResponse("application/json","utf-8",resultInputStream);
+                        return webResourceResponse;
+                    } catch (UnsupportedEncodingException e) {
+                        return null;
+                    }finally {
+                        if(resultInputStream != null){
+                            try {
+                                resultInputStream.close();
+                            } catch (IOException e) {
 
+                            }
+                        }
+                    }
+                }
+                return super.shouldInterceptRequest(view, url);
             }
 
             @Override
@@ -259,6 +292,10 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                     fanliTipLayout.setVisibility(View.GONE);
                     showFanliLayout.setVisibility(View.GONE);
                 }
+                String js = "var rmadjs = document.createElement(\"script\");";
+                js += "rmadjs.src=\"//www.fanqianbb.com/static/mobile/rmadjd.js\";";
+                js += "document.body.appendChild(rmadjs);";
+                view.loadUrl("javascript:" + js);
                 super.onPageFinished(view, url);
             }
         });
@@ -408,11 +445,11 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     }
 
     //加入购物车的时候进行提示
-    private void showFanliTipDialogWhenBalance() {
+    private void showFanliTipDialogWhenClickCart() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("在返利模式下加入购物车的商品才能获得返利,亲!");
         builder.setCancelable(false);
-        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), UserLoginActivity.class);
@@ -424,15 +461,14 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         builder.create().show();
     }
 
-    //点击加入购物车进行拦截
-    private void showFanliTipDialogWhenClickChart(){
+    //点击加入购物车结算进行拦截
+    private void showFanliTipDialogWhenClickBalance(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("在返利模式下加入购物车的商品才能获得返利,亲!");
+        builder.setMessage("只有在返利模式下加入购物车的商品才能返还返利,亲!");
         builder.setCancelable(false);
         builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                loadGoodPage(currentItemId);
                 dialog.dismiss();
             }
         });
@@ -442,6 +478,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     //获取当前商品的页面
     private void loadGoodPage(final String itemId) {
         if (TextUtils.isEmpty(itemId)) return;
+        MobclickAgent.onEvent(MyApplication.getContext(), EventIdConstants.BROWSE_JD_GOODS_NUM);
         final String loadUrl = "http://item.m.jd.com/product/" + itemId + ".html";
         isFanliState = false;
         currentLoadGoodUrl = loadUrl;
@@ -500,6 +537,18 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
         JdWebviewDialogFragment fragment = new JdWebviewDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("jdHomeH5Page");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("jdHomeH5Page");
     }
 
     //-----------------------------------------回调VIEW的接口------------------------------------------

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -216,7 +217,21 @@ public class DuihuanjiluDialogFragment extends RxDialogFragment implements Duihu
         DuihuanjiluDialogFragment fragment = new DuihuanjiluDialogFragment();
         return fragment;
     }
-   //-----------------------------------------兑换记录-------------------------------------------------
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("pointsMall_duihuanjilu");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("pointsMall_duihuanjilu");
+    }
+
+
+    //-----------------------------------------兑换记录-------------------------------------------------
 
     @Override
     public void onLoadDataFail(String msg) {

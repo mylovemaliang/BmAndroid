@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.trello.rxlifecycle.components.support.RxFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
@@ -34,6 +35,8 @@ public abstract class BaseFragment extends RxFragment {
      * 获取当前布局的ID
      * @return
      */
+    protected abstract String getPageName();
+
     protected abstract int getRootLayoutId();
 
     protected void initView(){}
@@ -98,4 +101,15 @@ public abstract class BaseFragment extends RxFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getPageName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getPageName());
+    }
 }

@@ -119,6 +119,9 @@ public class WebviewActivity extends BaseActivity {
     //保存最初加载的URL
     private String originLoadUrl = "";
 
+    //保存当前页面的业务类型
+    private String bizString;
+
     public String getOriginLoadUrl() {
         return originLoadUrl;
     }
@@ -230,11 +233,20 @@ public class WebviewActivity extends BaseActivity {
                         return true;
                     }
 
+                    if(url.replace("http://","").replace("https://","").startsWith("mclient.alipay.com/h5/cashierPay.htm") ||
+                       url.replace("http://","").replace("https://","").startsWith("buyertrade.taobao.com/trade/pay_success.htm") ||
+                       url.replace("http://","").replace("https://","").startsWith("buy.tmall.com/order/paySuccess.htm")) {
+
+                        MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SUCCESS_BUY_FOR_TAOBAO);
+                        return false;
+                    }
+
                     if(isTaobaoItemDetail(url)){//是商品详情页
                         relatedGoodUrl = url.replace("&fqbb=1","");
                         webviewBottom.setVisibility(View.VISIBLE);
 
                         if(!url.contains("&fqbb=1")){//是新的商品详情页
+                            MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.BROWSE_TAOBAO_GOODS_NUM);
                             String itemIdStr = getParamsMapByUrlStr(url).get("id");
                             Long newItemId = 0l;
                             if(itemIdStr!=null){
@@ -406,17 +418,11 @@ public class WebviewActivity extends BaseActivity {
                         loginPreUrl = null;
                         loginAlimama.setVisibility(View.GONE);
                     }
-                }else{
-                    /*if(url.startsWith("http://huodong.m.taobao.com/buy/paySuccess.htm") || url.startsWith("https://huodong.m.taobao.com/buy/paySuccess.htm")){//付款成功页面
-                        MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.BUY_GOODS_FOR_SUCCEED);
-                        showHasPayDialog();
-                    }else{*/
-                        String js = "var rmadjs = document.createElement(\"script\");";
-                    js += "rmadjs.src=\"//www.fanqianbb.com/static/mobile/rmad.js\";";
-                    js += "document.body.appendChild(rmadjs);";
-                    view.loadUrl("javascript:" + js);
-                    //}
                 }
+                String js = "var rmadjs = document.createElement(\"script\");";
+                js += "rmadjs.src=\"//www.fanqianbb.com/static/mobile/rmad.js\";";
+                js += "document.body.appendChild(rmadjs);";
+                view.loadUrl("javascript:" + js);
             }
         });
 
@@ -510,6 +516,11 @@ public class WebviewActivity extends BaseActivity {
             webviewToHome.setText("返回宝宝主页");
         }
 
+        bizString = in.getStringExtra("bizString");
+        if(TextUtils.isEmpty(bizString)){
+            bizString = "";
+        }
+
         if(loadUrl.equals(myTaobaoPageUrl)){
             initTaobaoItemId = -1l;
             isLoginForMyTaobao();
@@ -527,6 +538,41 @@ public class WebviewActivity extends BaseActivity {
                myWebView.loadUrl(loadUrl);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        if("tbGoodDetail".equals(bizString)){
+             MobclickAgent.onPageStart("tbGoodDetail_wv");
+        }
+        else if("myTaoBao".equals(bizString)){
+             MobclickAgent.onPageStart("myTaoBao_wv");
+        }
+        else if("taobao".equals(bizString)){
+             MobclickAgent.onPageStart("taobao_wv");
+        }
+        else if("tmall".equals(bizString)){
+             MobclickAgent.onPageStart("tmall_wv");
+        }
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        if("tbGoodDetail".equals(bizString)){
+            MobclickAgent.onPageEnd("tbGoodDetail_wv");
+        }
+        else if("myTaoBao".equals(bizString)){
+            MobclickAgent.onPageEnd("myTaoBao_wv");
+        }
+        else if("taobao".equals(bizString)){
+            MobclickAgent.onPageEnd("taobao_wv");
+        }
+        else if("tmall".equals(bizString)){
+            MobclickAgent.onPageEnd("tmall_wv");
+        }
+        super.onPause();
     }
 
     private void showFanliLoginDialog() {
@@ -798,15 +844,12 @@ public class WebviewActivity extends BaseActivity {
 
                 if(tag==0){//显示登录按钮
                     loginAlimama.setVisibility(View.VISIBLE);
-                    MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.SHOW_TIP_OF_WOYAOFANQIAN);
                 }
                 if(tag==1){//完善信息按钮（修复权限）；新增媒体、渠道、推广位失败，取CPS链接出现异常
                     wsxx.setVisibility(View.VISIBLE);
-                    MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.SHOW_TIP_OF_XIUFUQUANXIAN);
                 }
                 if(tag==2){//开通权限按钮，没有实名认证
                     ktfxQx.setVisibility(View.VISIBLE);
-                    MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.SHOW_TIP_OF_KAIQIFANQIANQUANXIAN);
                     //jfbDisplay();
                 }
                 if(tag==3){//启动返钱模式按钮
@@ -1013,7 +1056,6 @@ public class WebviewActivity extends BaseActivity {
             public void nologinCallback() {
                 if(myWebView!=null){
                     myWebView.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
-                    MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.LOGIN_OF_SLIDER_MYTAOBAO);
                 }
             }
 
@@ -1030,7 +1072,6 @@ public class WebviewActivity extends BaseActivity {
            myWebView.loadUrl(loginPageUrl);
         }
         webviewBottom.setVisibility(View.GONE);
-        MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.LOGIN_OF_WOYAOFANQIAN_BTN);
         //cleanCurrentItemId();
     }
 
@@ -1340,7 +1381,7 @@ public class WebviewActivity extends BaseActivity {
                                             if(myWebView!=null){
                                             myWebView.loadUrl(cpsUrl);
                                             qdfx.setVisibility(View.GONE);
-                                            MobclickAgent.onEvent(WebviewActivity.this, EventIdConstants.NUMBER_FOR_JINRUFANLIMOSHI);
+                                            MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.NUMBER_OF_FANLI_FOR_TAOBAO);
                                             //addItemTextInfo("已进入返利模式，", null);
                                             //testDd();
                                          }

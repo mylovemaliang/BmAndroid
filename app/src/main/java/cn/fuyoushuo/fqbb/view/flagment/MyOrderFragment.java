@@ -41,6 +41,11 @@ public class MyOrderFragment extends BaseFragment{
     }
 
     @Override
+    protected String getPageName() {
+        return "myOrder";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.flagment_myorder;
     }

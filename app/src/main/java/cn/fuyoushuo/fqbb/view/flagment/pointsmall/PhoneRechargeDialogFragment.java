@@ -22,6 +22,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxDialogFragment;
+import com.umeng.analytics.MobclickAgent;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -288,6 +289,18 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
     @Override
     public void onPhoneRechargeFail(String msg) {
         Toast.makeText(MyApplication.getContext(),"手机充值失败",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("pointsMall-phoneRecharge");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("pointsMall-phoneRecharge");
     }
 
     //----------------------------------处理编辑框-------------------------------------------------------

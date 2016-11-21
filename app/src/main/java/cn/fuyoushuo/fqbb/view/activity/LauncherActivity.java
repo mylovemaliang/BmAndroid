@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.fuyoushuo.fqbb.MyApplication;
+import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 
 
 public class LauncherActivity extends BaseActivity {
@@ -30,6 +33,8 @@ public class LauncherActivity extends BaseActivity {
         tipEditor.putBoolean("short_time_tipForTaobao",false);
         tipEditor.putBoolean("short_time_tipForJd",false);
         tipEditor.commit();
+
+        MobclickAgent.onEvent(MyApplication.getContext(), EventIdConstants.APPLICATION_LAUNCH_NUM);
 
         if(sharedPreferences.getBoolean("isUserGuided",false)){
             Intent intent1 = new Intent(this,AppstartActivity.class);

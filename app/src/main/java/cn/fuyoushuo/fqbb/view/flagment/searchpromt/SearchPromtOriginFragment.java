@@ -39,6 +39,11 @@ public class SearchPromtOriginFragment extends BaseFragment{
 
 
     @Override
+    protected String getPageName() {
+        return "searchTip_origin";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.origin_promt_search_view;
     }

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.view.flagment.AboutFragment;
 import cn.fuyoushuo.fqbb.view.flagment.ConfigFragment;
@@ -66,5 +68,17 @@ public class ConfigActivity extends BaseActivity {
         }else if(lastShowFragmentIndex == 1){
             aboutFragment.goBack();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("设置页面");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("设置页面");
     }
 }

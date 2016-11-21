@@ -54,15 +54,12 @@ public class SearchPresenter extends BasePresenter{
         //搜索逻辑统计
         if(!TextUtils.isEmpty(currentSearchCate) && SearchCondition.search_cate_taobao.equals(currentSearchCate)){
             if(getMyView() != null){
-               MobclickAgent.onEvent(getMyView().getMyContext(),EventIdConstants.SEARCH_TYPE_TAOBAO);
             }
         }else if(!TextUtils.isEmpty(currentSearchCate) && SearchCondition.search_cate_commonfan.equals(currentSearchCate)){
             if(getMyView() != null){
-                MobclickAgent.onEvent(getMyView().getMyContext(),EventIdConstants.SEARCH_TYPE_FANLI);
             }
         }else{
             if(getMyView() != null){
-                MobclickAgent.onEvent(getMyView().getMyContext(),EventIdConstants.SEARCH_TYPE_SUPERFANLI);
             }
         }
 

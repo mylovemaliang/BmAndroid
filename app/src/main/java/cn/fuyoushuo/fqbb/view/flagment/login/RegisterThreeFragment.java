@@ -45,6 +45,11 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
     RegisterThreePresenter registerThreePresenter;
 
     @Override
+    protected String getPageName() {
+        return "register-3";
+    }
+
+    @Override
     protected int getRootLayoutId() {
             return R.layout.fragment_register_3;
     }

@@ -46,6 +46,11 @@ public class RegisterTwoFragment extends BaseFragment {
     private Long time = 60l;
 
     @Override
+    protected String getPageName() {
+        return "register-2";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_register_2;
     }

@@ -172,6 +172,7 @@ public class SearchActivity extends BaseActivity {
                     Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
                     intent.putExtra("loadUrl",event.getGoodUrl());
                     intent.putExtra("forSearchGoodInfo",true);
+                    intent.putExtra("bizString","tbGoodDetail");
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                 }

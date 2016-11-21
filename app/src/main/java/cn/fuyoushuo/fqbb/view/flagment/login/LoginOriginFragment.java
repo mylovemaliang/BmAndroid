@@ -59,6 +59,11 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
     private LoginOriginPresenter loginOriginPresenter;
 
     @Override
+    protected String getPageName() {
+        return "loginPage";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_login_origin;
     }

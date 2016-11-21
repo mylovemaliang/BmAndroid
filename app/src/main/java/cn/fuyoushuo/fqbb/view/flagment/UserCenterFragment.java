@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.trello.rxlifecycle.FragmentEvent;
+import com.umeng.analytics.MobclickAgent;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +29,7 @@ import butterknife.Bind;
 import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.DateUtils;
+import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.presenter.impl.UserCenterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.ConfigActivity;
@@ -105,9 +107,13 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("dddddd");
 
         return super.onCreateView(inflater,container,savedInstanceState);
+    }
+
+    @Override
+    protected String getPageName() {
+        return "userCenterPage";
     }
 
     @Override
@@ -164,6 +170,7 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
                     @Override
                     public void call(Void aVoid) {
                         //提现页面
+                        MobclickAgent.onEvent(MyApplication.getContext(), EventIdConstants.USER_TIXIAN_BTN);
                         TixianFlagment.newInstance().show(getFragmentManager(),"TixianFlagment");
                     }
                 });

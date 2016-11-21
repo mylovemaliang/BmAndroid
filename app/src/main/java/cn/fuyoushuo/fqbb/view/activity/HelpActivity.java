@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
 import org.apache.log4j.chainsaw.Main;
 
 import cn.fuyoushuo.fqbb.R;
@@ -141,5 +143,17 @@ public class HelpActivity extends BaseActivity {
             startActivity(intent);
             this.finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("帮助中心");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("帮助中心");
     }
 }

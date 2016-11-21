@@ -42,6 +42,11 @@ public class FindPassTwoFragment extends BaseFragment implements FindPassTwoView
     FindPassTwoPresenter findPassTwoPresent;
 
     @Override
+    protected String getPageName() {
+        return "findPass-2";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_find_pass_2;
     }

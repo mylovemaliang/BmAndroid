@@ -50,8 +50,6 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        Log.d("application init",getCurProcessName(context));
-        if(getCurProcessName(context) != null || !"cn.fuyoushuo.fqbb:searchProcess".equals(getCurProcessName(context))){
         try {
             ApplicationInfo appInfo = this.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             feedbackAppkey = String.valueOf(appInfo.metaData.getInt("feedback_appkey"));
@@ -76,12 +74,12 @@ public class MyApplication extends Application{
         //用户登录信息管理
         LoginInfoStore.getIntance().init(this);
         //禁用默认的统计机制
-        MobclickAgent.setDebugMode(false);
-        MobclickAgent.openActivityDurationTrack(true);
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
         displayMetrics = context.getResources().getDisplayMetrics();
         mRefWatcher = Constants.DEBUG ?  LeakCanary.install(this) : RefWatcher.DISABLED;
         initFeedBack(feedbackAppkey);
-      }
+
     }
 
     public static RefWatcher getRefWatcher(Context context) {

@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jakewharton.rxbinding.view.RxView;
+import com.umeng.analytics.MobclickAgent;
 
 import org.apache.log4j.chainsaw.Main;
 
@@ -174,5 +175,17 @@ public class PointMallActivity extends BaseActivity{
         freezePoints.setText(String.valueOf(orderFreezePoint+convertFreezePoint));
         useablePoints.setText(String.valueOf(validPoint));
         accountView.setText(account);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("积分商城-主页面");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("积分商城-主页面");
     }
 }

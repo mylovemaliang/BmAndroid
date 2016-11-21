@@ -171,6 +171,10 @@ public class MainActivity extends BaseActivity {
         //处理回调的任务
         String bizCallback = intent.getStringExtra("bizCallBack");
         bizCallback = bizCallback==null ? "" : bizCallback;
+        if(intent.getBooleanExtra("noLoginFromMain",false)){
+            mainButton.setChecked(true);
+        }
+
         if("MainToUc".equals(bizCallback)){
             userCenterFragment.refreshUserInfo();
             changeView(USER_CENTER_INDEX);
@@ -225,6 +229,7 @@ public class MainActivity extends BaseActivity {
                     /*Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                     intent.putExtra("goodUrl",event.getGoodUrl());*/
                      Intent intent = new Intent(MainActivity.this, WebviewActivity.class);
+                     intent.putExtra("bizString","tbGoodDetail");
                      intent.putExtra("loadUrl",event.getGoodUrl());
                      intent.putExtra("forSearchGoodInfo",false);
                      intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -439,6 +444,7 @@ public class MainActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("loadUrl", "https://h5.m.taobao.com/mlapp/mytaobao.html#mlapp-mytaobao");
         intent.putExtra("forSearchGoodInfo", false);
+        intent.putExtra("bizString","myTaoBao");
         startActivity(intent);
     }
 

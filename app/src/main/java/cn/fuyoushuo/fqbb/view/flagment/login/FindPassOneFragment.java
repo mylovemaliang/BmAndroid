@@ -51,7 +51,10 @@ public class FindPassOneFragment extends BaseFragment {
     LocalLoginPresent localLoginPresent;
 
 
-
+    @Override
+    protected String getPageName() {
+        return "findPass_1";
+    }
 
     @Override
     protected int getRootLayoutId() {

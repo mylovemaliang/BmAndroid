@@ -7,91 +7,81 @@ package cn.fuyoushuo.fqbb.commonlib.utils;
 public class EventIdConstants {
 
     /**
-     * 首页搜索栏区域
+     * 程序开启次数
      */
-    public static final String HOME_TOP_SEARCH_BTN = "home_top_sarch_btn";
+    public static final String APPLICATION_LAUNCH_NUM = "application_launch_num";
 
     /**
-     * 当天进入返钱模式人数
+     * 当天浏览京东商品数
      */
-    public static final String NUMBER_FOR_JINRUFANLIMOSHI = "number_for_jinRuFanLiMoShi";
+    public static final String BROWSE_JD_GOODS_NUM = "browse_JD_goods_num";
 
     /**
-     * 侧边栏我的淘宝按钮
+     * 当天浏览淘宝商品数
      */
-    public static final String SLIDER_MY_TAOBAO_BTN = "slider_my_taoBao_btn";
+    public static final String BROWSE_TAOBAO_GOODS_NUM = "browse_taoBao_goods_num";
 
     /**
-     * 侧边栏使用帮助
+     * 首页京东按钮点击数
      */
-    public static final String SLIDER_USERHELPER_FAQ_BTN = "slider_userHelper_FAQ_btn";
+    public static final String HOME_JD_BTN = "home_JD_btn";
 
     /**
-     * 提现页面左上"我要提现"按钮
+     * 首页我的淘宝按钮点击数
      */
-    public static final String TIXIANYEMIAN_TOP_LEFT_FAQ_BTN = "tiXianYeMian_top_left_FAQ_Btn";
+    public static final String HOME_MYTAOBAO_BTN = "home_myTaoBao_btn";
 
     /**
-     * 付款成功后立即查询订单按钮
+     * 首页淘宝按钮点击数
      */
-    public static final String AFTER_BUY_GOTO_ORDER_BTN = "after_buy_goto_order_btn";
+    public static final String HOME_TAOBAO_BTN = "home_taoBao_btn";
 
     /**
-     * 当天成功购买商品人数
+     * 首页天猫按钮点击数
      */
-    public static final String BUY_GOODS_FOR_SUCCEED = "buy_goods_for_succeed";
+    public static final String HOME_TMALL_BTN = "home_Tmall_btn";
 
     /**
-     * 我的订单进入登录页面
+     *  京东进入返利模式数
      */
-    public static final String LOGIN_OF_ORDER_PAGE = "login_of_order_page";
+    public static final String NUMBER_OF_FANLI_FOR_JD = "number_of_fanLi_for_JD";
 
     /**
-     * 侧边栏我的淘宝进入登录页面
+     *  淘宝进入返利模式数
      */
-    public static final String LOGIN_OF_SLIDER_MYTAOBAO = "login_of_slider_myTaobao";
+    public static final String NUMBER_OF_FANLI_FOR_TAOBAO = "number_of_fanLi_for_taoBao";
 
     /**
-     * 提现页面进入登录页面
+     * 搜索页返利搜索
      */
-    public static final String LOGIN_OF_TIXIAN_PAGE = "login_of_tiXian_page";
+    public static final String LOGIN_OF_TIXIAN_PAGE = "search_type_fanLi";
 
     /**
-     *  点击我要返钱进入登录页面
+     * 搜索页面搜索总数
      */
-    public static final String LOGIN_OF_WOYAOFANQIAN_BTN = "login_of_woYaoFanQian_btn";
-
-
-    /**
-     *  提示开启返钱权限次数
-     */
-    public static final String SHOW_TIP_OF_KAIQIFANQIANQUANXIAN = "show_tip_of_kaiQiFanQianQuanXian";
-
-    /**
-     *  我要返钱显示次数
-     */
-    public static final String  SHOW_TIP_OF_WOYAOFANQIAN = "show_tip_of_woYaoFanQian";
-
-    /**
-     *  提示修复权限次数
-     */
-    public static final String SHOW_TIP_OF_XIUFUQUANXIAN = "show_tip_of_xiuFuQuanXian";
+    public static final String SEARCH_TYPE_FOR_ALL = "search_type_for_all";
 
 
     /**
-     *  通过淘宝进行搜索
+     *  搜索页面京东搜索
      */
-    public static final String SEARCH_TYPE_TAOBAO = "search_type_taobao";
+    public static final String SEARCH_TYPE_JD = "search_type_JD";
 
     /**
-     *  通过返利进行搜索
+     *  京东购买商品数
      */
-    public static final String SEARCH_TYPE_FANLI = "search_type_fanli";
+    public static final String  SUCCESS_BUY_FOR_JD = "success_buy_for_JD";
 
     /**
-     *  通过超级返进行搜索
+     *  淘宝购买商品数
      */
-    public static final String SEARCH_TYPE_SUPERFANLI = "search_type_superfanli";
+    public static final String SUCCESS_BUY_FOR_TAOBAO = "success_buy_for_taoBao";
+
+
+    /**
+     *  个人中心余额提现按钮点击数
+     */
+    public static final String USER_TIXIAN_BTN = "user_tiXian_btn";
 
     /**
      *  app crash 重启次数

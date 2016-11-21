@@ -118,6 +118,11 @@ public class SelectedGoodFragment extends BaseFragment{
     }
 
     @Override
+    protected String getPageName() {
+        return "jxscPage";
+    }
+
+    @Override
     protected int getRootLayoutId() {
         return R.layout.fragment_selected_good;
     }
@@ -159,6 +164,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -195,6 +201,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -231,6 +238,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -267,6 +275,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -303,6 +312,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);
@@ -339,6 +349,7 @@ public class SelectedGoodFragment extends BaseFragment{
                 String url = goodItem.getUrl();
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("bizString","tbGoodDetail");
                 intent.putExtra("loadUrl", url);
                 intent.putExtra("forSearchGoodInfo", false);
                 startActivity(intent);

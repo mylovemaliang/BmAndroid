@@ -68,7 +68,6 @@ public class TixianFlagment extends RxDialogFragment {
         howToTixianLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MobclickAgent.onEvent(parentActivity, EventIdConstants.TIXIANYEMIAN_TOP_LEFT_FAQ_BTN);
                 Intent intent = new Intent(parentActivity, HelpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("howToTixian", true);
@@ -115,7 +114,6 @@ public class TixianFlagment extends RxDialogFragment {
                     if(replaceUrl.equals("www.alimama.com/member/login.htm")){//用户登录过了，然后退出了阿里妈妈，那么刷新会到登录页；这个时候就需要跳到我们的阿里妈妈登录页
                         mytixianWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
                         tixianTitleText.setText("淘宝账户登录");
-                        MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_TIXIAN_PAGE);
                         return true;
                     }
 
@@ -188,7 +186,6 @@ public class TixianFlagment extends RxDialogFragment {
                 if(mytixianWebview!=null){
                     tixianTitleText.setText("淘宝账户登录");
                     mytixianWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
-                    MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_TIXIAN_PAGE);
                 }
             }
 
@@ -215,5 +212,17 @@ public class TixianFlagment extends RxDialogFragment {
             mytixianWebview.destroy();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("uc_tixian");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("uc_tixian");
     }
 }

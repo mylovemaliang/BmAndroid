@@ -126,7 +126,6 @@ public class MyOrderFlagment extends Fragment {
                         public void nologinCallback() {//阿里妈妈也没有登录
                             myorderWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
                             myorderTitleText.setText("淘宝账户登录");
-                            MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_ORDER_PAGE);
                         }
 
                         @Override
@@ -176,7 +175,6 @@ public class MyOrderFlagment extends Fragment {
                 if(myorderWebview!=null){
                     myorderTitleText.setText("淘宝账户登录");
                     myorderWebview.loadUrl(TaobaoInterPresenter.TAOBAOKE_LOGINURL);
-                    MobclickAgent.onEvent(parentActivity, EventIdConstants.LOGIN_OF_ORDER_PAGE);
                 }
             }
 

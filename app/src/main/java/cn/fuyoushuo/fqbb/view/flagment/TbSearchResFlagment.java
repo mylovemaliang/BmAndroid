@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jakewharton.rxbinding.view.RxView;
@@ -149,6 +150,18 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView,Sear
         return fragment;
     }
 
+
+    @Override
+    protected String getPageName() {
+        if(SearchCondition.search_cate_superfan.equals(searchCateString)){
+            return "searchResult_superfan";
+        }
+        else if(SearchCondition.search_cate_taobao.equals(searchCateString)){
+            return "searchResult_tb";
+        }else{
+            return "";
+        }
+    }
 
     @Override
     protected int getRootLayoutId() {
@@ -860,49 +873,51 @@ public class TbSearchResFlagment extends BaseFragment implements SearchView,Sear
      */
     @Override
     public void setAlertDialogIfNull(){
-        final AlertDialog alertDialog = new AlertDialog.Builder(mactivity).create();
 
-        View dialog = layoutInflater.inflate(R.layout.search_null_content_dialog, null);
-        String currentSearchCate = searchCondition.getCurrentSearchCate();
-
-        RecyclerView rview = (RecyclerView) dialog.findViewById(R.id.search_null_content_dialog_rview);
-        TextView title = (TextView) dialog.findViewById(R.id.search_null_content_dialog_top);
-        title.setText(SearchCondition.getSearchTypeDesc(currentSearchCate)+"无搜索结果");
-        SearchMenuAdapter adapter = new SearchMenuAdapter();
-        adapter.setData(adapter.getNcRowItems(currentSearchCate));
-        rview.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mactivity);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rview.setLayoutManager(linearLayoutManager);
-        rview.addItemDecoration(new ItemDecoration(mactivity));
-        rview.setAdapter(adapter);
-
-        adapter.setOnRowClick(new SearchMenuAdapter.OnRowClick() {
-            @Override
-            public void onClick(View view, SearchMenuAdapter.RowItem rowItem) {
-                String sortCode = rowItem.getSortCode();
-                if(!"cancel".equals(sortCode)){
-                    SeartchPo po = new SeartchPo();
-                    po.setQ(q);
-                    po.setSearchType(sortCode);
-                    refreshSearchView(po);
-                    alertDialog.dismiss();
-                }
-                else if("cancel".equals(sortCode)){
-                    alertDialog.dismiss();
-                }
-            }
-        });
-
-        int mScreenWidth = MyApplication.getDisplayMetrics().widthPixels;
-        alertDialog.show();
-        WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
-        params.width = CommonUtils.getIntHundred(mScreenWidth*0.6f);
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        alertDialog.getWindow().setAttributes(params);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 0, 0, 0)));
-        alertDialog.setContentView(dialog);
-        alertDialog.setCanceledOnTouchOutside(false);
+          Toast.makeText(MyApplication.getContext(),"搜索结果为空",Toast.LENGTH_SHORT).show();
+//        final AlertDialog alertDialog = new AlertDialog.Builder(mactivity).create();
+//
+//        View dialog = layoutInflater.inflate(R.layout.search_null_content_dialog, null);
+//        String currentSearchCate = searchCondition.getCurrentSearchCate();
+//
+//        RecyclerView rview = (RecyclerView) dialog.findViewById(R.id.search_null_content_dialog_rview);
+//        TextView title = (TextView) dialog.findViewById(R.id.search_null_content_dialog_top);
+//        title.setText(SearchCondition.getSearchTypeDesc(currentSearchCate)+"无搜索结果");
+//        SearchMenuAdapter adapter = new SearchMenuAdapter();
+//        adapter.setData(adapter.getNcRowItems(currentSearchCate));
+//        rview.setHasFixedSize(true);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mactivity);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        rview.setLayoutManager(linearLayoutManager);
+//        rview.addItemDecoration(new ItemDecoration(mactivity));
+//        rview.setAdapter(adapter);
+//
+//        adapter.setOnRowClick(new SearchMenuAdapter.OnRowClick() {
+//            @Override
+//            public void onClick(View view, SearchMenuAdapter.RowItem rowItem) {
+//                String sortCode = rowItem.getSortCode();
+//                if(!"cancel".equals(sortCode)){
+//                    SeartchPo po = new SeartchPo();
+//                    po.setQ(q);
+//                    po.setSearchType(sortCode);
+//                    refreshSearchView(po);
+//                    alertDialog.dismiss();
+//                }
+//                else if("cancel".equals(sortCode)){
+//                    alertDialog.dismiss();
+//                }
+//            }
+//        });
+//
+//        int mScreenWidth = MyApplication.getDisplayMetrics().widthPixels;
+//        alertDialog.show();
+//        WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+//        params.width = CommonUtils.getIntHundred(mScreenWidth*0.6f);
+//        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//        alertDialog.getWindow().setAttributes(params);
+//        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(0, 0, 0, 0)));
+//        alertDialog.setContentView(dialog);
+//        alertDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override

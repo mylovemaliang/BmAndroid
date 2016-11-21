@@ -11,6 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.net.URLEncoder;
 
 import butterknife.Bind;
@@ -33,6 +35,11 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
 
     @Bind(R.id.jd_search_webview)
     WebView myJdWebView;
+
+    @Override
+    protected String getPageName() {
+        return "searchResult_jd";
+    }
 
     @Override
     protected int getRootLayoutId() {
@@ -81,20 +88,20 @@ public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                String js = "var rmadjs = document.createElement(\"script\");";
+                js += "rmadjs.src=\"//www.fanqianbb.com/static/mobile/rmad.js\";";
+                js += "document.body.appendChild(rmadjs);";
+                view.loadUrl("javascript:" + js);
                 super.onPageFinished(view, url);
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
-                if(url.startsWith("http://stat.m.jd.com/m/access")){
-                    System.out.println("333333");
-                }
                 super.onLoadResource(view, url);
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                System.out.println("1111111");
                 super.onReceivedSslError(view, handler, error);
             }
         });
