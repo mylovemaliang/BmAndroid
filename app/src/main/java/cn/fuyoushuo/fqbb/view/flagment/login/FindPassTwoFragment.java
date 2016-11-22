@@ -53,7 +53,9 @@ public class FindPassTwoFragment extends BaseFragment implements FindPassTwoView
 
     @Override
     protected void initView() {
-
+        newPassView.setFocusable(true);
+        newPassView.setFocusableInTouchMode(true);
+        newPassView.requestFocus();
         RxTextView.textChanges(newPassView).compose(this.<CharSequence>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<CharSequence>() {
                     @Override

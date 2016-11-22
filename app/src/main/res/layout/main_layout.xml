@@ -37,7 +37,7 @@
                 style="@style/rg_btn_style"
                 android:drawableTop="@drawable/bt_menu_jxsc_select"
                 android:textColor="@drawable/bt_menu_select_color"
-                android:text="精选商城"
+                android:text="精选商品"
                 android:layout_toRightOf="@+id/rbHome"
                 android:layout_marginBottom="3dp"/>
 

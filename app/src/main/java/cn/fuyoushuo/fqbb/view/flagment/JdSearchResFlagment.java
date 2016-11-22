@@ -22,7 +22,7 @@ import cn.fuyoushuo.fqbb.R;
  * Created by MALIANG on 2016/10/20.
  * 用于展现京东的搜索结果页面
  */
-public class JdSearchResFlagment extends BaseFragment implements SearchFlagment.doUpdateWithQ{
+public class JdSearchResFlagment extends BaseInnerFragment implements SearchFlagment.doUpdateWithQ{
 
     public static final String TAG_NAME = "jdSearchResFlagment";
 

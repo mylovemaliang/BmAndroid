@@ -171,12 +171,8 @@ public class MainActivity extends BaseActivity {
         //处理回调的任务
         String bizCallback = intent.getStringExtra("bizCallBack");
         bizCallback = bizCallback==null ? "" : bizCallback;
-        if(intent.getBooleanExtra("noLoginFromMain",false)){
-            mainButton.setChecked(true);
-        }
 
         if("MainToUc".equals(bizCallback)){
-            userCenterFragment.refreshUserInfo();
             changeView(USER_CENTER_INDEX);
             ucButton.setChecked(true);
 
@@ -194,14 +190,22 @@ public class MainActivity extends BaseActivity {
 
     private void processIntent(){
         //判断是否直接转发到详情页
-        if(currentShowBizPage==0)
+        if(currentShowBizPage==0){
             changeView(MAIN_FRAGMENT_INDEX);
-//        else if(currentShowBizPage == 1)
-//            changeView(JXSC_FRAGMENT_INDEX);
-        else if(currentShowBizPage==2)
+            mainButton.setChecked(true);
+        }
+        else if(currentShowBizPage == 1){
+            changeView(JXSC_FRAGMENT_INDEX);
+            jxscButton.setChecked(true);
+        }
+        else if(currentShowBizPage==2){
             changeView(MYORDER_FRAGMENT_INDEX);
-        else if(currentShowBizPage==3)
+            myOrderButton.setChecked(true);
+        }
+        else if(currentShowBizPage==3){
            changeView(USER_CENTER_INDEX);
+           ucButton.setChecked(true);
+        }
     }
 
     private void initBusEventListen(){
@@ -258,9 +262,9 @@ public class MainActivity extends BaseActivity {
         mContent = mainFlagment;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.main_area,mainFlagment).show(mainFlagment);
-        fragmentTransaction.add(R.id.main_area,selectedGoodFragment).hide(selectedGoodFragment);
-        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
-        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
+//        fragmentTransaction.add(R.id.main_area,selectedGoodFragment).hide(selectedGoodFragment);
+//        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
+//        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
 
         fragmentTransaction.commit();
         currentShowBizPage = 0;
@@ -273,9 +277,9 @@ public class MainActivity extends BaseActivity {
             mContent = to;
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             if (!to.isAdded()) {    // 先判断是否被add过
-                transaction.hide(from).add(R.id.main_area, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.main_area, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
@@ -306,8 +310,8 @@ public class MainActivity extends BaseActivity {
                       localLoginPresent.isFqbbLocalLogin(new LocalLoginPresent.LoginCallBack() {
                           @Override
                           public void localLoginSuccess() {
-                              userCenterFragment.refreshUserInfo();
                               changeView(USER_CENTER_INDEX);
+                              //userCenterFragment.refreshUserInfo();
                               currentShowBizPage = USER_CENTER_INDEX;
                           }
 

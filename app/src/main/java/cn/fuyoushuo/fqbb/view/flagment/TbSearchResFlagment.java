@@ -61,7 +61,7 @@ import rx.functions.Action1;
  * Created by MALIANG on 2016/10/20.
  * 用于展现淘宝的搜索结果页
  */
-public class TbSearchResFlagment extends BaseFragment implements SearchView,SearchFlagment.doUpdateWithQ {
+public class TbSearchResFlagment extends BaseInnerFragment implements SearchView,SearchFlagment.doUpdateWithQ {
 
     public static final String TAG_NAME = "tbSearchResFlagment";
 

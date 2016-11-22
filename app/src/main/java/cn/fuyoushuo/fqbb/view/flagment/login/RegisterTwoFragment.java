@@ -1,5 +1,6 @@
 package cn.fuyoushuo.fqbb.view.flagment.login;
 
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,6 +58,10 @@ public class RegisterTwoFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        verifiValue.setInputType(InputType.TYPE_CLASS_PHONE);
+        verifiValue.setFocusable(true);
+        verifiValue.setFocusableInTouchMode(true);
+        verifiValue.requestFocus();
         RxView.clicks(acquireVerifiButton).compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
@@ -83,6 +88,8 @@ public class RegisterTwoFragment extends BaseFragment {
                         RxBus.getInstance().send(new ToRegisterThreeEvent(phoneNum,verifiCode));
                     }
                 });
+
+        verifiValue.setInputType(InputType.TYPE_CLASS_PHONE);
     }
 
     @Override
@@ -103,6 +110,9 @@ public class RegisterTwoFragment extends BaseFragment {
                     @Override
                     public void call(Long aLong) {
                         time--;
+                        if(acquireVerifiButton == null){
+                            return;
+                        }
                         if (time > 0) {
                             acquireVerifiButton.setText("获取验证码(" + time + ")");
                         } else {
@@ -123,6 +133,12 @@ public class RegisterTwoFragment extends BaseFragment {
     //刷新当前的手机号
     public void refreshPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         headTitle.setText("手机号 : " + phoneNum);
         timeForVerifiCode();
     }

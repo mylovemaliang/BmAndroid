@@ -25,8 +25,9 @@ import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.presenter.impl.TaobaoInterPresenter;
 import cn.fuyoushuo.fqbb.view.activity.MainActivity;
 import cn.fuyoushuo.fqbb.view.activity.WebviewActivity;
+import cn.fuyoushuo.fqbb.view.flagment.BaseInnerFragment;
 
-public class TbOrderFragment extends Fragment {
+public class TbOrderFragment extends BaseInnerFragment {
 
     public static final String VOLLEY_TAG_NAME = "my_order_flagment";
 
@@ -45,8 +46,18 @@ public class TbOrderFragment extends Fragment {
     boolean noLoginIntercept = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view =  inflater.inflate(R.layout.flagment_tb_myorder, container, false);
+    protected String getPageName() {
+        return "tb_orderSearch";
+    }
+
+    @Override
+    protected int getRootLayoutId() {
+        return R.layout.flagment_tb_myorder;
+    }
+
+
+    @Override
+    protected void initView(View view) {
         parentActivity = (MainActivity) getActivity();
 
         reflashMyOrderLl = (LinearLayout) view.findViewById(R.id.reflashMyOrderLl);
@@ -146,9 +157,12 @@ public class TbOrderFragment extends Fragment {
             }
         });
         webviewArea.addView(myorderWebview);
-        return view;
     }
 
+    @Override
+    protected void initData() {
+
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -216,17 +230,5 @@ public class TbOrderFragment extends Fragment {
         //当前 flagment 销毁时,取消所有进行及等待的请求
         TaobaoInterPresenter.cancelTagedRuquests(VOLLEY_TAG_NAME);
         super.onDestroy();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("tbOrderSearch");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("tbOrderSearch");
     }
 }

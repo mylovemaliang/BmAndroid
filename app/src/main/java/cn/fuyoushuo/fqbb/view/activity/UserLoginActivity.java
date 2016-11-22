@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -97,12 +98,7 @@ public class UserLoginActivity extends BaseActivity{
                         finish();
                     }
                 });
-
-
-
     }
-
-
 
 
     //初始化所有的FRAGMENT
@@ -121,19 +117,19 @@ public class UserLoginActivity extends BaseActivity{
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.login_fragment_area,loginOriginFragment,LoginOriginFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.login_fragment_area,findPassOneFragment,FindPassOneFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.login_fragment_area,findPassTwoFragment,FindPassTwoFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.login_fragment_area,registerOneFragment,RegisterOneFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.login_fragment_area,registerTwoFragment,RegisterTwoFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.login_fragment_area,registerThreeFragment,RegisterThreeFragment.TAG_NAME);
+//        fragmentTransaction.add(R.id.login_fragment_area,findPassOneFragment,FindPassOneFragment.TAG_NAME);
+//        fragmentTransaction.add(R.id.login_fragment_area,findPassTwoFragment,FindPassTwoFragment.TAG_NAME);
+//        fragmentTransaction.add(R.id.login_fragment_area,registerOneFragment,RegisterOneFragment.TAG_NAME);
+//        fragmentTransaction.add(R.id.login_fragment_area,registerTwoFragment,RegisterTwoFragment.TAG_NAME);
+//        fragmentTransaction.add(R.id.login_fragment_area,registerThreeFragment,RegisterThreeFragment.TAG_NAME);
 
         //初始化 fragment 状态
         fragmentTransaction.show(loginOriginFragment);
-        fragmentTransaction.hide(findPassOneFragment);
-        fragmentTransaction.hide(findPassTwoFragment);
-        fragmentTransaction.hide(registerOneFragment);
-        fragmentTransaction.hide(registerTwoFragment);
-        fragmentTransaction.hide(registerThreeFragment);
+//        fragmentTransaction.hide(findPassOneFragment);
+//        fragmentTransaction.hide(findPassTwoFragment);
+//        fragmentTransaction.hide(registerOneFragment);
+//        fragmentTransaction.hide(registerTwoFragment);
+//        fragmentTransaction.hide(registerThreeFragment);
 
         mContent = loginOriginFragment;
 
@@ -147,9 +143,9 @@ public class UserLoginActivity extends BaseActivity{
             mContent = to;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if (!to.isAdded()) {    // 先判断是否被add过
-                transaction.hide(from).add(R.id.main_area, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                transaction.hide(from).add(R.id.login_fragment_area, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
             } else {
-                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
         }
     }
@@ -188,7 +184,7 @@ public class UserLoginActivity extends BaseActivity{
                     switchContent(mContent,loginOriginFragment);
                 }
                 else if(busEvent instanceof LoginOriginFragment.LoginSuccessEvent){
-                     if("".equals(biz)){
+                    if("".equals(biz)){
                          Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
                          intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                          startActivity(intent);

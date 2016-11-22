@@ -34,7 +34,7 @@ public class ConfigActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.config_fragment_area, configFragment).show(configFragment);
-        fragmentTransaction.add(R.id.config_fragment_area, aboutFragment).hide(aboutFragment);
+        //fragmentTransaction.add(R.id.config_fragment_area, aboutFragment).hide(aboutFragment);
         fragmentTransaction.commit();
     }
 

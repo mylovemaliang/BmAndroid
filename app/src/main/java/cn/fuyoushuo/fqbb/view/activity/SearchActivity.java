@@ -61,11 +61,11 @@ public class SearchActivity extends BaseActivity {
     private void initFragments() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.search_flagment_container, searchPromptFragment, SearchPromptFragment.TAG_NAME);
-        fragmentTransaction.add(R.id.search_flagment_container, searchFlagment, SearchPromptFragment.TAG_NAME);
-        //处理crash
-        //int resultcode = processCrash();
-        //Log.i("testmy","c0"+resultcode);
-         fragmentTransaction.hide(searchFlagment);
+         //fragmentTransaction.add(R.id.search_flagment_container, searchFlagment,SearchFlagment.TAG_NAME);
+         //处理crash
+         //int resultcode = processCrash();
+         //Log.i("testmy","c0"+resultcode);
+         //fragmentTransaction.hide(searchFlagment);
          fragmentTransaction.show(searchPromptFragment);
          mContent = searchPromptFragment;
          currentFlag = FLAG_SEARCHPROMT;

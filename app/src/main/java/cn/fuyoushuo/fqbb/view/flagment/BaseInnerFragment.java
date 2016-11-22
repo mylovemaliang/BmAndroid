@@ -19,7 +19,7 @@ import cn.fuyoushuo.fqbb.view.activity.BaseActivity;
 /**
  * Fragment 的基本抽象
  */
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseInnerFragment extends RxFragment {
 
     protected BaseActivity mactivity;
 
@@ -27,7 +27,9 @@ public abstract class BaseFragment extends RxFragment {
 
     protected boolean isInit = false;
 
-    public BaseFragment() {
+    protected boolean isCreated = false;
+
+    public BaseInnerFragment() {
         // Required empty public constructor
     }
 
@@ -53,6 +55,7 @@ public abstract class BaseFragment extends RxFragment {
         mAutoBindView = true;
         initData();
         setRetainInstance(false);
+        isCreated = true;
     }
 
     @Override
@@ -101,29 +104,27 @@ public abstract class BaseFragment extends RxFragment {
         }
     }
 
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if(!hidden){
-            MobclickAgent.onPageStart(getPageName());
-        }else{
-            MobclickAgent.onPageEnd(getPageName());
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(!this.isHidden()){
-          MobclickAgent.onPageStart(getPageName());
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(!this.isHidden()){
-          MobclickAgent.onPageEnd(getPageName());
-        }
-    }
+//    public void initUmengPageStart(){
+//          MobclickAgent.onPageStart(getPageName());
+//    }
+//
+//
+//    public void initUmengPageEnd(){
+//         MobclickAgent.onPageEnd(getPageName());
+//    }
+//
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        // 友盟统计页面跳转，重写此方法，可以保证ViewPager切换Fragment时能够准确的记录Fragment之间的跳转
+//        // 不用再调用Fragment的生命周期方法
+//        if (!isCreated){
+//            return;
+//        }
+//        if (isVisibleToUser){
+//            MobclickAgent.onPageStart(getPageName());
+//        }else{
+//            MobclickAgent.onPageEnd(getPageName());
+//        }
+//    }
 }

@@ -1,5 +1,6 @@
 package cn.fuyoushuo.fqbb.view.flagment.login;
 
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -63,6 +64,12 @@ public class FindPassOneFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        accountView.setFocusable(true);
+        accountView.setFocusableInTouchMode(true);
+        accountView.requestFocus();
+        accountView.setInputType(InputType.TYPE_CLASS_PHONE);
+        verifiCodeView.setInputType(InputType.TYPE_CLASS_PHONE);
+
         RxView.clicks(sendVerificodeButton).compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
@@ -141,6 +148,9 @@ public class FindPassOneFragment extends BaseFragment {
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
+                        if(sendVerificodeButton == null){
+                           return;
+                        }
                         time--;
                         if (time > 0) {
                             sendVerificodeButton.setText("获取验证码(" + time + ")");

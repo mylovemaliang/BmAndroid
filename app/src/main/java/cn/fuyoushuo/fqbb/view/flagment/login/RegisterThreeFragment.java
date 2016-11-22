@@ -56,6 +56,9 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
 
     @Override
     protected void initView() {
+        passwordView.setFocusable(true);
+        passwordView.setFocusableInTouchMode(true);
+        passwordView.requestFocus();
 
         RxTextView.textChanges(passwordView).compose(this.<CharSequence>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<CharSequence>() {
@@ -96,11 +99,15 @@ public class RegisterThreeFragment extends BaseFragment implements RegisterThree
     public void refreshView(String phoneNum,String verifiCode){
         this.phoneNum = phoneNum;
         this.verifiCode = verifiCode;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         headerTitle.setText("手机号 : "+phoneNum);
     }
 
-
-   //--------------------------------------------实现　view　层接口----------------------------------
+    //--------------------------------------------实现　view　层接口----------------------------------
    //当注册成功后的逻辑　
     @Override
     public void onRegistSuccess(String phoneNum) {

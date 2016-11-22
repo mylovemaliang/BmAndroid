@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -176,6 +177,8 @@ public class PhoneRechargeDialogFragment extends RxDialogFragment implements Pho
                         }
                     }
                 });
+        //编辑框类型
+        inputPhoneNum.setInputType(InputType.TYPE_CLASS_PHONE);
 
     }
 

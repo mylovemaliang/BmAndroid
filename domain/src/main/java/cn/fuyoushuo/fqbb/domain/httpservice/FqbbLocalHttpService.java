@@ -14,7 +14,7 @@ public interface FqbbLocalHttpService {
     @GET("/vcc/sc.htm")
     Observable<HttpResp> getVerifiCode(@Query("vct") String vct,@Query("eop") String eop);
 
-    @GET("/user/doregist.htm")
+    @GET("/user/doregist.htm?regFrom=2")
     Observable<HttpResp> registerUser(@Query("phone") String phoneNum,@Query("password") String password,@Query("mobileCode") String mobileCode);
 
     @GET("/user/mlogin.htm")

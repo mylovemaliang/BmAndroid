@@ -143,6 +143,30 @@ public class SearchFlagment extends BaseFragment{
         }
         viewPager.setAdapter(myPageAdapter);
         viewPager.setOffscreenPageLimit(2);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                 if(position == 0){
+                     MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SEARCH_TYPE_FANLI);
+                 }
+                 else if(position == 1){
+                     MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SEARCH_TYPE_TB);
+                 }
+                 else if(position == 2){
+                     MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SEARCH_TYPE_JD);
+                 }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         if(!isInit){
           if(!TextUtils.isEmpty(q)){

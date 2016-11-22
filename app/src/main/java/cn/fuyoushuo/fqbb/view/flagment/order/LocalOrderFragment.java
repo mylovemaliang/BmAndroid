@@ -30,13 +30,14 @@ import cn.fuyoushuo.fqbb.view.Layout.SearchPointsOrderMenu;
 import cn.fuyoushuo.fqbb.view.activity.UserLoginActivity;
 import cn.fuyoushuo.fqbb.view.adapter.SearchMenuAdapter;
 import cn.fuyoushuo.fqbb.view.flagment.BaseFragment;
+import cn.fuyoushuo.fqbb.view.flagment.BaseInnerFragment;
 import cn.fuyoushuo.fqbb.view.view.LocalOrderView;
 import rx.functions.Action1;
 
 /**
  * Created by QA on 2016/11/4.
  */
-public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
+public class LocalOrderFragment extends BaseInnerFragment implements LocalOrderView{
 
     @Bind(R.id.local_order_all)
     TextView allOrderText;
@@ -228,7 +229,7 @@ public class LocalOrderFragment extends BaseFragment implements LocalOrderView{
         builder.setMessage("登录状态下才能查看订单信息!");
 
         builder.setCancelable(true);
-        builder.setPositiveButton("去登陆", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), UserLoginActivity.class);

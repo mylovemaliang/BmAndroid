@@ -2,6 +2,7 @@ package cn.fuyoushuo.fqbb.view.flagment.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,6 +64,9 @@ public class RegisterOneFragment extends BaseFragment implements RegisterOneView
 
     @Override
     protected void initView() {
+        phoneNumText.setFocusable(true);
+        phoneNumText.setFocusableInTouchMode(true);
+        phoneNumText.requestFocus();
         RxTextView.textChanges(phoneNumText)
                 .compose(this.<CharSequence>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<CharSequence>() {
@@ -116,6 +120,7 @@ public class RegisterOneFragment extends BaseFragment implements RegisterOneView
                     }
                 });
 
+        phoneNumText.setInputType(InputType.TYPE_CLASS_PHONE);
     }
 
     @Override

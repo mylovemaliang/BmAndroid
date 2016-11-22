@@ -54,7 +54,7 @@ public class EventIdConstants {
     /**
      * 搜索页返利搜索
      */
-    public static final String LOGIN_OF_TIXIAN_PAGE = "search_type_fanLi";
+    public static final String SEARCH_TYPE_FANLI = "search_type_fanLi";
 
     /**
      * 搜索页面搜索总数
@@ -66,6 +66,12 @@ public class EventIdConstants {
      *  搜索页面京东搜索
      */
     public static final String SEARCH_TYPE_JD = "search_type_JD";
+
+
+    /**
+     * 搜索页面淘宝搜索
+     */
+    public static final String SEARCH_TYPE_TB = "search_type_tb";
 
     /**
      *  京东购买商品数

@@ -78,23 +78,6 @@ public class PointMallActivity extends BaseActivity{
     //初始化view
     private void initView(){
 
-         //加载用户信息
-         localLoginPresent.getUserInfo(new LocalLoginPresent.UserInfoCallBack() {
-             @Override
-             public void onUserInfoGetSucc(JSONObject result) {
-                  initUserInfo(result);
-             }
-
-             @Override
-             public void onUserInfoGetError() {
-                 currentPoints.setText("--");
-                 freezePoints.setText("--");
-                 useablePoints.setText("--");
-                 accountView.setText("--");
-                 Toast.makeText(MyApplication.getContext(),"获取用户信息错误",Toast.LENGTH_SHORT).show();
-             }
-         });
-
          //返回键响应
          RxView.clicks(backArea).compose(this.<Void>bindToLifecycle()).throttleFirst(1000, TimeUnit.MILLISECONDS)
                  .subscribe(new Action1<Void>() {
@@ -146,6 +129,26 @@ public class PointMallActivity extends BaseActivity{
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //加载用户信息
+        localLoginPresent.getUserInfo(new LocalLoginPresent.UserInfoCallBack() {
+            @Override
+            public void onUserInfoGetSucc(JSONObject result) {
+                initUserInfo(result);
+            }
+
+            @Override
+            public void onUserInfoGetError() {
+                currentPoints.setText("--");
+                freezePoints.setText("--");
+                useablePoints.setText("--");
+                accountView.setText("--");
+                Toast.makeText(MyApplication.getContext(),"获取用户信息错误",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {

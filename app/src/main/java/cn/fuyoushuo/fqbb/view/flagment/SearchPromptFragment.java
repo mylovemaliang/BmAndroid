@@ -296,7 +296,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         FragmentManager childFragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = childFragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.search_promt_flagment_area,searchPromtOriginFragment).show(searchPromtOriginFragment);
-        fragmentTransaction.add(R.id.search_promt_flagment_area,searchAutoCompleteFragment).hide(searchAutoCompleteFragment);
+        //fragmentTransaction.add(R.id.search_promt_flagment_area,searchAutoCompleteFragment).hide(searchAutoCompleteFragment);
         mContent = searchPromtOriginFragment;
         fragmentTransaction.commitAllowingStateLoss();
     }

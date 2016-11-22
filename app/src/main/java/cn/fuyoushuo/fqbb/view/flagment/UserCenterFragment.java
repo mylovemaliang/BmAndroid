@@ -235,6 +235,12 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
         return fragment;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshUserInfo();
+    }
+
     //----------------------------------用于外部调用--------------------------------------------------
 
     public void refreshUserInfo(){

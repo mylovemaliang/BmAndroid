@@ -84,8 +84,8 @@ public class MainFlagment extends BaseFragment implements MainView {
     @Bind(R.id.main_totop_icon)
     TextView toTopIcon;
 
-    @Bind(R.id.main_feedback)
-    View mainFeedback;
+    @Bind(R.id.main_userGuide)
+    View mainUserGuide;
 
     private MainPresenter mainPresenter;
 
@@ -177,12 +177,14 @@ public class MainFlagment extends BaseFragment implements MainView {
                     }
         });
 
-        RxView.clicks(mainFeedback).throttleFirst(1000,TimeUnit.MILLISECONDS)
+        RxView.clicks(mainUserGuide).throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        FeedbackAPI.openFeedbackActivity(MyApplication.getContext());
+                        //FeedbackAPI.openFeedbackActivity(MyApplication.getContext());
+                        Intent intent = new Intent(getActivity(),HelpActivity.class);
+                        startActivity(intent);
                     }
         });
 

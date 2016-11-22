@@ -1,6 +1,7 @@
 package cn.fuyoushuo.fqbb.view.flagment.login;
 
 import android.content.Intent;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -105,7 +106,7 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                         RxBus.getInstance().send(new ToRegisterOneEvent());
+                        RxBus.getInstance().send(new ToRegisterOneEvent());
                     }
                 });
 
@@ -118,6 +119,8 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
                         loginOriginPresenter.userLogin(accountValue,passwordValue);
                     }
                 });
+
+        account.setInputType(InputType.TYPE_CLASS_PHONE);
     }
 
     @Override
@@ -134,10 +137,14 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
 
     public void refreshAccount(String phoneNum){
         accountValue = phoneNum;
-        account.setText(phoneNum);
+
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        account.setText(accountValue);
+    }
 
     //----------------------------------------回调VIEW层的接口--------------------------------------------
 
