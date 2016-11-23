@@ -41,4 +41,13 @@ public class DateUtils {
         float f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
         return f1;
     }
+
+    public static Integer floatToInt(Float f){
+        if(f == null){
+            return 0;
+        }
+        BigDecimal b = new BigDecimal(f);
+        int value = b.intValue();
+        return value;
+    }
 }

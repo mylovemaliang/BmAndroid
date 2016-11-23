@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import cn.fuyoushuo.fqbb.MyApplication;
 import cn.fuyoushuo.fqbb.PreLoadService;
 import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
@@ -482,8 +483,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void finishAll(){
-        this.finish();
-        System.exit(0);
+        MyApplication.getMyapplication().finishAllActivity();
+        MyApplication.getMyapplication().finishProgram();
     }
 
    //--------------------------------------------统计---------------------------------------------

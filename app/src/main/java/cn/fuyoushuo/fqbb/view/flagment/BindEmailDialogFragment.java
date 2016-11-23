@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -104,56 +105,51 @@ public class BindEmailDialogFragment extends RxDialogFragment{
                     }
                 });
 
-        RxView.focusChanges(emailTextView).compose(this.<Boolean>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if(!aBoolean){
-                            //判断邮箱是否有效
-                            localLoginPresent.validateData(emailValue, 2, new LocalLoginPresent.DataValidataCallBack() {
-                                @Override
-                                public void onValidataSucc(int flag) {
-                                    if(flag == 1){
-                                        isAccountRight = false;
-                                        Toast.makeText(MyApplication.getContext(),"邮箱已经被注册",Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        isAccountRight = true;
-                                        Toast.makeText(MyApplication.getContext(),"邮箱可以正常使用",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onValidataFail(String msg) {
-                                    isAccountRight = false;
-                                    Toast.makeText(MyApplication.getContext(),msg,Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                });
+//        RxView.focusChanges(emailTextView).compose(this.<Boolean>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+//                .subscribe(new Action1<Boolean>() {
+//                    @Override
+//                    public void call(Boolean aBoolean) {
+//                        if(!aBoolean){
+//                            //判断邮箱是否有效
+//
+//                        }
+//                    }
+//                });
 
         RxView.clicks(verifiAcquireButton).compose(this.<Void>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .throttleFirst(1000,TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        if(!isAccountRight){
-                            Toast.makeText(MyApplication.getContext(),"账号有误,请检查账号后再次输入",Toast.LENGTH_SHORT).show();
-                            return;
-                        }else{
-                            timeForVerifiCode();
-                            localLoginPresent.getVerifiCode(emailValue, "email_bind_email", new LocalLoginPresent.VerifiCodeGetCallBack() {
-                                @Override
-                                public void onVerifiCodeGetSucc(String account) {
-                                    Toast.makeText(MyApplication.getContext(),"验证码发送成功,请查收邮件",Toast.LENGTH_SHORT).show();
-                                }
+                        localLoginPresent.validateData(emailValue, 2, new LocalLoginPresent.DataValidataCallBack() {
+                            @Override
+                            public void onValidataSucc(int flag) {
+                                if(flag == 1){
+                                    isAccountRight = false;
+                                    Toast.makeText(MyApplication.getContext(),"邮箱已经被注册",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    isAccountRight = true;
+                                    timeForVerifiCode();
+                                    localLoginPresent.getVerifiCode(emailValue, "email_bind_email", new LocalLoginPresent.VerifiCodeGetCallBack() {
+                                        @Override
+                                        public void onVerifiCodeGetSucc(String account) {
+                                            Toast.makeText(MyApplication.getContext(),"验证码发送成功,请查收邮件",Toast.LENGTH_SHORT).show();
+                                        }
 
-                                @Override
-                                public void onVerifiCodeGetError(String msg) {
-                                    Toast.makeText(MyApplication.getContext(),"验证码发送失败,请重试",Toast.LENGTH_SHORT).show();
+                                        @Override
+                                        public void onVerifiCodeGetError(String msg) {
+                                            Toast.makeText(MyApplication.getContext(),"验证码发送失败,请重试",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
-                            });
-                        }
+                            }
+
+                            @Override
+                            public void onValidataFail(String msg) {
+                                isAccountRight = false;
+                                Toast.makeText(MyApplication.getContext(),msg,Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
@@ -162,6 +158,10 @@ public class BindEmailDialogFragment extends RxDialogFragment{
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
+                        if(!isAccountRight || TextUtils.isEmpty(verifiCodeValue)){
+                            Toast.makeText(MyApplication.getContext(),"你输入的邮箱地址或验证码不可用,请重试",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         localLoginPresent.bindMail(emailValue, verifiCodeValue, new LocalLoginPresent.BindEmailCallBack() {
                             @Override
                             public void onBindEmailSuccess(String account) {

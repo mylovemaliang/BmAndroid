@@ -265,10 +265,10 @@ public class TbSearchResFlagment extends BaseInnerFragment implements SearchView
                 return;
             }
         });
-        if(!isInit){
-            changeSearchType(searchCateString);
-            searchPresenter.getSearchResult(searchCondition,false);
-        }
+//        if(!isInit){
+//            changeSearchType(searchCateString);
+//            searchPresenter.getSearchResult(searchCondition,false);
+//        }
     }
 
 
@@ -958,14 +958,16 @@ public class TbSearchResFlagment extends BaseInnerFragment implements SearchView
     //初始化全部状态
     @Override
     public void initState() {
-        searchleftBtn.setText("综合排序");
-        searchCondition.deleteSortItem();
-        rightSearchViewMap.clear();
-        rightSearchView = null;
-        this.q = "";
-        tbGoodDataAdapter.clearData();
-        tbGoodDataAdapter.notifyDataSetChanged();
-        searchCondition = searchCondition.newInstance(searchCateString);
+        if(isInit) {
+            searchleftBtn.setText("综合排序");
+            searchCondition.deleteSortItem();
+            rightSearchViewMap.clear();
+            rightSearchView = null;
+            this.q = "";
+            tbGoodDataAdapter.clearData();
+            tbGoodDataAdapter.notifyDataSetChanged();
+            searchCondition = searchCondition.newInstance(searchCateString);
+        }
     }
 
 }

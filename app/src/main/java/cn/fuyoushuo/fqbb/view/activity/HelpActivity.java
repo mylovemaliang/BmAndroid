@@ -82,7 +82,7 @@ public class HelpActivity extends BaseActivity {
         howToTixian = in.getBooleanExtra("howToTixian", false);
         jdOrderNoEffect = in.getBooleanExtra("jdOrderNoEffect",false);
         if(howToTixian){
-            helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwq4.html");
+            helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwq10.html");
         }
         else if(jdOrderNoEffect){
             helpWebview.loadUrl("http://www.fanqianbb.com/mfwq/fwq13.html");

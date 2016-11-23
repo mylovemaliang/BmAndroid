@@ -204,13 +204,20 @@ public class UserLoginActivity extends BaseActivity{
                          startActivity(intent);
                          finish();
                      }
-                     else if("MainToJdWv".endsWith(biz)){
+                     else if("MainToJdWv".equals(biz)){
                          Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
                          intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                          intent.putExtra("bizCallBack","MainToJdWv");
                          startActivity(intent);
                          finish();
                      }
+                     else if("SearchToJdWv".equals(biz)){
+                          Intent intent = new Intent(UserLoginActivity.this,SearchActivity.class);
+                          intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                          intent.putExtra("bizCallBack","SearchToJdWv");
+                          startActivity(intent);
+                          finish();
+                    }
                 }
                 else if(busEvent instanceof FindPassOneFragment.ToFindPassTwoEvent){
                      FindPassOneFragment.ToFindPassTwoEvent event = (FindPassOneFragment.ToFindPassTwoEvent) busEvent;

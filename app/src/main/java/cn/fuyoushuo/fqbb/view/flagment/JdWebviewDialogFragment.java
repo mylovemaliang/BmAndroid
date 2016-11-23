@@ -35,6 +35,7 @@ import com.trello.rxlifecycle.components.support.RxDialogFragment;
 import com.umeng.analytics.MobclickAgent;
 
 import org.jsoup.helper.DataUtil;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -98,6 +99,8 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     @Bind(R.id.jd_wv_close)
     RelativeLayout closeArea;
 
+    private String fromWhere = "main";
+
     /**
      * 0 默认情况 1 去登陆 2 重新获取CPS链接  3 重新获取商品CPS跳转
      */
@@ -126,6 +129,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             this.currentLoadGoodUrl = "";
             this.currentItemId = "";
         }
+        fromWhere = getArguments().getString("fromWhere","main");
         setStyle(DialogFragment.STYLE_NORMAL, R.style.fullScreenDialog);
         localLoginPresent = new LocalLoginPresent();
         jdGoodDetailPresenter = new JdGoodDetailPresenter(this);
@@ -207,7 +211,8 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                      }
                 }
                 //购物车结算时拦截
-                else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1){
+                //http://p.m.jd.com/norder/order.action?sid=b13ffb9032fbd3a26dc0471717cb454f&flowType=&page_param=
+                else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1 && url.indexOf("flowType=") == -1){
                     myJdWebView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -322,7 +327,12 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                         if (leftTipBiz == 0) return;
                         else if (leftTipBiz == 1) {
                             Intent intent = new Intent(getActivity(), UserLoginActivity.class);
-                            intent.putExtra("biz", "MainToJdWv");
+                            if("main".equals(fromWhere)){
+                                intent.putExtra("biz", "MainToJdWv");
+                            }
+                            else if("search".equals(fromWhere)){
+                                intent.putExtra("biz","SearchToJdWv");
+                            }
                             startActivity(intent);
                         }
                         else if (leftTipBiz == 2) {
@@ -436,7 +446,12 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), UserLoginActivity.class);
-                intent.putExtra("biz", "MainToJdWv");
+                if("main".equals(fromWhere)){
+                   intent.putExtra("biz", "MainToJdWv");
+                }
+                else if("search".equals(fromWhere)){
+                   intent.putExtra("biz","SearchToJdWv");
+                }
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -453,7 +468,12 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getActivity(), UserLoginActivity.class);
-                intent.putExtra("biz", "MainToJdWv");
+                if("main".equals(fromWhere)){
+                    intent.putExtra("biz", "MainToJdWv");
+                }
+                else if("search".equals(fromWhere)){
+                    intent.putExtra("biz","SearchToJdWv");
+                }
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -520,20 +540,27 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
     private void goback(){
          if(myJdWebView != null && myJdWebView.canGoBack()){
              String url = myJdWebView.getUrl();
-             if(!TextUtils.isEmpty(url) || jdGoodDetailPresenter.isUserFanqianMode(url)){
+             if(!TextUtils.isEmpty(url) && jdGoodDetailPresenter.isUserFanqianMode(url) && "main".equals(fromWhere)){
                   //返回首页
                   myJdWebView.loadUrl("http://m.jd.com");
              }else{
-                myJdWebView.goBack();
+                if("search".equals(fromWhere)){
+                   dismissAllowingStateLoss();
+                }else{
+                  myJdWebView.goBack();
+                }
              }
+         }else{
+             dismissAllowingStateLoss();
          }
     }
 
 
     //初始化fragment
-    public static JdWebviewDialogFragment newInstance(String initUrl) {
+    public static JdWebviewDialogFragment newInstance(String initUrl,String fromWhere) {
         Bundle args = new Bundle();
         args.putString("initUrl",initUrl);
+        args.putString("fromWhere",fromWhere);
         JdWebviewDialogFragment fragment = new JdWebviewDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -574,7 +601,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
            }
        }
        String percentString = String.valueOf(DateUtils.getFormatFloat(percent*100));
-       String savePoints = String.valueOf(DateUtils.getFormatFloat(sumPrice*percent)*100);
+       String savePoints = String.valueOf(DateUtils.floatToInt(sumPrice*percent*100));
        rightTipText.setText("返"+percentString+"%|"+"约"+savePoints+"积分");
        if(jdGoodDetailPresenter != null && !TextUtils.isEmpty(loadUrl)){
           jdGoodDetailPresenter.getJdCpsUrl(loadUrl);

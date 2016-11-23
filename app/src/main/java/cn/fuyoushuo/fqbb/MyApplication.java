@@ -78,7 +78,7 @@ public class MyApplication extends Application{
         MobclickAgent.openActivityDurationTrack(false);
         displayMetrics = context.getResources().getDisplayMetrics();
         mRefWatcher = Constants.DEBUG ?  LeakCanary.install(this) : RefWatcher.DISABLED;
-        initFeedBack(feedbackAppkey);
+        //initFeedBack(feedbackAppkey);
 
     }
 
@@ -113,31 +113,31 @@ public class MyApplication extends Application{
      * 初始化阿里百川 用户回馈
      * @param appKey 阿里百川申请 的appkey
      */
-    private void initFeedBack(String appKey){
-        //阿里百川用户反馈
-        FeedbackAPI.initAnnoy((Application) context,appKey);
-        Map<String,String> feedbackSetMap = new HashMap<String,String>();
-        feedbackSetMap.put("pageTitle","意见反馈");
-        feedbackSetMap.put("themeColor","#de323a");
-        FeedbackAPI.setUICustomInfo(feedbackSetMap);
-        FeedbackAPI.setCustomContact("",true);
-        FeedbackAPI.getFeedbackUnreadCount(context, null, new IWxCallback() {
-            @Override
-            public void onSuccess(Object... objects) {
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onProgress(int i) {
-
-            }
-        });
-    }
+//    private void initFeedBack(String appKey){
+//        //阿里百川用户反馈
+//        FeedbackAPI.initAnnoy((Application) context,appKey);
+//        Map<String,String> feedbackSetMap = new HashMap<String,String>();
+//        feedbackSetMap.put("pageTitle","意见反馈");
+//        feedbackSetMap.put("themeColor","#de323a");
+//        FeedbackAPI.setUICustomInfo(feedbackSetMap);
+//        FeedbackAPI.setCustomContact("",true);
+//        FeedbackAPI.getFeedbackUnreadCount(context, null, new IWxCallback() {
+//            @Override
+//            public void onSuccess(Object... objects) {
+//
+//            }
+//
+//            @Override
+//            public void onError(int i, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onProgress(int i) {
+//
+//            }
+//        });
+//    }
 
     private String getCurProcessName(Context context) {
         int pid = android.os.Process.myPid();

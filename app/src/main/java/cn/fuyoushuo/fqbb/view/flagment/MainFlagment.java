@@ -252,7 +252,7 @@ public class MainFlagment extends BaseFragment implements MainView {
                         if(mainPresenter.isNeedTip(2)){
                             setTipDialogIfNeed(2);
                         }else {
-                            JdWebviewDialogFragment.newInstance("http://m.jd.com").show(getFragmentManager(),"JdWebviewDialogFragment");
+                            JdWebviewDialogFragment.newInstance("http://m.jd.com","main").show(getFragmentManager(),"JdWebviewDialogFragment");
                         }
                     }
                 });

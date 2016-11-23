@@ -10,9 +10,11 @@ import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.commonlib.utils.SeartchPo;
 import cn.fuyoushuo.fqbb.domain.ext.SearchCondition;
+import cn.fuyoushuo.fqbb.view.flagment.JdWebviewDialogFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchFlagment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 import cn.fuyoushuo.fqbb.view.flagment.TbSearchResFlagment;
+import cn.fuyoushuo.fqbb.view.flagment.searchpromt.SearchPromtOriginFragment;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -86,6 +88,13 @@ public class SearchActivity extends BaseActivity {
     private boolean processIntent(){
         Intent intent = getIntent();
         boolean intentFromMain = intent.getBooleanExtra("intentFromMain",true);
+        String bizCallBack = intent.getStringExtra("bizCallBack");
+        if("SearchToJdWv".equals(bizCallBack)){
+            Fragment jdWebviewDialogFragment = getSupportFragmentManager().findFragmentByTag("JdWebviewDialogFragment");
+            if(jdWebviewDialogFragment != null) {
+                ((JdWebviewDialogFragment)jdWebviewDialogFragment).reloadGoodPage();
+            }
+        }
         //重置
         if(intentFromMain){
             return true;
@@ -175,6 +184,9 @@ public class SearchActivity extends BaseActivity {
                     intent.putExtra("bizString","tbGoodDetail");
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
+                }
+                if(busEvent instanceof SearchPromtOriginFragment.RefreshSearchPromtOriginEvent){
+                    searchPromptFragment.initPromtOrigin();
                 }
             }
         }));

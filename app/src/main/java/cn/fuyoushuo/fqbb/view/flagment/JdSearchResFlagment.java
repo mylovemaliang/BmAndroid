@@ -77,7 +77,7 @@ public class JdSearchResFlagment extends BaseInnerFragment implements SearchFlag
                     }
                     //去到京东详情页处理
                     if(isPageGoodDetail(url)){
-                         JdWebviewDialogFragment.newInstance(url).show(getFragmentManager(),"JdWebviewDialogFragment");
+                         JdWebviewDialogFragment.newInstance(url,"search").show(getActivity().getSupportFragmentManager(),"JdWebviewDialogFragment");
                          return true;
                     }
                     return false;

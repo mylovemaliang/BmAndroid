@@ -2,6 +2,7 @@ package cn.fuyoushuo.fqbb.view.flagment.searchpromt;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import cn.fuyoushuo.fqbb.R;
+import cn.fuyoushuo.fqbb.commonlib.utils.RxBus;
 import cn.fuyoushuo.fqbb.view.flagment.BaseFragment;
 import cn.fuyoushuo.fqbb.view.flagment.SearchPromptFragment;
 
@@ -50,7 +52,6 @@ public class SearchPromtOriginFragment extends BaseFragment{
 
     @Override
     protected void initView() {
-        hisWords = new ArrayList<String>();
         searchHisRview.setAdapter(new TagAdapter<String>(hisWords) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
@@ -61,7 +62,6 @@ public class SearchPromtOriginFragment extends BaseFragment{
             }
         });
 
-        hotWords = new ArrayList<String>();
         searchHotRview.setAdapter(new TagAdapter<String>(hotWords) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
@@ -95,8 +95,14 @@ public class SearchPromtOriginFragment extends BaseFragment{
                 return true;
             }
         });
-        // 初始化默认 flagment
-        ((SearchPromptFragment)getParentFragment()).initPromtOrigin();
+        //Log.d("lifecycleTest","SearchPromptOriginFragment onViewCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Log.d("lifecycleTest","SearchPromptOriginFragment onstart");
+        RxBus.getInstance().send(new RefreshSearchPromtOriginEvent());
     }
 
     @Override
@@ -107,6 +113,9 @@ public class SearchPromtOriginFragment extends BaseFragment{
 
     @Override
     protected void initData() {
+        hisWords = new ArrayList<String>();
+        hotWords = new ArrayList<String>();
+        Log.d("lifecycleTest","SearchPromptOriginFragment onCreate");
 
     }
 
@@ -120,13 +129,22 @@ public class SearchPromtOriginFragment extends BaseFragment{
    public void refreshHisData(List<String> items){
        hisWords.clear();
        hisWords.addAll(items);
-       searchHisRview.getAdapter().notifyDataChanged();
+       if(searchHisRview != null && searchHisRview.getAdapter() != null){
+          searchHisRview.getAdapter().notifyDataChanged();
+       }
    }
 
    public void refreshHotData(List<String> items){
        hotWords.clear();
        hotWords.addAll(items);
-       searchHotRview.getAdapter().notifyDataChanged();
+       if(searchHotRview != null && searchHotRview.getAdapter() != null) {
+           searchHotRview.getAdapter().notifyDataChanged();
+       }
    }
+
+
+  //---------------------------Event定义-------------------------------------------------------
+
+  public class RefreshSearchPromtOriginEvent extends RxBus.BusEvent{}
 
 }

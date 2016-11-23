@@ -116,23 +116,31 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:text="更多"
-                    android:textSize="15sp"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/tehui_more"/>
+                    android:layout_height="match_parent"
+                    android:id="@+id/tehui_more"
+                    android:layout_alignParentRight="true">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10sp"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/shouye_next" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:textSize="15sp"
+                        android:id="@+id/tehui_more_text"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tehui_more_text"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10sp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/shouye_next" />
+
+                </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -161,23 +169,30 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nzjh_more"
+                    android:layout_alignParentRight="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
                     android:text="更多"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/nzjh_more"/>
+                    android:id="@+id/nzjh_more_text"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/nzjh_more_text"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10sp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/shouye_next" />
+
+               </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -206,23 +221,31 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/lz_more"
+                    android:layout_alignParentRight="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
                     android:text="更多"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/lz_more"/>
+                    android:id="@+id/lz_more_text"/>
 
-                <ImageView
+                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/lz_more_text"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10sp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/shouye_next" />
+
+                  </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -251,23 +274,29 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/meishi_more"
+                    android:layout_alignParentRight="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
                     android:text="更多"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/meishi_more"/>
+                    android:id="@+id/meishi_more_text"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/meishi_more_text"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10sp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/shouye_next" />
+                </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -296,23 +325,29 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/jiaju_more"
+                    android:layout_alignParentRight="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
                     android:text="更多"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/jiaju_more"/>
+                    android:id="@+id/jiaju_more_text"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/jiaju_more_text"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10sp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/shouye_next" />
+                </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -341,23 +376,29 @@
                     android:textSize="20sp"
                     android:layout_centerVertical="true"/>
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/sport_more"
+                    android:layout_alignParentRight="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
                     android:text="更多"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/sport_more"/>
+                    android:id="@+id/sport_more_text"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/sport_more_text"
                     android:layout_marginRight="10sp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/shouye_next" />
+
+                </RelativeLayout>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"

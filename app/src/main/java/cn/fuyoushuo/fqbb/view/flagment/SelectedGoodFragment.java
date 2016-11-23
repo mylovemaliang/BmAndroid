@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -71,22 +72,22 @@ public class SelectedGoodFragment extends BaseFragment{
     SelectedGoodDataAdapter sportAdapter;
 
     @Bind(R.id.tehui_more)
-    TextView tehuiMore;
+    RelativeLayout tehuiMore;
 
     @Bind(R.id.nzjh_more)
-    TextView nzjhMore;
+    RelativeLayout nzjhMore;
 
     @Bind(R.id.lz_more)
-    TextView lzMore;
+    RelativeLayout lzMore;
 
     @Bind(R.id.meishi_more)
-    TextView meishiMore;
+    RelativeLayout meishiMore;
 
     @Bind(R.id.jiaju_more)
-    TextView jiajuMore;
+    RelativeLayout jiajuMore;
 
     @Bind(R.id.sport_more)
-    TextView sportMore;
+    RelativeLayout sportMore;
 
     @Bind(R.id.channel_tehui)
     Button tehuiButton;

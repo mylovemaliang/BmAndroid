@@ -83,6 +83,8 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
 
     private String originCatId = "";
 
+    private int currentLevel = 0;
+
     SelectedGoodPresenter selectedGoodPresenter;
 
     @Override
@@ -134,7 +136,7 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
             public void onRefresh() {
                 // TODO: 2016/11/10 刷新当前页面数据
                 final int currentPage = tbGoodDataAdapter.getCurrentPage();
-                selectedGoodPresenter.getSelectedGood(currentChannel,currentPage,currentCatId, null, new SelectedGoodPresenter.SelectGoodGetCallBack() {
+                selectedGoodPresenter.getSelectedGood(currentChannel,currentPage,currentCatId,currentLevel, new SelectedGoodPresenter.SelectGoodGetCallBack() {
                     @Override
                     public void onGetGoodSucc(List<TaoBaoItemVo> goodList, LinkedList<TbCateVo> cateList) {
                         if(tbGoodDataAdapter != null){
@@ -168,6 +170,7 @@ public class JxspDetailDialogFragment extends RxDialogFragment {
                 // TODO: 2016/11/10  获取点击后数据
                 currentCatId = getCurrentCatId(cateItem.getCatId());
                 int level = cateItem.getLevel();
+                currentLevel = level;
                 selectedGoodPresenter.getSelectedGood(currentChannel,1,currentCatId,level,new SelectedGoodPresenter.SelectGoodGetCallBack() {
                     @Override
                     public void onGetGoodSucc(List<TaoBaoItemVo> goodList, LinkedList<TbCateVo> cateList) {
