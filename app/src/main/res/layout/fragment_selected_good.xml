@@ -81,11 +81,6 @@
              android:text="运动"/>
      </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/selected_swipe_layout">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -410,6 +405,4 @@
 
         </LinearLayout>
     </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
 </LinearLayout>

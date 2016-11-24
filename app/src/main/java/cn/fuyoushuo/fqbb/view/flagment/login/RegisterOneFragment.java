@@ -82,41 +82,23 @@ public class RegisterOneFragment extends BaseFragment implements RegisterOneView
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        if(isAccountRight){
-                            registerOnePresenter.getVerifiCode(phoneNum);
-                        }else{
-                            Toast.makeText(MyApplication.getContext(),"手机号码不可用,请检查账号后再次输入",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-                });
-
-
-        RxView.focusChanges(phoneNumText).compose(this.<Boolean>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if(!aBoolean){
-                            //判断邮箱是否有效
-                            localLoginPresent.validateData(phoneNum,1, new LocalLoginPresent.DataValidataCallBack() {
-                                @Override
-                                public void onValidataSucc(int flag) {
-                                    if(flag == 1){
-                                        isAccountRight = false;
-                                        Toast.makeText(MyApplication.getContext(),"手机号码已被注册",Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        isAccountRight = true;
-                                        Toast.makeText(MyApplication.getContext(),"手机号码可以正常使用",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onValidataFail(String msg) {
+                        localLoginPresent.validateData(phoneNum,1, new LocalLoginPresent.DataValidataCallBack() {
+                            @Override
+                            public void onValidataSucc(int flag) {
+                                if(flag == 1){
                                     isAccountRight = false;
-                                    Toast.makeText(MyApplication.getContext(),msg,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MyApplication.getContext(),"手机号码已被注册",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    isAccountRight = true;
+                                    registerOnePresenter.getVerifiCode(phoneNum);
                                 }
-                            });
-                        }
+                            }
+                            @Override
+                            public void onValidataFail(String msg) {
+                                isAccountRight = false;
+                                Toast.makeText(MyApplication.getContext(),"手机号码不可用,请检查账号后再次输入",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 

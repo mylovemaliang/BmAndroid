@@ -105,6 +105,8 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
 
     private String email = "";
 
+    private boolean isDataInit = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -238,7 +240,9 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
     @Override
     public void onStart() {
         super.onStart();
-        refreshUserInfo();
+        if(!isDataInit){
+           refreshUserInfo();
+        }
     }
 
     //----------------------------------用于外部调用--------------------------------------------------
@@ -259,7 +263,6 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
 
     @Override
     public void onUserInfoGetError() {
-        Toast.makeText(MyApplication.getContext(),"获取用户信息失败",Toast.LENGTH_SHORT).show();
         currentPoints.setText("--");
         freezePoints.setText("--");
         useablePoints.setText("--");
@@ -305,14 +308,15 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
          useablePoints.setText(String.valueOf(validPoint));
          accountView.setText(account);
          userCenterRefreshView.setRefreshing(false);
+         isDataInit = true;
     }
 
-    @Override
-    public void onLoginFail() {
-        Intent intent = new Intent(mactivity, UserLoginActivity.class);
-        intent.putExtra("fromWhere","UserCenter");
-        startActivity(intent);
-    }
+//    @Override
+//    public void onLoginFail() {
+//        Intent intent = new Intent(mactivity, UserLoginActivity.class);
+//        intent.putExtra("fromWhere","UserCenter");
+//        startActivity(intent);
+//    }
 
     @Override
     public void onAlimamaLoginFail() {

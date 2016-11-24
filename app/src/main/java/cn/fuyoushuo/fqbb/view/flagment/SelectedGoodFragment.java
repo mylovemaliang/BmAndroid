@@ -107,9 +107,6 @@ public class SelectedGoodFragment extends BaseFragment{
     @Bind(R.id.channel_sport)
     Button sportButton;
 
-    @Bind(R.id.selected_swipe_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
     SelectedGoodPresenter selectGoodPresent;
 
     private boolean isLoaded = false;
@@ -364,15 +361,6 @@ public class SelectedGoodFragment extends BaseFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshResult();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-
         //更多按钮的响应
         RxView.clicks(tehuiMore).compose(this.<Void>bindToLifecycle())
                 .throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -488,7 +476,9 @@ public class SelectedGoodFragment extends BaseFragment{
     @Override
     public void onStart() {
         super.onStart();
-        refreshResult();
+        if(!isLoaded){
+          refreshResult();
+        }
     }
 
     @Override

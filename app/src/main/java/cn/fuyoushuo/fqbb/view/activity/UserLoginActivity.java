@@ -2,6 +2,7 @@ package cn.fuyoushuo.fqbb.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -234,6 +235,11 @@ public class UserLoginActivity extends BaseActivity{
                 }
             }
         }));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        //防止FRAGMENT 重叠
     }
 
     @Override

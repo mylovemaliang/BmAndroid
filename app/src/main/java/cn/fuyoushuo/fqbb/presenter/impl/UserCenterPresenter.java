@@ -76,7 +76,7 @@ public class UserCenterPresenter extends BasePresenter{
                    public void onNext(HttpResp httpResp) {
                        if(httpResp == null || httpResp.getS() != 1){
                            if(getMyView() != null){
-                               getMyView().onLoginFail();
+                               getMyView().onUserInfoGetError();
                            }
                        }else {
                            if(getMyView() != null){

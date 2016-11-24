@@ -144,6 +144,14 @@ public class JdSearchResFlagment extends BaseInnerFragment implements SearchFlag
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if(myJdWebView != null){
+            myJdWebView.loadUrl("about:blank");
+        }
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if(myJdWebView != null){
@@ -167,7 +175,7 @@ public class JdSearchResFlagment extends BaseInnerFragment implements SearchFlag
     }
 
     @Override
-    public void initState() {
+    public void initOrigin() {
         if(myJdWebView != null){
             myJdWebView.loadUrl("about:blank");
         }

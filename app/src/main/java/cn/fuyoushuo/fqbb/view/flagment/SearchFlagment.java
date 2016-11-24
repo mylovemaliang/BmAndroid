@@ -238,7 +238,7 @@ public class SearchFlagment extends BaseFragment{
         Map<String,Fragment> fragmentMap = getFragmentMap();
         if(fragmentMap != null && fragmentMap.size() > 0){
             for(Map.Entry<String,Fragment> entry : fragmentMap.entrySet()){
-                ((doUpdateWithQ)entry.getValue()).initState();
+                ((doUpdateWithQ)entry.getValue()).initOrigin();
             }
         }
     }
@@ -332,7 +332,7 @@ public class SearchFlagment extends BaseFragment{
          */
         void updateQ(String q);
 
-        void initState();
+        void initOrigin();
 
     }
 }

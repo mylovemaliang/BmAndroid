@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -149,7 +150,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        //什么都不做,防止FRAGMENT重叠
     }
 
     @Override
@@ -176,7 +177,6 @@ public class MainActivity extends BaseActivity {
         if("MainToUc".equals(bizCallback)){
             changeView(USER_CENTER_INDEX);
             ucButton.setChecked(true);
-
         }
         else if("MainToLocalOrder".equals(bizCallback)){
             myOrderFlagment.reflashLocalOrder();
@@ -470,6 +470,8 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         exit();
     }
+
+
 
 
     //所有Activity退出

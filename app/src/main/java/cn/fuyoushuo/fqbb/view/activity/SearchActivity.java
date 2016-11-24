@@ -2,6 +2,7 @@ package cn.fuyoushuo.fqbb.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -80,7 +81,7 @@ public class SearchActivity extends BaseActivity {
         super.onNewIntent(intent);
         setIntent(intent);
         if(processIntent()){
-            initFragmentToOrigin();
+            //initFragmentToOrigin();
         }
     }
 
@@ -108,6 +109,10 @@ public class SearchActivity extends BaseActivity {
         switchContent(searchFlagment,searchPromptFragment);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        //防止fragment 重叠
+    }
 
     //处理crash恢复
     private int processCrash(){
@@ -201,11 +206,18 @@ public class SearchActivity extends BaseActivity {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

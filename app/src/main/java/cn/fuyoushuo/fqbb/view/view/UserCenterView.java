@@ -11,7 +11,7 @@ public interface UserCenterView {
 
     void onUserInfoGetSucc(JSONObject result);
 
-    void onLoginFail();
+//    void onLoginFail();
 
     void onAlimamaLoginFail();
 

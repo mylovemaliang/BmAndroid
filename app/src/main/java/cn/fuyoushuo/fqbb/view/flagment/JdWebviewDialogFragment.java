@@ -200,7 +200,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
 
                 //http://p.m.jd.com/norder/order.action?wareId=1750531&wareNum=1&enterOrder=true&sid=13c72c6665914925103c4af7aff54ebe
                 //付款的时候拦截
-                if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") > -1){
+                if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") > -1 && url.indexOf("enterOrder") > -1){
                      if(!isHasFanli){
                          return false;
                      }else{
@@ -212,7 +212,7 @@ public class JdWebviewDialogFragment extends RxDialogFragment implements JdGoodD
                 }
                 //购物车结算时拦截
                 //http://p.m.jd.com/norder/order.action?sid=b13ffb9032fbd3a26dc0471717cb454f&flowType=&page_param=
-                else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1 && url.indexOf("flowType=") == -1){
+                else if(url.replace("http://","").replace("https://","").startsWith("p.m.jd.com/norder/order.action") && url.indexOf("wareNum=1") == -1 && url.indexOf("enterOrder") > -1){
                     myJdWebView.post(new Runnable() {
                         @Override
                         public void run() {
