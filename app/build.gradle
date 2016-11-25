@@ -107,6 +107,13 @@ android {
         pp_zhushou {}
         qq_yingyongbao {}
         xiaomi {}
+        meizu {}
+        lenovo {}
+        sougou {}
+        mumayi {}
+        yingyonghui {}
+        smartisan {}
+        baidu {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

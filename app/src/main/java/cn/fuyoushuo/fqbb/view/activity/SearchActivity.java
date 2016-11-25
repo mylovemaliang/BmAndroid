@@ -169,9 +169,7 @@ public class SearchActivity extends BaseActivity {
                     searchFlagment.refreshSearchView(event.getSeartchPo());
                 }
                 if (busEvent instanceof SearchPromptFragment.BacktoMainFlagEvent) {
-                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
+                    goBack();
                 }
                 if (busEvent instanceof SearchPromptFragment.BacktoSearchFlagEvent) {
                     switchContent(mContent, searchFlagment);
