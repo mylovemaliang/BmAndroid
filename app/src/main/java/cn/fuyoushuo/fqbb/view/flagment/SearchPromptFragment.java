@@ -163,12 +163,14 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
     @Override
     public void onPause() {
         super.onPause();
-        searchPromptPresenter.onDestroy();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(searchPromptPresenter != null){
+            
+        }
         destoryPopupView();
     }
 

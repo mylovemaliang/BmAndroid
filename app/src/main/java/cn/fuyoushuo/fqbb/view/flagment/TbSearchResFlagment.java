@@ -354,13 +354,14 @@ public class TbSearchResFlagment extends BaseInnerFragment implements SearchView
     @Override
     public void onPause() {
         super.onPause();
-        searchPresenter.onDestroy();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        if(searchPresenter != null){
+           searchPresenter.onDestroy();
+        }
         destoryPopupWindow();
         if(!rightSearchViewMap.isEmpty()){
             rightSearchViewMap.clear();
