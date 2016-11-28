@@ -85,7 +85,7 @@ public class MainPresenter extends BasePresenter{
                     @Override
                     public void onError(Throwable e) {
                         Toast.makeText(MyApplication.getContext(),"网速稍慢,请等待",Toast.LENGTH_SHORT).show();
-                        mMainView.setupFgoodsView(1,100l,new ArrayList<FGoodItem>(),isRefresh);
+                        mMainView.setupFgoodsView(1,cateId,new ArrayList<FGoodItem>(),isRefresh);
                     }
                     @Override
                     public void onNext(HttpResp httpResp) {

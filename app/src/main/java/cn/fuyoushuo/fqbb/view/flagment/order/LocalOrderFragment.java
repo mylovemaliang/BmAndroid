@@ -191,6 +191,7 @@ public class LocalOrderFragment extends BaseInnerFragment implements LocalOrderV
             orderWebview.destroy();
         }
         localOrderPresenter.onDestroy();
+        localLoginPresent.onDestroy();
         if(searchPointsOrderMenu != null){
             searchPointsOrderMenu.dismissWindow();
         }

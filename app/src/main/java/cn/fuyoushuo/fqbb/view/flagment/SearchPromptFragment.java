@@ -304,6 +304,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         //fragmentTransaction.add(R.id.search_promt_flagment_area,searchAutoCompleteFragment).hide(searchAutoCompleteFragment);
         mContent = searchPromtOriginFragment;
         fragmentTransaction.commitAllowingStateLoss();
+        childFragmentManager.executePendingTransactions();
     }
 
     //转换flagment
@@ -316,6 +317,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
             } else {
                 transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 
@@ -407,6 +409,12 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
         SharedPreferences.Editor editor = mSharePreference.edit();
         editor.putString(SEARCH_KEY,"");
         editor.commit();
+    }
+
+    //清除历史记录
+    public void clearHisItems() {
+         cleanHistory();
+         searchPromtOriginFragment.refreshHisData(new ArrayList<String>());
     }
 
     //-------------------------------------通信总线接口-----------------------------------------

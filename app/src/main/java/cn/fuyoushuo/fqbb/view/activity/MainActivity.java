@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -151,6 +152,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //什么都不做,防止FRAGMENT重叠
+        Log.d("saveInstanceState:","yes");
     }
 
     @Override
@@ -268,6 +270,7 @@ public class MainActivity extends BaseActivity {
 //        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
 
         fragmentTransaction.commit();
+        fragmentManager.executePendingTransactions();
         currentShowBizPage = 0;
         processIntent();
     }
@@ -282,6 +285,7 @@ public class MainActivity extends BaseActivity {
             } else {
                 transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
+            fragmentManager.executePendingTransactions();
         }
     }
 

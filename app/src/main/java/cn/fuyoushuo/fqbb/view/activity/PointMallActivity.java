@@ -30,10 +30,6 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class PointMallActivity extends BaseActivity{
 
-
-
-    private CompositeSubscription mSubscriptions;
-
     @Bind(R.id.user_center_account)
     TextView accountView;
 
@@ -61,8 +57,6 @@ public class PointMallActivity extends BaseActivity{
     @Bind(R.id.points_mall_pointsDetail)
     RelativeLayout pointsDetailArea;
 
-
-
     private LocalLoginPresent localLoginPresent;
 
 
@@ -70,7 +64,6 @@ public class PointMallActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.points_mall);
-        mSubscriptions = new CompositeSubscription();
         localLoginPresent = new LocalLoginPresent();
         initView();
     }
@@ -153,6 +146,7 @@ public class PointMallActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        localLoginPresent.onDestroy();
     }
 
     //初始化个人信息

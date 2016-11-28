@@ -72,8 +72,8 @@ public class SearchActivity extends BaseActivity {
          fragmentTransaction.show(searchPromptFragment);
          mContent = searchPromptFragment;
          currentFlag = FLAG_SEARCHPROMT;
-
         fragmentTransaction.commitAllowingStateLoss();
+        fragmentManager.executePendingTransactions();
     }
 
     @Override
@@ -149,6 +149,7 @@ public class SearchActivity extends BaseActivity {
             } else {
                 transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
+            fragmentManager.executePendingTransactions();
         }
     }
 
@@ -190,6 +191,9 @@ public class SearchActivity extends BaseActivity {
                 }
                 if(busEvent instanceof SearchPromtOriginFragment.RefreshSearchPromtOriginEvent){
                     searchPromptFragment.initPromtOrigin();
+                }
+                if(busEvent instanceof SearchPromtOriginFragment.ClearHisItemsEvent){
+                    searchPromptFragment.clearHisItems();
                 }
             }
         }));

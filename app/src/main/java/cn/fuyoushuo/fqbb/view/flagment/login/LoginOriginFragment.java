@@ -146,6 +146,14 @@ public class LoginOriginFragment extends BaseFragment implements LoginOriginView
         account.setText(accountValue);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(loginOriginPresenter != null){
+            loginOriginPresenter.onDestroy();
+        }
+    }
+
     //----------------------------------------回调VIEW层的接口--------------------------------------------
 
     @Override

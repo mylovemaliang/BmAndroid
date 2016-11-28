@@ -133,8 +133,9 @@ public class TbOrderFragment extends BaseInnerFragment {
                     myorderWebview.loadUrl(myOrderUrl);
                 }
 
-                String replaceUrl = myorderWebview.getUrl().replace("https://", "").replace("http://", "");
-                if(replaceUrl.equals("login.m.taobao.com/login.htm")){//用户登录过了，然后退出了淘宝，那么刷新会到登录页；这个时候就需要跳到我们的阿里妈妈登录页
+                if(myorderWebview.getUrl()!=null && !"".equals(myorderWebview.getUrl().trim())){
+                  String replaceUrl = myorderWebview.getUrl().replace("https://", "").replace("http://", "");
+                  if(replaceUrl.equals("login.m.taobao.com/login.htm")){//用户登录过了，然后退出了淘宝，那么刷新会到登录页；这个时候就需要跳到我们的阿里妈妈登录页
                     TaobaoInterPresenter.judgeAlimamaLogin(new TaobaoInterPresenter.LoginCallback() {
                         @Override
                         public void hasLoginCallback() {//阿里妈妈已登录,只是淘宝未登录
@@ -153,7 +154,8 @@ public class TbOrderFragment extends BaseInnerFragment {
 
                         }
                     },VOLLEY_TAG_NAME);
-                }
+                  }
+                 }
             }
         });
         webviewArea.addView(myorderWebview);

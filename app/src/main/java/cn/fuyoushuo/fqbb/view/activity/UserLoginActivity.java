@@ -136,6 +136,7 @@ public class UserLoginActivity extends BaseActivity{
 
         //提交fragment 事务
         fragmentTransaction.commitAllowingStateLoss();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
     //转换flagment
@@ -148,6 +149,7 @@ public class UserLoginActivity extends BaseActivity{
             } else {
                 transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
             }
+            getSupportFragmentManager().executePendingTransactions();
         }
     }
 

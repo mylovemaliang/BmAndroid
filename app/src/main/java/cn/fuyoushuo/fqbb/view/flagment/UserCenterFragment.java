@@ -245,6 +245,12 @@ public class UserCenterFragment extends BaseFragment implements UserCenterView{
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        userCenterPresenter.onDestroy();
+    }
+
     //----------------------------------用于外部调用--------------------------------------------------
 
     public void refreshUserInfo(){
