@@ -169,7 +169,7 @@ public class SearchPromptFragment extends BaseFragment implements SearchPromptVi
     public void onDestroy() {
         super.onDestroy();
         if(searchPromptPresenter != null){
-            
+
         }
         destoryPopupView();
     }

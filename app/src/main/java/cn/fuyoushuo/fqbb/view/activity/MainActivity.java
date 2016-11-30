@@ -269,7 +269,7 @@ public class MainActivity extends BaseActivity {
 //        fragmentTransaction.add(R.id.main_area,myOrderFlagment).hide(myOrderFlagment);
 //        fragmentTransaction.add(R.id.main_area,userCenterFragment).hide(userCenterFragment);
 
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
         fragmentManager.executePendingTransactions();
         currentShowBizPage = 0;
         processIntent();

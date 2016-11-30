@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +49,7 @@ import cn.fuyoushuo.fqbb.R;
 import cn.fuyoushuo.fqbb.commonlib.utils.EventIdConstants;
 import cn.fuyoushuo.fqbb.commonlib.utils.okhttp.PersistentCookieStore;
 import cn.fuyoushuo.fqbb.presenter.impl.TaobaoInterPresenter;
+import cn.fuyoushuo.fqbb.view.flagment.GoodDetailTipDialogFragment;
 
 public class WebviewActivity extends BaseActivity {
 
@@ -102,6 +104,8 @@ public class WebviewActivity extends BaseActivity {
     private ImageView webviewBackImg;
 
     private LinearLayout webviewToHomeLl;
+
+    private LinearLayout tipArea;
 
     //是否从商品搜索页转发过来
     private boolean isFromGoodSearch = false;
@@ -158,6 +162,20 @@ public class WebviewActivity extends BaseActivity {
 
         webviewBottom = (RelativeLayout) this.findViewById(R.id.webviewFragBottom);
 
+        tipArea = (LinearLayout) this.findViewById(R.id.detailBottomRmBtn);
+
+        tipArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(itemfxinfo2 != null){
+                    CharSequence text = itemfxinfo2.getText();
+                    if(text != null) {
+                        GoodDetailTipDialogFragment.newInstance(text.toString()).show(getSupportFragmentManager(), "GoodDetailTipDialogFragment");
+                    }
+                }
+            }
+        });
+
         myWebView = (WebView) this.findViewById(R.id.tb_h5page_webview);
 
         /*if(myWebView==null){
@@ -187,10 +205,18 @@ public class WebviewActivity extends BaseActivity {
             CookieManager.getInstance().setAcceptThirdPartyCookies(myWebView, true);
 
         myWebView.setWebViewClient(new WebViewClient(){
+
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+                super.onPageStarted(view, url, favicon);
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
                 if(url.startsWith("http://") || url.startsWith("https://") || url.startsWith("www://")){
-                    //Log.i("taobao webview shouldOverrideUrlLoading", url);
+                    Log.d("shouldOverrideUrl", url);
                     if(url.contains("ali_trackid=2:mm_") || url.contains("ali_trackid=2%3Amm_")){
                         showLeftTishi("已进入返钱模式");
                         webviewBottom.setVisibility(View.VISIBLE);
@@ -231,14 +257,6 @@ public class WebviewActivity extends BaseActivity {
                            }
                        },VOLLEY_TAG_NAME);
                         return true;
-                    }
-
-                    if(url.replace("http://","").replace("https://","").startsWith("mclient.alipay.com/h5/cashierPay.htm") ||
-                       url.replace("http://","").replace("https://","").startsWith("buyertrade.taobao.com/trade/pay_success.htm") ||
-                       url.replace("http://","").replace("https://","").startsWith("buy.tmall.com/order/paySuccess.htm")) {
-
-                        MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SUCCESS_BUY_FOR_TAOBAO);
-                        return false;
                     }
 
                     if(isTaobaoItemDetail(url)){//是商品详情页
@@ -299,8 +317,13 @@ public class WebviewActivity extends BaseActivity {
                             } catch (Exception e) {}
                         }
                     });
+                }
+                if(url.replace("http://","").replace("https://","").startsWith("mclient.alipay.com/h5/cashierPay.htm") ||
+                        url.replace("http://","").replace("https://","").startsWith("buyertrade.taobao.com/trade/pay_success.htm") ||
+                        url.replace("http://","").replace("https://","").startsWith("buy.tmall.com/order/paySuccess.htm")) {
 
-            }
+                    MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SUCCESS_BUY_FOR_TAOBAO);
+                }
                 return null;
             }
 
@@ -326,11 +349,14 @@ public class WebviewActivity extends BaseActivity {
                             } catch (Exception e) {}
                         }
                     });
+                }
+                if(url.replace("http://","").replace("https://","").startsWith("mclient.alipay.com/h5/cashierPay.htm") ||
+                        url.replace("http://","").replace("https://","").startsWith("buyertrade.taobao.com/trade/pay_success.htm") ||
+                        url.replace("http://","").replace("https://","").startsWith("buy.tmall.com/order/paySuccess.htm")) {
 
-
+                    MobclickAgent.onEvent(MyApplication.getContext(),EventIdConstants.SUCCESS_BUY_FOR_TAOBAO);
                 }
                 return super.shouldInterceptRequest(view, url);
-
             }
 
             @Override
@@ -797,6 +823,7 @@ public class WebviewActivity extends BaseActivity {
         itemfxinfo1.setVisibility(View.VISIBLE);
         itemfxinfo2.setVisibility(View.VISIBLE);
         itemfxinfo3.setVisibility(View.VISIBLE);
+        tipArea.setVisibility(View.VISIBLE);
     }
 
     public void showFanJfbInfo(Long jfbAmount){
@@ -823,6 +850,7 @@ public class WebviewActivity extends BaseActivity {
 
         itemfxinfo2.setVisibility(View.GONE);
         itemfxinfo3.setVisibility(View.GONE);
+        tipArea.setVisibility(View.GONE);
     }
 
     public void showFlowBtn(String jsonInfoFromAlimama){//显示登录按钮/完善信息按钮/开通权限按钮/启动返钱按钮

@@ -3,12 +3,18 @@ package cn.fuyoushuo.fqbb.presenter.impl;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.BooleanCodec;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import cn.fuyoushuo.fqbb.ServiceManager;
+import cn.fuyoushuo.fqbb.commonlib.utils.Constants;
 import cn.fuyoushuo.fqbb.commonlib.utils.DataCheckUtils;
 import cn.fuyoushuo.fqbb.commonlib.utils.LoginInfoStore;
+import cn.fuyoushuo.fqbb.commonlib.utils.MD5;
+import cn.fuyoushuo.fqbb.commonlib.utils.UserInfoStore;
 import cn.fuyoushuo.fqbb.domain.ext.HttpResp;
 import cn.fuyoushuo.fqbb.domain.httpservice.FqbbLocalHttpService;
 import rx.Observable;
@@ -26,11 +32,10 @@ public class LocalLoginPresent extends BasePresenter{
 
     public void isFqbbLocalLogin(final LoginCallBack loginCallBack){
 
-        mSubscriptions.add(ServiceManager.createService(FqbbLocalHttpService.class)
-                .getUserInfo()
+        mSubscriptions.add(createLoginInfoObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<HttpResp>() {
+                .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
 
@@ -44,8 +49,8 @@ public class LocalLoginPresent extends BasePresenter{
                     }
 
                     @Override
-                    public void onNext(HttpResp httpResp) {
-                        if(httpResp == null || httpResp.getS() != 1){
+                    public void onNext(Boolean resp) {
+                        if(!resp){
                             if(loginCallBack != null){
                                 loginCallBack.localLoginFail();
                             }
@@ -335,6 +340,26 @@ public class LocalLoginPresent extends BasePresenter{
 
         void onUpdatePasswordFail();
 
+    }
+
+    //-----------------------------------------创建观察者----------------------------------------------------------
+
+    private Observable<Boolean> createLoginInfoObservable(){
+        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(final Subscriber<? super Boolean> subscriber) {
+                UserInfoStore userInfoStore = LoginInfoStore.getIntance().getUserInfoStore();
+                if(userInfoStore == null){
+                    subscriber.onNext(false);
+                    return;
+                }
+                if(!TextUtils.isEmpty(userInfoStore.getSessionId()) && !TextUtils.isEmpty(userInfoStore.getUserId()) && !TextUtils.isEmpty(userInfoStore.getToken())){
+                    subscriber.onNext(true);
+                    return;
+                }
+                subscriber.onNext(false);
+            }
+        });
     }
 
 

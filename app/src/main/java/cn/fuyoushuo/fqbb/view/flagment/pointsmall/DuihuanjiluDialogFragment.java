@@ -240,6 +240,11 @@ public class DuihuanjiluDialogFragment extends RxDialogFragment implements Duihu
 
     @Override
     public void onLoadDataSuccess(Integer queryStatus, int page, boolean isRefresh, List<DuihuanItem> itemList) {
+        initButtonColor(queryStatus);
+        if(itemList != null && itemList.isEmpty()){
+            Toast.makeText(MyApplication.getContext(),"你的兑换记录为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (isRefresh) {
             duihuanOrderAdapter.setData(itemList);
         } else {
@@ -248,7 +253,6 @@ public class DuihuanjiluDialogFragment extends RxDialogFragment implements Duihu
         duihuanOrderAdapter.setQueryStatus(queryStatus);
         duihuanOrderAdapter.setCurrentPage(page);
         duihuanOrderAdapter.notifyDataSetChanged();
-        initButtonColor(queryStatus);
     }
 
 }

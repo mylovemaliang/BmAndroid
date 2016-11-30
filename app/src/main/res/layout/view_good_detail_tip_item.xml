@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_widthPercent="15%w"
+        android:id="@+id/tip_content_q"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/q_img" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用购物券,优惠券可以返利吗?"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:paddingTop="1dp"
+        android:id="@+id/tip_title"
+        android:layout_toRightOf="@+id/tip_content_q"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tip_title"
+        android:layout_alignParentLeft="true"
+        app:layout_marginLeftPercent="15%w"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tip_content"
+        android:textSize="10dp"
+        android:text="不建议使用。部分优惠券会导致高比例的商品返利比例降低，若使用优惠券出现问题，请退款重新购买"
+        />
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

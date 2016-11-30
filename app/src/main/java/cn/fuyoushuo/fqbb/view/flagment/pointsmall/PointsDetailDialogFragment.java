@@ -152,6 +152,10 @@ public class PointsDetailDialogFragment extends RxDialogFragment implements Duih
 
     @Override
     public void onLoadDataSucc(int pageNum, boolean isRefresh, List<DuihuanDetail> details) {
+        if(details != null && details.isEmpty()){
+            Toast.makeText(MyApplication.getContext(),"你的积分详情为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (isRefresh) {
             duihuanDetailAdapter.setData(details);
         } else {

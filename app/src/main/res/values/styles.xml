@@ -31,7 +31,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/module_14</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/module_11</item>
         <item name="colorAccent">@color/module_14</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>

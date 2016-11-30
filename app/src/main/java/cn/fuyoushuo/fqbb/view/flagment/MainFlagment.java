@@ -311,13 +311,13 @@ public class MainFlagment extends BaseFragment implements MainView {
                         startActivity(intent);
                     }
                 });
+
+        mainPresenter.getFGoods(0L, 1, false);
     }
 
     @Override
     public void initView() {
         parentActivity = (MainActivity) this.getActivity();
-
-        mainPresenter.getFGoods(0L, 1, false);
 
         mainFlagmentHeader = layoutInflater.inflate(R.layout.flagment_main_header, null);
 
